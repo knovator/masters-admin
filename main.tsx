@@ -28,15 +28,15 @@ let newColumns: ColumnsSchema = [
 
 function Main() {
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTlhMjA5ODgwMDA2N2NhOTM2YTNlOSIsImVtYWlsIjoiaW5mb0BvcmJpdHdvcmtzLmNhIiwiaWF0IjoxNjU0NDg5MTY3LCJleHAiOjE2NTU0ODkxNjd9.7PcHPUsph-ovT5Q8Xq6wWt3LD0yPL5kirsjbwHGkepo"
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMGE0NDgzNTI3YzI4MTA0OGFkNjcxMyIsImVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20iLCJpYXQiOjE2NTQ2NjUwNTcsImV4cCI6MTY1NDc1MTQ1N30.oqbvjP1sslJ1A6EZuI9EhuWDznjc_FtrufCqmtHaQrU"
 
   return (
     <Provider
-      baseUrl="https://api.orbitworks.knovator.in"
+      baseUrl="https://api.orbitjobs.knovator.in"
       permissions={{}}
       token={token}
-      dataGetter={(response) => response.data.data}
-      paginationGetter={(response) => response.data.paginator}
+      dataGetter={(response) => response.data.docs}
+      paginationGetter={(response) => response.data}
     >
       <div className="grid grid-cols-2">
         <Master />

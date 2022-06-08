@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react"
+import React, { useState, useCallback, useEffect } from "react"
 
 import commonApi from "api"
 import { useMasterState } from "context"
@@ -52,8 +52,22 @@ const useMaster = () => {
     }
   }, [])
 
-  useEffect(() => {
-    getMastersList()
+  const partialUpdate = useCallback(async (id: string, data: any) => {
+    await commonApi({
+      parameter: id,
+      module: "masters",
+      data,
+      baseUrl,
+      token,
+      common: true,
+      action: "partialUpdate",
+    }).then((response) => {
+      if (response?.code === "SUCCESS") {
+        getMastersList()
+      } else {
+        // showNotification(response?.message, "error")
+      }
+    })
   }, [])
 
   return {
@@ -69,6 +83,7 @@ const useMaster = () => {
     clickNextPage,
     clickPreviousPage,
     crtPage,
+    partialUpdate,
   }
 }
 
