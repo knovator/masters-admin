@@ -7,9 +7,10 @@ interface MasterTableProps {
   columns: ColumnsSchema
   data: any[]
   actions?: false | TableActionTypes
+  onUpdate?: (id: string, data: any) => void
 }
 
-const MasterTable = ({ columns, data, actions }: MasterTableProps) => {
+const MasterTable = ({ columns, data, actions, onUpdate }: MasterTableProps) => {
   const [tableColumns, setTableColumns] = useState<ColumnsSchema>([])
 
   useEffect(() => {
@@ -18,7 +19,9 @@ const MasterTable = ({ columns, data, actions }: MasterTableProps) => {
 
   function updateClosure(item: any, key: string) {
     return function (value: string) {
-      console.log("Updating", item.id, key, value)
+      if (onUpdate) {
+        onUpdate(item.id, { [key]: value })
+      }
     }
   }
   function verifyAndUpdateColumns() {
@@ -70,7 +73,7 @@ const MasterTable = ({ columns, data, actions }: MasterTableProps) => {
 
     setTableColumns(modifiedColumns)
   }
-  
+
   if (Array.isArray(data) && data.length > 0) return <Table columns={tableColumns} data={data} />
 
   return null

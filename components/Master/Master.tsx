@@ -1,9 +1,11 @@
+import React from "react"
 import Pagination from "components/Common/Pagination"
 import Form from "components/Common/Form"
 import useMaster from "hook/useMaster"
 
 import MasterTable from "./MasterTable"
 import ToggleBtn from "widgets/toggle"
+import DrawerWrapper from "components/Common/Drawer"
 
 interface TableRendererProps {
   columns: ColumnsSchema
@@ -36,10 +38,16 @@ const columns = [
 ]
 
 const Master = ({ table }: MasterProps) => {
-  const { list } = useMaster()
+  const { list, partialUpdate } = useMaster()
+
   const renderTable = () => {
-    if (typeof table === "function") return table({ columns, data: list })
-    return <MasterTable columns={columns} data={list} />
+    let tableComponent
+    if (typeof table === "function") tableComponent = table({ columns, data: list })
+    tableComponent = <MasterTable columns={columns} data={list} />
+
+    // Adding additional props
+    tableComponent = React.cloneElement(tableComponent, { onUpdate: partialUpdate })
+    return tableComponent
   }
   return <div>{renderTable()}</div>
 }
