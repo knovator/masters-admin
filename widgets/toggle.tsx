@@ -1,7 +1,3 @@
-import { useEffect, useState } from "react"
-import commonApi from "api"
-// import showNotification from "utils/showNotification"
-
 interface ToggleButtonProps {
   isChecked?: boolean
   disabled?: boolean

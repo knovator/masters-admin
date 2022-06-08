@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import * as constants from "constants/common"
 // import useDebounceValue from "hook/common/useDebounceValue";
 
@@ -12,11 +12,6 @@ const usePagination = () => {
 
   const [filter, setFilter] = useState(defaultApiPayload)
   const [crtPage, setCrtPage] = useState(constants.DEFAULT_CURRENT_PAGE)
-
-  useEffect(() => {
-    setFilter(defaultApiPayload)
-    setCrtPage(1)
-  }, [])
 
   const clickPreviousPage = (page: number) => {
     setFilter((draft) => {
@@ -41,17 +36,6 @@ const usePagination = () => {
       return draft
     })
     setCrtPage(constants.DEFAULT_CURRENT_PAGE)
-  }
-
-  const searchingCustomer = (search: string) => {
-    setFilter((draft) => {
-      draft.search = search
-      return draft
-    })
-  }
-
-  const delay = (value: string) => {
-    searchingCustomer(value)
   }
 
   const changeSearch = (value: string) => {

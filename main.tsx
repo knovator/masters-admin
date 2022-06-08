@@ -1,9 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './styles/index.css';
+import ReactDOM from "react-dom/client"
+import "./styles/index.css"
 
-import Master from 'components/Master';
-import Provider from 'context';
+import Master from "components/Master"
+import Provider from "context"
 
 let newColumns: ColumnsSchema = [
   {
@@ -51,9 +51,10 @@ function Main() {
   )
 }
 
-ReactDOM.render(
-	<React.StrictMode>
-		<Main />
-	</React.StrictMode>,
-	document.getElementById('root')
+const root = ReactDOM.createRoot(document.getElementById("root")!)
+
+root.render(
+  <React.StrictMode>
+    <Main />
+  </React.StrictMode>
 )

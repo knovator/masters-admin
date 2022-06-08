@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react"
+import { useState, useCallback, useEffect } from "react"
 
 import commonApi from "api"
 import { useMasterState } from "context"
@@ -14,60 +14,69 @@ const useMaster = () => {
   const { baseUrl, token, dataGetter, paginationGetter } = useMasterState()
   const { pageSizeChange, clickNextPage, clickPreviousPage, crtPage } = usePagination()
 
-  const getMastersList = useCallback(async (search?: string) => {
-    try {
-      setLoader(true)
-      let response = await commonApi({
-        baseUrl,
-        token,
-        module: "masters",
-        common: true,
-        data: {
-          search,
-          options: {
-            sort: {
-              createdAt: 1,
+  const getMastersList = useCallback(
+    async (search?: string) => {
+      try {
+        setLoader(true)
+        let response = await commonApi({
+          baseUrl,
+          token,
+          module: "masters",
+          common: true,
+          data: {
+            search,
+            options: {
+              sort: {
+                createdAt: 1,
+              },
+              offset: 0, // filters.offset
+              limit: 20, // filters.limit
+              page: crtPage,
+              pagination: true,
             },
-            offset: 0, // filters.offset
-            limit: 20, // filters.limit
-            page: crtPage,
-            pagination: true,
+            isCountOnly: false,
           },
-          isCountOnly: false,
-        },
-        action: "list",
-      })
-      if (response?.code === "SUCCESS") {
+          action: "list",
+        })
+        if (response?.code === "SUCCESS") {
+          setLoader(false)
+          setTotalPages(paginationGetter(response).totalPages)
+          return setList(dataGetter(response))
+        }
         setLoader(false)
-        setTotalPages(paginationGetter(response).totalPages)
-        return setList(dataGetter(response))
-      }
-      setLoader(false)
-      if (response?.message === "UNAUTHENTICATED") {
+        if (response?.message === "UNAUTHENTICATED") {
+          console.log("UNAUTHORIZED")
+        }
+      } catch (error) {
+        setLoader(false)
         console.log("UNAUTHORIZED")
       }
-    } catch (error) {
-      setLoader(false)
-      console.log("UNAUTHORIZED")
-    }
-  }, [])
+    },
+    [baseUrl, crtPage, dataGetter, paginationGetter, token]
+  )
 
-  const partialUpdate = useCallback(async (id: string, data: any) => {
-    await commonApi({
-      parameter: id,
-      module: "masters",
-      data,
-      baseUrl,
-      token,
-      common: true,
-      action: "partialUpdate",
-    }).then((response) => {
-      if (response?.code === "SUCCESS") {
-        getMastersList()
-      } else {
-        // showNotification(response?.message, "error")
-      }
-    })
+  const partialUpdate = useCallback(
+    async (id: string, data: any) => {
+      await commonApi({
+        parameter: id,
+        module: "masters",
+        data,
+        baseUrl,
+        token,
+        common: true,
+        action: "partialUpdate",
+      }).then((response) => {
+        if (response?.code === "SUCCESS") {
+          getMastersList()
+        } else {
+          // showNotification(response?.message, "error")
+        }
+      })
+    },
+    [baseUrl, getMastersList, token]
+  )
+  useEffect(() => {
+    getMastersList()
   }, [])
 
   return {

@@ -5,7 +5,6 @@ import useMaster from "hook/useMaster"
 
 import MasterTable from "./MasterTable"
 import ToggleBtn from "widgets/toggle"
-import DrawerWrapper from "components/Common/Drawer"
 
 interface TableRendererProps {
   columns: ColumnsSchema
@@ -43,7 +42,7 @@ const Master = ({ table }: MasterProps) => {
   const renderTable = () => {
     let tableComponent
     if (typeof table === "function") tableComponent = table({ columns, data: list })
-    tableComponent = <MasterTable columns={columns} data={list} />
+    else tableComponent = <MasterTable columns={columns} data={list} />
 
     // Adding additional props
     tableComponent = React.cloneElement(tableComponent, { onUpdate: partialUpdate })
