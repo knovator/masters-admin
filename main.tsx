@@ -5,9 +5,9 @@ import './styles/index.css';
 import Master from 'components/Master';
 import Provider from 'context';
 
-let newColumns: SchemaType = [
+let newColumns: ColumnsSchema = [
   {
-    Header: "Name",
+    Header: <u className="text-lg text-gray-500">Header</u>,
     accessor: "name",
   },
   {
@@ -28,14 +28,22 @@ let newColumns: SchemaType = [
 
 function Main() {
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMGE0NDgzNTI3YzI4MTA0OGFkNjcxMyIsImVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20iLCJpYXQiOjE2NTQ1NzY1MzMsImV4cCI6MTY1NDY2MjkzM30.aMzDVQxzaL9dtW2nL8Sol62D931NJrjpFpJ_tdoQ3Os"
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTlhMjA5ODgwMDA2N2NhOTM2YTNlOSIsImVtYWlsIjoiaW5mb0BvcmJpdHdvcmtzLmNhIiwiaWF0IjoxNjU0NDg5MTY3LCJleHAiOjE2NTU0ODkxNjd9.7PcHPUsph-ovT5Q8Xq6wWt3LD0yPL5kirsjbwHGkepo"
+
   return (
-    <Provider baseUrl="https://api.orbitjobs.knovator.in" permissions={{}} token={token}>
+    <Provider
+      baseUrl="https://api.orbitworks.knovator.in"
+      permissions={{}}
+      token={token}
+      dataGetter={(response) => response.data.data}
+      paginationGetter={(response) => response.data.paginator}
+    >
       <div className="grid grid-cols-2">
         <Master />
+
         <Master
-          table={({ columns, data }) => (
-            <Master.Table columns={newColumns} data={data} actions={{ showDelete: false }} />
+          table={({ data }) => (
+            <Master.Table columns={newColumns} data={data} actions={{ showEdit: false, atFirst: true }} />
           )}
         />
       </div>

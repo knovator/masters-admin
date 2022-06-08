@@ -1,4 +1,3 @@
-import * as path from 'path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import rollupReplace from '@rollup/plugin-replace'
@@ -18,7 +17,7 @@ export default defineConfig({
     tsconfigPaths()
   ],
   server: {
-    port: 8080
+    port: 1122
   },
   preview: {
     port: 8080

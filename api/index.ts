@@ -5,27 +5,36 @@ import apiList from "./list"
 type ActionType = "list" | "create" | "update" | "partialUpdate" | "partialDefaultUpdate" | "delete" | "getList" | "getListById" | "partialUpdateId"
 
 interface BaseAPIProps {
-    parameters?: (string | number)[];
-    module: string;
-    data: any;
-    config?: any;
-    baseUrl: string;
-    token: string;
+  parameter?: string
+  module: string
+  data: any
+  config?: any
+  baseUrl: string
+  token: string
 }
 interface CommonAPIProps extends BaseAPIProps {
-  common: true;
-  action: ActionType;
+  common: true
+  action: ActionType
 }
 interface NonCommonAPIProps extends BaseAPIProps {
-  common: false;
-  action: "imgUpload";
+  common: false
+  action: "imgUpload"
 }
 interface APIType {
-    url: (id?: string) => string;
-    method: string;
+  url: ((id: string) => string) | ((id?: string) => string)
+  method: string
 }
 
-const commonApi = async ({ parameters = [], action, module = "", data, config, common, baseUrl, token }: CommonAPIProps | NonCommonAPIProps) => {
+const commonApi = async ({
+  parameter,
+  action,
+  module = "",
+  data,
+  config,
+  common,
+  baseUrl,
+  token,
+}: CommonAPIProps | NonCommonAPIProps) => {
   const api: APIType = common ? apiList.commonUrl(module)[action] : apiList[`${action}`]
 
   if (api) {
@@ -34,10 +43,11 @@ const commonApi = async ({ parameters = [], action, module = "", data, config, c
       tokenPrefix: "jwt",
       getToken: token,
       onError: (error: any) => console.log(error),
-    });
+    })
     return fetchUrl({
       type: api.method,
-      url: api.url(...parameters),
+      // @ts-ignore
+      url: api.url(parameter),
       data,
       config,
     })

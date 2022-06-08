@@ -19,7 +19,7 @@ const LocalStorage = {
 
   set: (...rest: any) => {
     if (typeof localStorage !== "undefined") {
-      return localStorage.setItem(...rest)
+      return localStorage.setItem.apply(null, rest)
     }
 
     return false

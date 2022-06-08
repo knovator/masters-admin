@@ -4,13 +4,13 @@ import DeleteIcon from "icons/deleteIcon"
 import EditIcon from "icons/editIcon"
 
 interface MasterTableProps {
-  columns: SchemaType
+  columns: ColumnsSchema
   data: any[]
   actions?: false | TableActionTypes
 }
 
 const MasterTable = ({ columns, data, actions }: MasterTableProps) => {
-  const [tableColumns, setTableColumns] = useState<SchemaType>([])
+  const [tableColumns, setTableColumns] = useState<ColumnsSchema>([])
 
   useEffect(() => {
     verifyAndUpdateColumns()
@@ -22,17 +22,7 @@ const MasterTable = ({ columns, data, actions }: MasterTableProps) => {
     }
   }
   function verifyAndUpdateColumns() {
-    // Applying onUpdate to Cell
-    let modifiedColumns = columns.map((column) => {
-      return {
-        ...column,
-        Cell: ({ row }: any) => {
-          if (column.Cell)
-            return column.Cell({ row: row.original, onUpdate: updateClosure(row.original, column.accessor) })
-          else return String(row.original[column.accessor] || "")
-        },
-      }
-    })
+    let modifiedColumns = [...columns]
 
     // Handling Table Actions
     let tableActions: TableActionTypes = {
@@ -47,23 +37,43 @@ const MasterTable = ({ columns, data, actions }: MasterTableProps) => {
     }
     // Appending Table Actions, if actions not specified or actions object is provided
     if (typeof actions === "undefined" || !!actions) {
-      modifiedColumns.push({
+      let modification: ColumnSchemaType = {
         Header: "Actions",
         accessor: "actions",
-        Cell({ row }: any) {
+        Cell({ row, onUpdate }) {
           return (
             <div className="flex items-center gap-3">
               {tableActions.showEdit ? <EditIcon fill="#fff" /> : null}
-              {row.original.canDel && tableActions.showDelete ? <DeleteIcon /> : null}
+              {row.canDel && tableActions.showDelete ? <DeleteIcon /> : null}
             </div>
           )
         },
-      })
+      }
+      if (actions && actions.atFirst) {
+        modifiedColumns.unshift(modification)
+      } else {
+        modifiedColumns.push(modification)
+      }
     }
+
+    // Applying onUpdate to Cell, keep at last
+    modifiedColumns = modifiedColumns.map((column) => {
+      return {
+        ...column,
+        Cell: ({ row }: any) => {
+          if (column.Cell)
+            return column.Cell({ row: row.original, onUpdate: updateClosure(row.original, column.accessor) })
+          else return String(row.original[column.accessor] || "")
+        },
+      }
+    })
+
     setTableColumns(modifiedColumns)
   }
+  
+  if (Array.isArray(data) && data.length > 0) return <Table columns={tableColumns} data={data} />
 
-  return <Table columns={tableColumns} data={data} />
+  return null
 }
 
 export default MasterTable

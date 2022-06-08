@@ -6,7 +6,7 @@ import MasterTable from "./MasterTable"
 import ToggleBtn from "widgets/toggle"
 
 interface TableRendererProps {
-  columns: SchemaType
+  columns: ColumnsSchema
   data: any[]
 }
 

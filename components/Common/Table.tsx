@@ -3,6 +3,7 @@ import { usePagination, useRowSelect, useTable } from "react-table"
 const Table = ({ data, columns }: TableProps) => {
   const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } = useTable(
     {
+      // @ts-ignore
       columns,
       data,
     },

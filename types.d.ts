@@ -1,16 +1,18 @@
 declare module '@knovator/api';
 declare module '@knovator/can';
 
-type SchemaType = {
-  Header: String | ((props: any) => any)
+type ColumnCellType = { row: any; onUpdate: (data: any) => void }
+type ColumnSchemaType = {
+  Header: String | React.ReactElement | (() => any)
   accessor: string
   id?: string
-  Cell?: ({ row }: { row: any; onUpdate: (data: any) => void }) => any
-}[]
+  Cell?: (data: { row: any; onUpdate: (data: any) => void }) => any
+}
+type ColumnsSchema = ColumnSchemaType[]
 
 interface TableProps {
   data: any
-  columns: SchemaType
+  columns: ColumnsSchema
   sequencing?: boolean
   sortable?: boolean
   defaultSort?: {
@@ -21,4 +23,13 @@ interface TableProps {
 interface TableActionTypes {
   showEdit?: boolean
   showDelete?: boolean
+  atFirst?: boolean
+}
+
+interface MasterContextInterface {
+  baseUrl: string
+  permissions: any
+  token: string
+  dataGetter: (response: any) => any[]
+  paginationGetter: (response: any) => any
 }
