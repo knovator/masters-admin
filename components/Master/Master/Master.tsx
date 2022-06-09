@@ -3,7 +3,7 @@ import Pagination from "components/Common/Pagination"
 import Form from "components/Common/Form"
 import useMaster from "hook/useMaster"
 
-import MasterTable from "./MasterTable"
+import MasterTable from "../MasterTable"
 import ToggleBtn from "widgets/toggle"
 
 interface TableRendererProps {

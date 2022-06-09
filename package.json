@@ -7,8 +7,9 @@
     "build": "vite build",
     "serve": "vite preview",
     "start": "vite",
-    "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "test": "vitest run",
+    "coverage": "vitest run --coverage",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@knovator/api": "^0.0.9",
@@ -28,6 +29,7 @@
     "@types/react-table": "^7.7.12",
     "@vitejs/plugin-react": "^1.2.0",
     "autoprefixer": "^10.4.7",
+    "husky": "^8.0.1",
     "jsdom": "^19.0.0",
     "msw": "^0.42.1",
     "postcss": "^8.4.14",
