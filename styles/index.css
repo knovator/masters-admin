@@ -2,72 +2,91 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: "Poppins";
-  color: #111;
+@layer components {
+  /* Table */
+  .kms_actions {
+    @apply flex items-center gap-3;
+  }
+  .kms_actions-edit, .kms_actions-delete {
+    @apply cursor-pointer;
+  }
+  .kms_table-container {
+    @apply overflow-hidden bg-white border rounded-lg border-gray-200;
+  }
+  .kms_table {
+    @apply w-full text-sm;
+  }
+  .kms_thead {
+    @apply bg-slate-200;
+  }
+  .kms_thead th {
+    @apply px-4 py-3 text-left;
+  }
+  .kms_tbody td {
+    @apply px-4 py-3;
+  }
+  /* \ End of Table */
+
+
+  /* Switch */
+  .kms_switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+  }
+  .kms_switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .kms_switch .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #888;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+  }
+  .kms_switch .slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 5px;
+    bottom: 4px;
+    background-color: #fff;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    box-shadow: 0px 0px 6px #00000029;
+    background-image: url(../public/images/close.png);
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  /* Switch Rounded sliders */
+  .kms_switch .slider.round {
+    border-radius: 34px;
+  }
+  .kms_switch .slider.round:before {
+    border-radius: 50%;
+  }
+  input:checked + .slider {
+    background-color: #16a34a;
+  }
+  input:focus + .slider {
+    box-shadow: 0 0 1px #16a34a;
+  }
+  input:checked + .slider:before {
+    -webkit-transform: translateX(28px);
+    -ms-transform: translateX(28px);
+    transform: translateX(28px);
+    background-image: url(../public/images/tick.png);
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  /* \ End of Switch */
 }
 
-/* toggle-btn */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 30px;
-}
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #888;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 22px;
-  width: 22px;
-  left: 5px;
-  bottom: 4px;
-  background-color: #fff;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-  box-shadow: 0px 0px 6px #00000029;
-  background-image: url(../public/images/close.png);
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-input:checked + .slider {
-  background-color: #16a34a;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #16a34a;
-}
-input:checked + .slider:before {
-  -webkit-transform: translateX(28px);
-  -ms-transform: translateX(28px);
-  transform: translateX(28px);
-  background-image: url(../public/images/tick.png);
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}

@@ -9,7 +9,7 @@ const EditIcon = (properties: any) => {
         height="16"
         viewBox="0 0 13.971 13.971"
         {...properties}
-        className="cursor-pointer"
+        className="kms_actions-edit"
       >
         <path
           id="editIcon"

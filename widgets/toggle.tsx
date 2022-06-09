@@ -6,18 +6,15 @@ interface ToggleButtonProps {
 
 const ToggleButton = ({ isChecked, disabled, onChange }: ToggleButtonProps) => {
   return (
-    <div>
-      <label className="switch">
-        <input
-          className="toggle bg-slate-400"
-          type="checkbox"
-          onChange={() => onChange && onChange(!isChecked)}
-          checked={isChecked}
-          disabled={disabled}
-        />
-        <span className="slider round" />
-      </label>
-    </div>
+    <label className="kms_switch" data-testid="kms_switch">
+      <input
+        type="checkbox"
+        onChange={() => onChange && onChange(!isChecked)}
+        checked={isChecked}
+        disabled={disabled}
+      />
+      <span className="slider round" />
+    </label>
   )
 }
 

@@ -45,7 +45,7 @@ const MasterTable = ({ columns, data, actions, onUpdate }: MasterTableProps) => 
         accessor: "actions",
         Cell({ row, onUpdate }) {
           return (
-            <div className="flex items-center gap-3">
+            <div className="kms_actions">
               {tableActions.showEdit ? <EditIcon fill="#fff" /> : null}
               {row.canDel && tableActions.showDelete ? <DeleteIcon /> : null}
             </div>

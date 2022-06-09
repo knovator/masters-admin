@@ -9,7 +9,7 @@ const DeleteIcon = (properties: any) => {
         height="16"
         viewBox="0 0 16 16"
         {...properties}
-        className="cursor-pointer"
+        className="kms_actions-delete"
       >
         <path
           id="deleteIcon"
