@@ -45,6 +45,17 @@ function Main() {
           table={({ data }) => (
             <Master.Table columns={newColumns} data={data} actions={{ showEdit: false, atFirst: true }} />
           )}
+          pagination={({ currentPage, setCurrentPage, totalPages }) => (
+            <select value={currentPage} onChange={(e) => setCurrentPage(Number(e.target.value))}>
+              {Array.from({ length: totalPages })
+                .fill(0)
+                .map((_, index) => (
+                  <option value={index + 1} key={index}>
+                    {index + 1}
+                  </option>
+                ))}
+            </select>
+          )}
         />
       </div>
     </Provider>

@@ -1,19 +1,13 @@
 import React from "react"
-import Pagination from "components/Common/Pagination"
-import Form from "components/Common/Form"
 import useMaster from "hook/useMaster"
+import { Pagination, Form } from "components/Common"
 
 import MasterTable from "../MasterTable"
 import ToggleBtn from "widgets/toggle"
 
-interface TableRendererProps {
-  columns: ColumnsSchema
-  data: any[]
-}
-
 interface MasterProps extends React.PropsWithChildren {
   explicitForm?: boolean
-  pagination?: typeof Pagination
+  pagination?: (data: PaginationRendererProps) => JSX.Element
   form?: typeof Form
   table?: (data: TableRendererProps) => JSX.Element
 }
@@ -36,8 +30,8 @@ const columns = [
   },
 ]
 
-const Master = ({ table }: MasterProps) => {
-  const { list, partialUpdate } = useMaster()
+const Master = ({ table, pagination }: MasterProps) => {
+  const { list, partialUpdate, totalPages, currentPage, setCurrentPage, pageSize, setPageSize } = useMaster()
 
   const renderTable = () => {
     let tableComponent
@@ -48,7 +42,30 @@ const Master = ({ table }: MasterProps) => {
     tableComponent = React.cloneElement(tableComponent, { onUpdate: partialUpdate })
     return tableComponent
   }
-  return <div>{renderTable()}</div>
+
+  const renderPagination = () => {
+    let paginationContent
+    if (typeof pagination === "function")
+      paginationContent = pagination({ currentPage, setCurrentPage, totalPages, pageSize, setPageSize })
+    else
+      paginationContent = (
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+        />
+      )
+    return paginationContent
+  }
+
+  return (
+    <div>
+      {renderTable()}
+      {renderPagination()}
+    </div>
+  )
 }
 
-export default Object.assign(Master, { Table: MasterTable })
+export default Object.assign(Master, { Table: MasterTable, Pagination })

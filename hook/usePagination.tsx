@@ -1,6 +1,5 @@
 import { useState } from "react"
 import * as constants from "constants/common"
-// import useDebounceValue from "hook/common/useDebounceValue";
 
 const usePagination = () => {
   const defaultApiPayload = {
@@ -11,45 +10,31 @@ const usePagination = () => {
   }
 
   const [filter, setFilter] = useState(defaultApiPayload)
-  const [crtPage, setCrtPage] = useState(constants.DEFAULT_CURRENT_PAGE)
+  const [currentPage, setCurrentPage] = useState(constants.DEFAULT_CURRENT_PAGE)
 
-  const clickPreviousPage = (page: number) => {
-    setFilter((draft) => {
-      draft.offset = draft.limit * (page - 2)
-      return draft
+  const setPageSize = (value: number) => {
+    setFilter({
+      ...filter,
+      limit: Number.parseInt(String(value), constants.DECIMAL_REDIX),
+      offset: constants.DEFAULT_OFFSET_PAYLOAD,
     })
-    setCrtPage(page - 1)
-  }
-
-  const clickNextPage = (page: number) => {
-    setFilter((draft) => {
-      draft.offset = draft.limit * page
-      return draft
-    })
-    setCrtPage(page + 1)
-  }
-
-  const pageSizeChange = (value: string) => {
-    setFilter((draft) => {
-      draft.limit = Number.parseInt(value, constants.DECIMAL_REDIX)
-      draft.offset = constants.DEFAULT_OFFSET_PAYLOAD
-      return draft
-    })
-    setCrtPage(constants.DEFAULT_CURRENT_PAGE)
+    setCurrentPage(constants.DEFAULT_CURRENT_PAGE)
   }
 
   const changeSearch = (value: string) => {
-    // delay.debounced(value);
+    setFilter((draft) => {
+      draft.search = value
+      return draft
+    })
   }
 
   return {
-    pageSizeChange,
-    crtPage,
-    clickNextPage,
-    clickPreviousPage,
+    pageSize: filter.limit,
+    setPageSize,
+    currentPage,
     changeSearch,
     filter,
-    setCrtPage,
+    setCurrentPage,
     defaultApiPayload,
     setFilter,
   }

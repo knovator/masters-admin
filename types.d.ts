@@ -33,3 +33,16 @@ interface MasterContextInterface {
   dataGetter: (response: any) => any[]
   paginationGetter: (response: any) => any
 }
+
+interface TableRendererProps {
+  columns: ColumnsSchema
+  data: any[]
+}
+
+interface PaginationRendererProps {
+  currentPage: number
+  setCurrentPage: (page: number) => void
+  totalPages: number
+  pageSize: number
+  setPageSize: (size: number) => void
+}

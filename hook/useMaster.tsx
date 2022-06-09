@@ -5,14 +5,13 @@ import { useMasterState } from "context"
 import usePagination from "hook/usePagination"
 
 const useMaster = () => {
-  const [page, setPage] = useState()
   const [list, setList] = useState<any>([])
   const [loader, setLoader] = useState(false)
   const [editData, setEditData] = useState({})
-  const [totalPages, setTotalPages] = useState()
+  const [totalPages, setTotalPages] = useState(0)
 
   const { baseUrl, token, dataGetter, paginationGetter } = useMasterState()
-  const { pageSizeChange, clickNextPage, clickPreviousPage, crtPage } = usePagination()
+  const { setPageSize, pageSize, currentPage, setCurrentPage, filter } = usePagination()
 
   const getMastersList = useCallback(
     async (search?: string) => {
@@ -27,14 +26,13 @@ const useMaster = () => {
             search,
             options: {
               sort: {
-                createdAt: 1,
+                createdAt: 0,
               },
-              offset: 0, // filters.offset
-              limit: 20, // filters.limit
-              page: crtPage,
+              offset: filter.offset,
+              limit: filter.limit,
+              page: currentPage,
               pagination: true,
             },
-            isCountOnly: false,
           },
           action: "list",
         })
@@ -52,7 +50,7 @@ const useMaster = () => {
         console.log("UNAUTHORIZED")
       }
     },
-    [baseUrl, crtPage, dataGetter, paginationGetter, token]
+    [baseUrl, currentPage, dataGetter, paginationGetter, token, filter]
   )
 
   const partialUpdate = useCallback(
@@ -75,24 +73,24 @@ const useMaster = () => {
     },
     [baseUrl, getMastersList, token]
   )
+
   useEffect(() => {
     getMastersList()
-  }, [])
+  }, [pageSize, currentPage])
 
   return {
     list,
     editData,
     setEditData,
     getMastersList,
-    setPage,
-    page,
-    totalPages,
     loader,
-    pageSizeChange,
-    clickNextPage,
-    clickPreviousPage,
-    crtPage,
     partialUpdate,
+
+    pageSize,
+    totalPages,
+    currentPage,
+    setCurrentPage,
+    setPageSize,
   }
 }
 
