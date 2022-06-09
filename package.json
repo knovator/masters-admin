@@ -8,6 +8,7 @@
     "serve": "vite preview",
     "start": "vite",
     "test": "vitest run",
+    "test-dev": "vitest dev",
     "coverage": "vitest run --coverage",
     "prepare": "husky install"
   },
@@ -30,6 +31,7 @@
     "@types/react-table": "^7.7.12",
     "@vitejs/plugin-react": "^1.2.0",
     "autoprefixer": "^10.4.7",
+    "c8": "^7.11.3",
     "husky": "^8.0.1",
     "jsdom": "^19.0.0",
     "msw": "^0.42.1",
