@@ -12,7 +12,7 @@ interface MasterTableProps {
 }
 
 const MasterTable = ({ columns, data, actions }: MasterTableProps) => {
-  const { onUpdate } = useMasterState()
+  const { onUpdate, sortable, sortConfig, setSortConfig } = useMasterState()
   const [tableColumns, setTableColumns] = useState<ColumnsSchema>([])
 
   useEffect(() => {
@@ -76,7 +76,16 @@ const MasterTable = ({ columns, data, actions }: MasterTableProps) => {
     setTableColumns(modifiedColumns)
   }
 
-  if (Array.isArray(data) && data.length > 0) return <Table columns={tableColumns} data={data} />
+  if (Array.isArray(data) && data.length > 0)
+    return (
+      <Table
+        columns={tableColumns}
+        data={data}
+        sortable={sortable}
+        sortConfig={sortConfig}
+        setSortConfig={setSortConfig}
+      />
+    )
 
   return null
 }

@@ -19,9 +19,9 @@ describe("Testing Table Component", () => {
       <Table columns={[{ Header: "Name", accessor: "name" }]} data={[{ name: "John" }, { name: "Karan" }]} />
     )
     let ths = container.querySelectorAll("th")
-    expect(ths[0].innerHTML).toBe("Name")
+    expect(ths[0].innerHTML).toContain("Name")
     let tds = container.querySelectorAll("td")
-    expect(tds[0].innerHTML).toBe("John")
+    expect(tds[0].innerHTML).toContain("John")
   })
   it("should show customized column header and value when passed", () => {
     const { container } = render(
@@ -39,8 +39,8 @@ describe("Testing Table Component", () => {
       />
     )
     let ths = container.querySelectorAll("th")
-    expect(ths[0].innerHTML).toBe("<b>Name</b>")
+    expect(ths[0].innerHTML).toContain("<b>Name</b>")
     let tds = container.querySelectorAll("td")
-    expect(tds[0].innerHTML).toBe("<u>John</u>")
+    expect(tds[0].innerHTML).toContain("<u>John</u>")
   })
 })

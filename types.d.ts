@@ -5,6 +5,7 @@ type ColumnSchemaType = {
   Header: String | React.ReactElement | (() => any)
   accessor: string
   id?: string
+  sortable?: boolean
   Cell?: (data: { row: any; onUpdate: (data: any) => void }) => any
 }
 type ColumnsSchema = ColumnSchemaType[]
@@ -14,9 +15,8 @@ interface TableProps {
   columns: ColumnsSchema
   sequencing?: boolean
   sortable?: boolean
-  defaultSort?: {
-    [key: string]: string
-  }
+  sortConfig?: SortConfigType
+  setSortConfig?: (data: SortConfigType) => void
 }
 
 interface TableActionTypes {
@@ -56,3 +56,5 @@ interface PaginationProps {
   totalRecords: number
   limits: number[]
 }
+
+type SortConfigType = [string, 1 | -1]

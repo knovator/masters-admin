@@ -1,6 +1,24 @@
 import { useTable } from "react-table"
+import { SORT_ASCENDING, SORT_DESCENDING, EXCLUDE_SORT_COLUMNS } from "constants/common"
 
-const Table = ({ data, columns }: TableProps) => {
+const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig }: TableProps) => {
+  const sortConfigRenderer = (accessor: string) => {
+    if (!sortable || !sortConfig) return null
+    if (accessor === sortConfig[0]) {
+      return (
+        <div className="text-xs ml-2 inline-block">
+          {sortConfig[1] === SORT_ASCENDING ? <>&#9650;</> : <>&#9660;</>}
+        </div>
+      )
+    } else return null
+  }
+  const onClickSort = (id: string) => {
+    if (setSortConfig && !EXCLUDE_SORT_COLUMNS.includes(String(id).toLocaleLowerCase())) {
+      if (sortConfig && id === sortConfig[0])
+        setSortConfig([id, sortConfig[1] === SORT_ASCENDING ? SORT_DESCENDING : SORT_ASCENDING])
+      else setSortConfig([id, SORT_ASCENDING])
+    }
+  }
   const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } = useTable({
     // @ts-ignore
     columns,
@@ -14,7 +32,14 @@ const Table = ({ data, columns }: TableProps) => {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                <th
+                  {...column.getHeaderProps()}
+                  onClick={() => onClickSort(column.id)}
+                  className="cursor-pointer hover:bg-opacity-50"
+                >
+                  {column.render("Header")}
+                  {sortConfigRenderer(column.id)}
+                </th>
               ))}
             </tr>
           ))}

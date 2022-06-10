@@ -9,7 +9,8 @@ import MasterPagination from "../MasterPagination"
 import MasterContextProvider from "context/MasterContext"
 
 interface MasterProps extends React.PropsWithChildren {
-  explicitForm?: boolean
+  sortable?: boolean
+  defaultSort?: SortConfigType
   pagination?: (data: PaginationRendererProps) => JSX.Element
   form?: JSX.Element
   table?: (data: TableRendererProps) => JSX.Element
@@ -34,9 +35,19 @@ const columns = [
   },
 ]
 
-const Master = ({ table, pagination, limits = PAGE_LIMITS }: MasterProps) => {
-  const { list, partialUpdate, totalPages, totalRecords, currentPage, setCurrentPage, pageSize, setPageSize } =
-    useMaster({ defaultLimit: Array.isArray(limits) && limits.length > 0 ? limits[0] : DEFAULT_LIMIT })
+const Master = ({ table, pagination, sortable = true, defaultSort, limits = PAGE_LIMITS }: MasterProps) => {
+  const {
+    list,
+    partialUpdate,
+    totalPages,
+    totalRecords,
+    currentPage,
+    setCurrentPage,
+    pageSize,
+    setPageSize,
+    sortConfig,
+    setSortConfig,
+  } = useMaster({ defaultLimit: Array.isArray(limits) && limits.length > 0 ? limits[0] : DEFAULT_LIMIT })
 
   const renderTable = () => {
     let tableComponent
@@ -74,7 +85,13 @@ const Master = ({ table, pagination, limits = PAGE_LIMITS }: MasterProps) => {
 
   return (
     <div>
-      <MasterContextProvider onUpdate={partialUpdate} limits={limits ? limits : PAGE_LIMITS}>
+      <MasterContextProvider
+        sortable={sortable}
+        onUpdate={partialUpdate}
+        limits={limits ? limits : PAGE_LIMITS}
+        sortConfig={sortConfig}
+        setSortConfig={setSortConfig}
+      >
         {renderTable()}
         {renderPagination()}
       </MasterContextProvider>

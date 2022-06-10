@@ -14,6 +14,7 @@ const useMaster = ({ defaultLimit }: UseMasterProps) => {
   const [editData, setEditData] = useState({})
   const [totalPages, setTotalPages] = useState(0)
   const [totalRecords, setTotalRecords] = useState(0)
+  const [sortConfig, setSortConfig] = useState<SortConfigType>(["createdAt", 1])
 
   const { baseUrl, token, dataGetter, paginationGetter } = useProviderState()
   const { setPageSize, pageSize, currentPage, setCurrentPage, filter } = usePagination({ defaultLimit })
@@ -31,7 +32,7 @@ const useMaster = ({ defaultLimit }: UseMasterProps) => {
             search,
             options: {
               sort: {
-                createdAt: 0,
+                [sortConfig[0]]: sortConfig[1],
               },
               offset: filter.offset,
               limit: filter.limit,
@@ -56,7 +57,7 @@ const useMaster = ({ defaultLimit }: UseMasterProps) => {
         console.log("UNAUTHORIZED")
       }
     },
-    [baseUrl, currentPage, dataGetter, paginationGetter, token, filter]
+    [baseUrl, currentPage, dataGetter, paginationGetter, token, filter, sortConfig]
   )
 
   const partialUpdate = useCallback(
@@ -80,9 +81,14 @@ const useMaster = ({ defaultLimit }: UseMasterProps) => {
     [baseUrl, getMastersList, token]
   )
 
+  const onSortChange = (config: SortConfigType) => {
+    console.log(config)
+    setSortConfig(config)
+  }
+
   useEffect(() => {
     getMastersList()
-  }, [pageSize, currentPage])
+  }, [pageSize, currentPage, sortConfig])
 
   return {
     list,
@@ -92,12 +98,17 @@ const useMaster = ({ defaultLimit }: UseMasterProps) => {
     loader,
     partialUpdate,
 
+    // Pagination
     pageSize,
     totalPages,
     currentPage,
     totalRecords,
     setCurrentPage,
     setPageSize,
+
+    // Sorting
+    sortConfig,
+    setSortConfig: onSortChange,
   }
 }
 

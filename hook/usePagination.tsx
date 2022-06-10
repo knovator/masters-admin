@@ -10,7 +10,6 @@ const usePagination = ({ defaultLimit }: UsePaginationProps) => {
     search: "",
     offset: constants.DEFAULT_OFFSET_PAYLOAD,
     limit: defaultLimit || constants.DEFAULT_LIMIT,
-    sort: constants.DEFAULT_SORT,
   }
 
   const [filter, setFilter] = useState(defaultApiPayload)

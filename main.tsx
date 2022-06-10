@@ -9,6 +9,7 @@ let newColumns: ColumnsSchema = [
   {
     Header: <u className="text-lg text-gray-500">Header</u>,
     accessor: "name",
+    sortable: false,
   },
   {
     Header: "Description",
