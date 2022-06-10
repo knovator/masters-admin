@@ -42,24 +42,27 @@ function Main() {
       <div className="grid grid-cols-2">
         <Master />
 
-        <Master
-          limits={[1, 4, 6, 7, 10]}
-          table={({ data }) => (
-            <Master.Table columns={newColumns} data={data} actions={{ showEdit: false, atFirst: true }} />
-          )}
-          pagination={({ currentPage, setCurrentPage, totalPages, pageSize, setPageSize, totalRecords }) => (
-            <div className="container bg-slate-200">
-              <Master.Pagination
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                totalPages={totalPages}
-                pageSize={pageSize}
-                setPageSize={setPageSize}
-                totalRecords={totalRecords}
-              />
-            </div>
-          )}
-        />
+        {/* Customized Master */}
+        <div className="max-h-screen overflow-auto">
+          <Master
+            limits={[10, 15, 20, 25]}
+            table={({ data }) => (
+              <Master.Table columns={newColumns} data={data} actions={{ showEdit: false, atFirst: true }} />
+            )}
+            pagination={({ currentPage, setCurrentPage, totalPages, pageSize, setPageSize, totalRecords }) => (
+              <div className="container bg-slate-200 sticky bottom-0">
+                <Master.Pagination
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                  totalPages={totalPages}
+                  pageSize={pageSize}
+                  setPageSize={setPageSize}
+                  totalRecords={totalRecords}
+                />
+              </div>
+            )}
+          />
+        </div>
       </div>
     </Provider>
   )

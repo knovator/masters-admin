@@ -20,7 +20,7 @@ const docs = [
   },
   {
     id: "3456",
-    name: "Known",
+    name: "Abcd",
     isActive: true,
     canDel: true,
   },
@@ -38,6 +38,21 @@ const restHandlers = [
   rest.post("https://testapi.com/admin/masters/list", (req, res, ctx) => {
     let bodyOptions = (req.body as any).options
     let bodyDocs = [...docs]
+    if (typeof bodyOptions.sort !== "undefined") {
+      let sortConfig = Object.entries(bodyOptions.sort)[0]
+      bodyDocs = bodyDocs.sort((a, b) => {
+        if (sortConfig[0] === "name")
+          if (sortConfig[1] == 1) return String(a.name).localeCompare(String(b.name))
+          else return String(b.name).localeCompare(String(a.name))
+        else if (sortConfig[0] === "isActive")
+          if (sortConfig[1] == 1)
+            // @ts-ignore
+            return Boolean(a.isActive) - Boolean(b.isActive)
+          // @ts-ignore
+          else return Boolean(b) - Boolean(a.isActive)
+        else return 0
+      })
+    }
     if (typeof bodyOptions.offset !== "undefined" && typeof bodyOptions.limit !== "undefined") {
       bodyDocs = bodyDocs.slice(Number(bodyOptions.offset), Number(bodyOptions.offset) + Number(bodyOptions.limit))
     }
@@ -126,14 +141,9 @@ describe("Testing MasterTable Component", () => {
       expect(screen.getByTestId("table")).toBeTruthy()
     })
 
-    // screen.debug()
     // By default first Record Name should be existed in DOM
     expect(screen.queryByText("John")).toBeTruthy()
     expect(screen.queryByText("Patrik")).not.toBeTruthy()
-    // console.log(johnTd, patrikTd)
-    // expect(getByText("John")).toBeTruthy()
-    // expect(getByText("Patrik")).toThrowError()
-    // expect(getByText("Patrik")).toBeTruthy()
 
     // Should Take first limit as default limit
     // Test select to have value of pageSize
@@ -149,5 +159,31 @@ describe("Testing MasterTable Component", () => {
       expect(screen.queryByText("Patrik")).toBeTruthy()
     })
     expect(screen.queryByText("John")).not.toBeTruthy()
+  })
+  it("Should Sort table", async () => {
+    const { container, getByRole } = render(
+      <Provider
+        baseUrl="https://testapi.com"
+        permissions={{}}
+        token={"abcd"}
+        dataGetter={(response) => response.data.docs}
+        paginationGetter={(response) => response.data}
+      >
+        <Master limits={[1, 2]} />
+      </Provider>
+    )
+    // Wait for Table to render fully
+    await waitFor(() => {
+      expect(screen.getByTestId("table")).toBeTruthy()
+    })
+
+    // Sorting Name field in Ascending order
+    let nameHeader = getByRole("columnheader", { name: "Name" })
+    fireEvent.click(nameHeader)
+
+    // Wait for API respose to repaint data
+    await waitFor(() => {
+      expect(container.querySelector("td")?.innerHTML).toBe("Abcd")
+    })
   })
 })

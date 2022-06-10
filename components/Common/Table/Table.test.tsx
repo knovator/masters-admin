@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import Table from "./Table"
 
 describe("Testing Table Component", () => {
@@ -42,5 +42,49 @@ describe("Testing Table Component", () => {
     expect(ths[0].innerHTML).toContain("<b>Name</b>")
     let tds = container.querySelectorAll("td")
     expect(tds[0].innerHTML).toContain("<u>John</u>")
+  })
+  it("Should show sort marks when clicked on ield header", () => {
+    let sortConfig: SortConfigType = ["createdAt", 1]
+    const setSortConfig = (data: SortConfigType) => (sortConfig = data)
+
+    const { rerender, getByRole } = render(
+      <Table
+        columns={[{ Header: "Name", accessor: "name" }]}
+        data={[{ name: "John" }, { name: "Karan" }]}
+        sortConfig={sortConfig}
+        setSortConfig={setSortConfig}
+      />
+    )
+    // Checking No sort icons exists
+    expect(screen.queryByText("&#9650")).not.toBeTruthy() // Ascending
+    expect(screen.queryByText("&#9660;")).not.toBeTruthy() // Descending
+
+    // Sorting Name field in Ascending order
+    let nameHeader = getByRole("columnheader", { name: "Name" })
+    fireEvent.click(nameHeader)
+    expect(JSON.stringify(sortConfig)).toBe(JSON.stringify(["name", 1]))
+    rerender(
+      <Table
+        columns={[{ Header: "Name", accessor: "name" }]}
+        data={[{ name: "John" }, { name: "Karan" }]}
+        sortConfig={sortConfig}
+        setSortConfig={setSortConfig}
+      />
+    )
+    nameHeader = getByRole("columnheader", { name: "Name ▲" })
+    expect(nameHeader).toBeTruthy()
+
+    // Sorting Name Field in Descending order
+    fireEvent.click(nameHeader)
+    expect(JSON.stringify(sortConfig)).toBe(JSON.stringify(["name", -1]))
+    rerender(
+      <Table
+        columns={[{ Header: "Name", accessor: "name" }]}
+        data={[{ name: "John" }, { name: "Karan" }]}
+        sortConfig={sortConfig}
+        setSortConfig={setSortConfig}
+      />
+    )
+    expect(getByRole("columnheader", { name: "Name ▼" })).toBeTruthy()
   })
 })

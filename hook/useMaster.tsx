@@ -57,7 +57,7 @@ const useMaster = ({ defaultLimit }: UseMasterProps) => {
         console.log("UNAUTHORIZED")
       }
     },
-    [baseUrl, currentPage, dataGetter, paginationGetter, token, filter, sortConfig]
+    [currentPage, filter, sortConfig]
   )
 
   const partialUpdate = useCallback(
@@ -78,13 +78,8 @@ const useMaster = ({ defaultLimit }: UseMasterProps) => {
         }
       })
     },
-    [baseUrl, getMastersList, token]
+    [getMastersList]
   )
-
-  const onSortChange = (config: SortConfigType) => {
-    console.log(config)
-    setSortConfig(config)
-  }
 
   useEffect(() => {
     getMastersList()
@@ -108,7 +103,7 @@ const useMaster = ({ defaultLimit }: UseMasterProps) => {
 
     // Sorting
     sortConfig,
-    setSortConfig: onSortChange,
+    setSortConfig,
   }
 }
 
