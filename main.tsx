@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client"
 import "./styles/index.css"
 
 import Master from "components/Master"
-import Provider from "context"
+import { Provider } from "context"
 
 let newColumns: ColumnsSchema = [
   {
@@ -28,7 +28,7 @@ let newColumns: ColumnsSchema = [
 
 function Main() {
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMGE0NDgzNTI3YzI4MTA0OGFkNjcxMyIsImVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20iLCJpYXQiOjE2NTQ3NTI0MDEsImV4cCI6MTY1NDgzODgwMX0.0d-JIhxpIVVZJ7Uai9aKmV1Bww3En9lnvoku38LvZ44"
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMGE0NDgzNTI3YzI4MTA0OGFkNjcxMyIsImVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20iLCJpYXQiOjE2NTQ4Mzk1NzksImV4cCI6MTY1NDkyNTk3OX0.aJkmAo6GCkss_zTBpiZuMHAatnVK0PE5ita3DdqqsZw"
 
   return (
     <Provider
@@ -42,10 +42,11 @@ function Main() {
         <Master />
 
         <Master
+          limits={[1, 4, 6, 7, 10]}
           table={({ data }) => (
             <Master.Table columns={newColumns} data={data} actions={{ showEdit: false, atFirst: true }} />
           )}
-          pagination={({ currentPage, setCurrentPage, totalPages, pageSize, setPageSize, totalRecords, limits }) => (
+          pagination={({ currentPage, setCurrentPage, totalPages, pageSize, setPageSize, totalRecords }) => (
             <div className="container bg-slate-200">
               <Master.Pagination
                 currentPage={currentPage}
@@ -54,18 +55,8 @@ function Main() {
                 pageSize={pageSize}
                 setPageSize={setPageSize}
                 totalRecords={totalRecords}
-                limits={[5, 10, 12, 15]}
               />
             </div>
-            // <select value={currentPage} onChange={(e) => setCurrentPage(Number(e.target.value))}>
-            //   {Array.from({ length: totalPages })
-            //     .fill(0)
-            //     .map((_, index) => (
-            //       <option value={index + 1} key={index}>
-            //         {index + 1}
-            //       </option>
-            //     ))}
-            // </select>
           )}
         />
       </div>

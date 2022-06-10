@@ -1,4 +1,5 @@
-import { fireEvent, render } from "@testing-library/react"
+import { render, fireEvent } from "@testing-library/react"
+import { MasterContextProvider } from "context"
 import MasterTable from "./MasterTable"
 
 let columnsSchema: ColumnsSchema = [
@@ -28,10 +29,14 @@ let data = [
 describe("Testing MasterTable Component", () => {
   it("Should call onUpdate when rendered element gets changed", () => {
     let buttonClicked = false
-    let onUpdate = () => {
+    let onUpdate = async (id: string, data: any) => {
       buttonClicked = true
     }
-    const { container } = render(<MasterTable columns={columnsSchema} data={data} onUpdate={onUpdate} />)
+    const { container } = render(
+      <MasterContextProvider onUpdate={onUpdate} limits={[1, 2, 3]}>
+        <MasterTable columns={columnsSchema} data={data} />
+      </MasterContextProvider>
+    )
 
     let activeCheckbox = container.querySelector("input[type=checkbox]")
     if (activeCheckbox) fireEvent.click(activeCheckbox)

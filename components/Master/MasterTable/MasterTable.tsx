@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react"
+import { useMasterState } from "context/MasterContext"
+
 import Table from "components/Common/Table"
 import DeleteIcon from "icons/deleteIcon"
 import EditIcon from "icons/editIcon"
@@ -7,10 +9,10 @@ interface MasterTableProps {
   columns: ColumnsSchema
   data: any[]
   actions?: false | TableActionTypes
-  onUpdate?: (id: string, data: any) => void
 }
 
-const MasterTable = ({ columns, data, actions, onUpdate }: MasterTableProps) => {
+const MasterTable = ({ columns, data, actions }: MasterTableProps) => {
+  const { onUpdate } = useMasterState()
   const [tableColumns, setTableColumns] = useState<ColumnsSchema>([])
 
   useEffect(() => {

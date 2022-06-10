@@ -1,15 +1,5 @@
 import { Button } from "components/Common"
 
-interface PaginationProps {
-  totalPages: number
-  currentPage: number
-  setCurrentPage: (page: number) => void
-  pageSize: number
-  setPageSize: (size: number) => void
-  totalRecords: number
-  limits: number[]
-}
-
 const Pagination = ({
   totalPages,
   currentPage,
@@ -84,5 +74,7 @@ const Pagination = ({
     </div>
   )
 }
+
+Pagination.type = "Pagination"
 
 export default Pagination

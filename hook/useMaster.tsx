@@ -1,18 +1,22 @@
 import { useState, useCallback, useEffect } from "react"
 
 import commonApi from "api"
-import { useMasterState } from "context"
+import { useProviderState } from "context"
 import usePagination from "hook/usePagination"
 
-const useMaster = () => {
+interface UseMasterProps {
+  defaultLimit: number
+}
+
+const useMaster = ({ defaultLimit }: UseMasterProps) => {
   const [list, setList] = useState<any>([])
   const [loader, setLoader] = useState(false)
   const [editData, setEditData] = useState({})
   const [totalPages, setTotalPages] = useState(0)
   const [totalRecords, setTotalRecords] = useState(0)
 
-  const { baseUrl, token, dataGetter, paginationGetter } = useMasterState()
-  const { setPageSize, pageSize, currentPage, setCurrentPage, filter } = usePagination()
+  const { baseUrl, token, dataGetter, paginationGetter } = useProviderState()
+  const { setPageSize, pageSize, currentPage, setCurrentPage, filter } = usePagination({ defaultLimit })
 
   const getMastersList = useCallback(
     async (search?: string) => {

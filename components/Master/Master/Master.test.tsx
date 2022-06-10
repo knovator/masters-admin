@@ -1,10 +1,9 @@
 import { afterAll, afterEach, beforeAll } from "vitest"
-import { render, screen, waitFor } from "@testing-library/react"
-// import userEvent from "@testing-library/user-event"
+import { render, screen, waitFor, fireEvent } from "@testing-library/react"
 import { setupServer } from "msw/node"
 import { rest } from "msw"
 
-import Provider from "context"
+import { Provider } from "context"
 import Master from "./Master"
 
 const docs = [
@@ -20,13 +19,21 @@ const docs = [
     canDel: true,
   },
 ]
+const data1 = {
+  code: "SUCCESS",
+  data: { docs },
+  limit: 1,
+  page: 2,
+  totalDocs: 2,
+  totalPages: 2,
+}
 
 const restHandlers = [
   rest.post("https://testapi.com/admin/masters/list", (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json({ code: "SUCCESS", data: { docs } }))
+    return res(ctx.status(200), ctx.json(data1))
   }),
-  rest.post("https://testapi.com/admin/masters/partial-update/activate/2123", (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json({ isActive: false }))
+  rest.patch("https://testapi.com/admin/masters/partial-update/activate/2123", (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json({ code: "SUCCESS", isActive: false }))
   }),
 ]
 
@@ -41,7 +48,7 @@ afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
 
 describe("Testing MasterTable Component", () => {
-  it("Should render table with actions and active checkbox", async () => {
+  it("Should show table with actions and active checkbox", async () => {
     const { container } = render(
       <Provider
         baseUrl="https://testapi.com"
@@ -87,7 +94,25 @@ describe("Testing MasterTable Component", () => {
     })
     let toggleSwitch: HTMLInputElement | null = container.querySelector(".kms_switch input")
     expect(toggleSwitch!.checked).toBeTruthy()
-    // userEvent.click(toggleSwitch!)
-    // await expect(container.querySelector(".kms_switch input").checked).not.toBeTruthy()
+    fireEvent.click(toggleSwitch!)
+  })
+  it("Should Show Pagination Actions", async () => {
+    const { container } = render(
+      <Provider
+        baseUrl="https://testapi.com"
+        permissions={{}}
+        token={"abcd"}
+        dataGetter={(response) => response.data.docs}
+        paginationGetter={(response) => response.data}
+      >
+        <Master />
+      </Provider>
+    )
+    // Wait for Table to render fully
+    await waitFor(() => {
+      expect(screen.getByTestId("table")).toBeTruthy()
+    })
+    // Should show two buttons for Next & Previous
+    expect(container.querySelectorAll(".kms_btn").length).toBe(2)
   })
 })

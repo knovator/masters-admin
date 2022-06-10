@@ -1,5 +1,4 @@
-declare module '@knovator/api';
-declare module '@knovator/can';
+declare module "@knovator/api"
 
 type ColumnCellType = { row: any; onUpdate: (data: any) => void }
 type ColumnSchemaType = {
@@ -46,5 +45,14 @@ interface PaginationRendererProps {
   pageSize: number
   totalRecords: number
   setPageSize: (size: number) => void
+}
+
+interface PaginationProps {
+  totalPages: number
+  currentPage: number
+  setCurrentPage: (page: number) => void
+  pageSize: number
+  setPageSize: (size: number) => void
+  totalRecords: number
   limits: number[]
 }

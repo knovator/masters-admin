@@ -1,11 +1,15 @@
 import { useState } from "react"
 import * as constants from "constants/common"
 
-const usePagination = () => {
+interface UsePaginationProps {
+  defaultLimit?: number
+}
+
+const usePagination = ({ defaultLimit }: UsePaginationProps) => {
   const defaultApiPayload = {
     search: "",
     offset: constants.DEFAULT_OFFSET_PAYLOAD,
-    limit: constants.DEFAULT_LIMIT,
+    limit: defaultLimit || constants.DEFAULT_LIMIT,
     sort: constants.DEFAULT_SORT,
   }
 

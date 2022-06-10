@@ -1,16 +1,19 @@
 import React from "react"
+import { DEFAULT_LIMIT, PAGE_LIMITS } from "constants/common"
 
 import ToggleBtn from "widgets/toggle"
 import useMaster from "hook/useMaster"
 import MasterTable from "../MasterTable"
-import { PAGE_LIMITS } from "constants/common"
-import { Pagination, Form } from "components/Common"
+import MasterPagination from "../MasterPagination"
+
+import MasterContextProvider from "context/MasterContext"
 
 interface MasterProps extends React.PropsWithChildren {
   explicitForm?: boolean
   pagination?: (data: PaginationRendererProps) => JSX.Element
-  form?: typeof Form
+  form?: JSX.Element
   table?: (data: TableRendererProps) => JSX.Element
+  limits?: number[]
 }
 
 const columns = [
@@ -31,17 +34,15 @@ const columns = [
   },
 ]
 
-const Master = ({ table, pagination }: MasterProps) => {
+const Master = ({ table, pagination, limits = PAGE_LIMITS }: MasterProps) => {
   const { list, partialUpdate, totalPages, totalRecords, currentPage, setCurrentPage, pageSize, setPageSize } =
-    useMaster()
+    useMaster({ defaultLimit: Array.isArray(limits) && limits.length > 0 ? limits[0] : DEFAULT_LIMIT })
 
   const renderTable = () => {
     let tableComponent
     if (typeof table === "function") tableComponent = table({ columns, data: list })
     else tableComponent = <MasterTable columns={columns} data={list} />
 
-    // Adding additional props
-    tableComponent = React.cloneElement(tableComponent, { onUpdate: partialUpdate })
     return tableComponent
   }
 
@@ -55,12 +56,10 @@ const Master = ({ table, pagination }: MasterProps) => {
         pageSize,
         setPageSize,
         totalRecords,
-        limits: PAGE_LIMITS,
       })
     else
       paginationContent = (
-        <Pagination
-          limits={PAGE_LIMITS}
+        <MasterPagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           totalPages={totalPages}
@@ -69,15 +68,18 @@ const Master = ({ table, pagination }: MasterProps) => {
           totalRecords={totalRecords}
         />
       )
+
     return paginationContent
   }
 
   return (
     <div>
-      {renderTable()}
-      {renderPagination()}
+      <MasterContextProvider onUpdate={partialUpdate} limits={limits ? limits : PAGE_LIMITS}>
+        {renderTable()}
+        {renderPagination()}
+      </MasterContextProvider>
     </div>
   )
 }
 
-export default Object.assign(Master, { Table: MasterTable, Pagination })
+export default Object.assign(Master, { Table: MasterTable, Pagination: MasterPagination })
