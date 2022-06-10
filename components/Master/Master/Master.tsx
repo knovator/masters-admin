@@ -1,9 +1,10 @@
 import React from "react"
-import useMaster from "hook/useMaster"
-import { Pagination, Form } from "components/Common"
 
-import MasterTable from "../MasterTable"
 import ToggleBtn from "widgets/toggle"
+import useMaster from "hook/useMaster"
+import MasterTable from "../MasterTable"
+import { PAGE_LIMITS } from "constants/common"
+import { Pagination, Form } from "components/Common"
 
 interface MasterProps extends React.PropsWithChildren {
   explicitForm?: boolean
@@ -31,7 +32,8 @@ const columns = [
 ]
 
 const Master = ({ table, pagination }: MasterProps) => {
-  const { list, partialUpdate, totalPages, currentPage, setCurrentPage, pageSize, setPageSize } = useMaster()
+  const { list, partialUpdate, totalPages, totalRecords, currentPage, setCurrentPage, pageSize, setPageSize } =
+    useMaster()
 
   const renderTable = () => {
     let tableComponent
@@ -46,15 +48,25 @@ const Master = ({ table, pagination }: MasterProps) => {
   const renderPagination = () => {
     let paginationContent
     if (typeof pagination === "function")
-      paginationContent = pagination({ currentPage, setCurrentPage, totalPages, pageSize, setPageSize })
+      paginationContent = pagination({
+        currentPage,
+        setCurrentPage,
+        totalPages,
+        pageSize,
+        setPageSize,
+        totalRecords,
+        limits: PAGE_LIMITS,
+      })
     else
       paginationContent = (
         <Pagination
+          limits={PAGE_LIMITS}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           totalPages={totalPages}
           pageSize={pageSize}
           setPageSize={setPageSize}
+          totalRecords={totalRecords}
         />
       )
     return paginationContent

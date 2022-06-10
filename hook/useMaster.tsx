@@ -9,6 +9,7 @@ const useMaster = () => {
   const [loader, setLoader] = useState(false)
   const [editData, setEditData] = useState({})
   const [totalPages, setTotalPages] = useState(0)
+  const [totalRecords, setTotalRecords] = useState(0)
 
   const { baseUrl, token, dataGetter, paginationGetter } = useMasterState()
   const { setPageSize, pageSize, currentPage, setCurrentPage, filter } = usePagination()
@@ -39,6 +40,7 @@ const useMaster = () => {
         if (response?.code === "SUCCESS") {
           setLoader(false)
           setTotalPages(paginationGetter(response).totalPages)
+          setTotalRecords(paginationGetter(response).totalDocs)
           return setList(dataGetter(response))
         }
         setLoader(false)
@@ -89,6 +91,7 @@ const useMaster = () => {
     pageSize,
     totalPages,
     currentPage,
+    totalRecords,
     setCurrentPage,
     setPageSize,
   }

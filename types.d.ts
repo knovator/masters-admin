@@ -44,5 +44,7 @@ interface PaginationRendererProps {
   setCurrentPage: (page: number) => void
   totalPages: number
   pageSize: number
+  totalRecords: number
   setPageSize: (size: number) => void
+  limits: number[]
 }

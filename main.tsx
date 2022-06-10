@@ -45,16 +45,27 @@ function Main() {
           table={({ data }) => (
             <Master.Table columns={newColumns} data={data} actions={{ showEdit: false, atFirst: true }} />
           )}
-          pagination={({ currentPage, setCurrentPage, totalPages }) => (
-            <select value={currentPage} onChange={(e) => setCurrentPage(Number(e.target.value))}>
-              {Array.from({ length: totalPages })
-                .fill(0)
-                .map((_, index) => (
-                  <option value={index + 1} key={index}>
-                    {index + 1}
-                  </option>
-                ))}
-            </select>
+          pagination={({ currentPage, setCurrentPage, totalPages, pageSize, setPageSize, totalRecords, limits }) => (
+            <div className="container bg-slate-200">
+              <Master.Pagination
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                totalPages={totalPages}
+                pageSize={pageSize}
+                setPageSize={setPageSize}
+                totalRecords={totalRecords}
+                limits={[5, 10, 12, 15]}
+              />
+            </div>
+            // <select value={currentPage} onChange={(e) => setCurrentPage(Number(e.target.value))}>
+            //   {Array.from({ length: totalPages })
+            //     .fill(0)
+            //     .map((_, index) => (
+            //       <option value={index + 1} key={index}>
+            //         {index + 1}
+            //       </option>
+            //     ))}
+            // </select>
           )}
         />
       </div>

@@ -32,7 +32,10 @@
 
   /* Pagination */
   .kms_pagination {
-    @apply flex items-center justify-end gap-3 px-4 py-3;
+    @apply flex justify-between items-center px-4 py-3;
+  }
+  .kms_pagination-actions {
+    @apply flex items-center justify-center gap-2;
   }
   .kms_pagination-pager {
     @apply flex items-center gap-2 text-sm;
@@ -43,17 +46,26 @@
   .kms_btn {
     @apply cursor-pointer items-center justify-center gap-2 rounded-md py-2.5 px-6 transition text-sm focus:ring ring-offset-1;
   }
+  .kms_btn:disabled {
+    @apply cursor-not-allowed;
+  }
   .kms_btn-primary {
     @apply bg-blue-600 text-white hover:bg-blue-500;
   }
   .kms_btn-primary:disabled {
-    @apply bg-blue-500 cursor-not-allowed;
+    @apply bg-blue-500;
+  }
+  .kms_btn-sm {
+    @apply px-4 py-1.5;
   }
   /* \ End of Button */
 
   /* Input */
   .kms_input {
     @apply text-center h-10 rounded-lg border border-slate-400 p-1 outline-none bg-transparent appearance-none;
+  }
+  .kms_input-sm {
+    @apply h-8;
   }
   /* \ End of Input */
 
@@ -91,9 +103,9 @@
     -webkit-transition: 0.4s;
     transition: 0.4s;
     box-shadow: 0px 0px 6px #00000029;
-    background-image: url(../public/images/close.png);
-    background-repeat: no-repeat;
-    background-position: center;
+    /* background-image: url(../public/images/close.png); */
+    /* background-repeat: no-repeat; */
+    /* background-position: center; */
   }
   /* Switch Rounded sliders */
   .kms_switch .slider.round {
@@ -112,9 +124,9 @@
     -webkit-transform: translateX(28px);
     -ms-transform: translateX(28px);
     transform: translateX(28px);
-    background-image: url(../public/images/tick.png);
+    /* background-image: url(../public/images/tick.png);
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: center; */
   }
   /* \ End of Switch */
 }

@@ -1,5 +1,4 @@
 import { Button } from "components/Common"
-import { PAGE_LIMIT } from "constants/common"
 
 interface PaginationProps {
   totalPages: number
@@ -7,9 +6,19 @@ interface PaginationProps {
   setCurrentPage: (page: number) => void
   pageSize: number
   setPageSize: (size: number) => void
+  totalRecords: number
+  limits: number[]
 }
 
-const Pagination = ({ totalPages, currentPage, pageSize, setPageSize, setCurrentPage }: PaginationProps) => {
+const Pagination = ({
+  totalPages,
+  currentPage,
+  pageSize,
+  setPageSize,
+  setCurrentPage,
+  totalRecords,
+  limits,
+}: PaginationProps) => {
   const pageHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       // @ts-ignore
@@ -28,30 +37,50 @@ const Pagination = ({ totalPages, currentPage, pageSize, setPageSize, setCurrent
   }
   return (
     <div className="kms_pagination">
-      <Button label="Previous" onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage - 1 === 0} />
-
-      <div className="kms_pagination-pager">
-        Page
-        <input
-          className="kms_input w-10"
-          maxLength={3}
-          pattern="([0-9]|[0-9]|[0-9])"
-          type="number"
-          onKeyDown={handleNumbers}
-          onKeyPress={pageHandler}
-          value={currentPage}
-          onChange={pageChange}
-        />
-        of {totalPages}
+      <div>
+        {(currentPage - 1) * pageSize + 1} - {Math.min(currentPage * pageSize, totalRecords)} of {totalRecords}
       </div>
-      <select value={pageSize} className="kms_input p-2" onChange={(e) => setPageSize(Number(e.target.value))}>
-        {PAGE_LIMIT.map((pageSize) => (
-          <option key={pageSize} value={pageSize}>
-            Show {pageSize}
-          </option>
-        ))}
-      </select>
-      <Button label="Next" onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages} />
+      <div className="kms_pagination-actions">
+        <Button
+          size="sm"
+          label="Previous"
+          onClick={() => setCurrentPage(currentPage - 1)}
+          disabled={currentPage - 1 === 0}
+        />
+        <div className="kms_pagination-pager">
+          Page
+          <input
+            className="kms_input kms_input-sm w-10"
+            maxLength={3}
+            pattern="([0-9]|[0-9]|[0-9])"
+            type="number"
+            onKeyDown={handleNumbers}
+            onKeyPress={pageHandler}
+            value={currentPage}
+            onChange={pageChange}
+          />
+          / {totalPages}
+        </div>
+        {Array.isArray(limits) ? (
+          <select
+            value={pageSize}
+            className="kms_input kms_input-sm"
+            onChange={(e) => setPageSize(Number(e.target.value))}
+          >
+            {limits.map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                Show {pageSize}
+              </option>
+            ))}
+          </select>
+        ) : null}
+        <Button
+          size="sm"
+          label="Next"
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        />
+      </div>
     </div>
   )
 }
