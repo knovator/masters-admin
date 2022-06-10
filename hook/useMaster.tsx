@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react"
+import { useState, useCallback, useEffect, useRef } from "react"
 
 import commonApi from "api"
 import { useProviderState } from "context"
@@ -14,7 +14,7 @@ const useMaster = ({ defaultLimit }: UseMasterProps) => {
   const [editData, setEditData] = useState({})
   const [totalPages, setTotalPages] = useState(0)
   const [totalRecords, setTotalRecords] = useState(0)
-  const [sortConfig, setSortConfig] = useState<SortConfigType>(["createdAt", 1])
+  const sortConfigRef = useRef<SortConfigType>(["createdAt", 1])
 
   const { baseUrl, token, dataGetter, paginationGetter } = useProviderState()
   const { setPageSize, pageSize, currentPage, setCurrentPage, filter } = usePagination({ defaultLimit })
@@ -22,6 +22,7 @@ const useMaster = ({ defaultLimit }: UseMasterProps) => {
   const getMastersList = useCallback(
     async (search?: string) => {
       try {
+        let sortConfig = sortConfigRef.current
         setLoader(true)
         let response = await commonApi({
           baseUrl,
@@ -57,8 +58,13 @@ const useMaster = ({ defaultLimit }: UseMasterProps) => {
         console.log("UNAUTHORIZED")
       }
     },
-    [currentPage, filter, sortConfig]
+    [currentPage, filter]
   )
+
+  const onChangeSortConfig = (data: SortConfigType) => {
+    sortConfigRef.current = data
+    getMastersList()
+  }
 
   const partialUpdate = useCallback(
     async (id: string, data: any) => {
@@ -83,7 +89,7 @@ const useMaster = ({ defaultLimit }: UseMasterProps) => {
 
   useEffect(() => {
     getMastersList()
-  }, [pageSize, currentPage, sortConfig])
+  }, [pageSize, currentPage])
 
   return {
     list,
@@ -102,8 +108,8 @@ const useMaster = ({ defaultLimit }: UseMasterProps) => {
     setPageSize,
 
     // Sorting
-    sortConfig,
-    setSortConfig,
+    sortConfig: sortConfigRef.current,
+    setSortConfig: onChangeSortConfig,
   }
 }
 
