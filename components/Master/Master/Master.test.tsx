@@ -18,19 +18,30 @@ const docs = [
     isActive: false,
     canDel: true,
   },
+  {
+    id: "3456",
+    name: "Known",
+    isActive: true,
+    canDel: true,
+  },
 ]
 const data1 = {
   code: "SUCCESS",
   data: { docs },
   limit: 1,
-  page: 2,
-  totalDocs: 2,
-  totalPages: 2,
+  page: 1,
+  totalDocs: docs.length,
+  totalPages: docs.length / 1,
 }
 
 const restHandlers = [
   rest.post("https://testapi.com/admin/masters/list", (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(data1))
+    let bodyOptions = (req.body as any).options
+    let bodyDocs = [...docs]
+    if (typeof bodyOptions.offset !== "undefined" && typeof bodyOptions.limit !== "undefined") {
+      bodyDocs = bodyDocs.slice(Number(bodyOptions.offset), Number(bodyOptions.offset) + Number(bodyOptions.limit))
+    }
+    return res(ctx.status(200), ctx.json({ ...data1, data: { docs: bodyDocs } }))
   }),
   rest.patch("https://testapi.com/admin/masters/partial-update/activate/2123", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json({ code: "SUCCESS", isActive: false }))
@@ -97,7 +108,9 @@ describe("Testing MasterTable Component", () => {
     fireEvent.click(toggleSwitch!)
   })
   it("Should Show Pagination Actions", async () => {
-    const { container } = render(
+    let limits = [1, 3, 5],
+      defaultLimits = limits[0]
+    const { container, getByRole } = render(
       <Provider
         baseUrl="https://testapi.com"
         permissions={{}}
@@ -105,14 +118,36 @@ describe("Testing MasterTable Component", () => {
         dataGetter={(response) => response.data.docs}
         paginationGetter={(response) => response.data}
       >
-        <Master />
+        <Master limits={[1, 2]} />
       </Provider>
     )
     // Wait for Table to render fully
     await waitFor(() => {
       expect(screen.getByTestId("table")).toBeTruthy()
     })
-    // Should show two buttons for Next & Previous
-    expect(container.querySelectorAll(".kms_btn").length).toBe(2)
+
+    // screen.debug()
+    // By default first Record Name should be existed in DOM
+    expect(screen.queryByText("John")).toBeTruthy()
+    expect(screen.queryByText("Patrik")).not.toBeTruthy()
+    // console.log(johnTd, patrikTd)
+    // expect(getByText("John")).toBeTruthy()
+    // expect(getByText("Patrik")).toThrowError()
+    // expect(getByText("Patrik")).toBeTruthy()
+
+    // Should Take first limit as default limit
+    // Test select to have value of pageSize
+    let limiter = container.querySelector("select") as HTMLSelectElement
+    expect(limiter).toBeTruthy()
+    expect(limiter.value).toBe(String(defaultLimits))
+
+    // Next button Should show next set of data
+    let nextButton = getByRole("button", { name: "Next" })
+    expect(nextButton).toBeDefined()
+    fireEvent.click(nextButton)
+    await waitFor(() => {
+      expect(screen.queryByText("Patrik")).toBeTruthy()
+    })
+    expect(screen.queryByText("John")).not.toBeTruthy()
   })
 })

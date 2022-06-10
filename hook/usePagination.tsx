@@ -32,13 +32,21 @@ const usePagination = ({ defaultLimit }: UsePaginationProps) => {
     })
   }
 
+  const changeCurrentPage = (value: number) => {
+    setFilter({
+      ...filter,
+      offset: Math.max(value - 1, 1) * filter.limit,
+    })
+    setCurrentPage(value)
+  }
+
   return {
     pageSize: filter.limit,
     setPageSize,
     currentPage,
     changeSearch,
     filter,
-    setCurrentPage,
+    setCurrentPage: changeCurrentPage,
     defaultApiPayload,
     setFilter,
   }
