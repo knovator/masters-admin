@@ -62,7 +62,7 @@
 
   /* Input */
   .kms_input {
-    @apply text-center h-10 rounded-lg border border-slate-400 p-1 outline-none bg-transparent appearance-none;
+    @apply h-10 rounded-lg border border-slate-400 p-1 outline-none bg-transparent appearance-none;
   }
   .kms_input-sm {
     @apply h-8;

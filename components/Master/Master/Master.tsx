@@ -4,6 +4,7 @@ import { DEFAULT_LIMIT, PAGE_LIMITS } from "constants/common"
 import ToggleBtn from "widgets/toggle"
 import useMaster from "hook/useMaster"
 import MasterTable from "../MasterTable"
+import MasterSearch from "../MasterSearch"
 import MasterPagination from "../MasterPagination"
 
 import MasterContextProvider from "context/MasterContext"
@@ -11,7 +12,6 @@ import MasterContextProvider from "context/MasterContext"
 interface MasterProps extends React.PropsWithChildren {
   sortable?: boolean
   defaultSort?: SortConfigType
-  pagination?: (data: PaginationRendererProps) => JSX.Element
   limits?: number[]
   routes?: Routes_Input
 }
@@ -34,7 +34,7 @@ const columns = [
   },
 ]
 
-const Master = ({ pagination, sortable = true, defaultSort, routes, limits = PAGE_LIMITS, children }: MasterProps) => {
+const Master = ({ sortable = true, defaultSort, routes, limits = PAGE_LIMITS, children }: MasterProps) => {
   const {
     list,
     partialUpdate,
@@ -46,6 +46,7 @@ const Master = ({ pagination, sortable = true, defaultSort, routes, limits = PAG
     setPageSize,
     sortConfig,
     setSortConfig,
+    getMastersList,
   } = useMaster({
     defaultLimit: Array.isArray(limits) && limits.length > 0 ? limits[0] : DEFAULT_LIMIT,
     routes,
@@ -70,11 +71,14 @@ const Master = ({ pagination, sortable = true, defaultSort, routes, limits = PAG
         pageSize={pageSize}
         setPageSize={setPageSize}
         totalRecords={totalRecords}
+        // Search
+        getMastersList={getMastersList}
       >
         {children ? (
           children
         ) : (
           <>
+            <MasterSearch />
             <MasterTable />
             <MasterPagination />
           </>
@@ -84,4 +88,4 @@ const Master = ({ pagination, sortable = true, defaultSort, routes, limits = PAG
   )
 }
 
-export default Object.assign(Master, { Table: MasterTable, Pagination: MasterPagination })
+export default Object.assign(Master, { Table: MasterTable, Pagination: MasterPagination, Search: MasterSearch })

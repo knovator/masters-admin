@@ -79,6 +79,12 @@ interface MasterContextType {
   pageSize: number
   setPageSize: (size: number) => void
   totalRecords: number
+
+  // Search
+  getMastersList: (search?: string) => Promise<void>
+}
+interface SearchContextType {
+  searchOnEnter: boolean
 }
 // \ End of Context
 
@@ -101,9 +107,7 @@ type API_TYPE = {
 
 type API_INPUT_TYPE = { module: string; id?: string }
 
-type Routes_Input = Record<ACTION_TYPES, (data: API_INPUT_TYPE) => API_TYPE>
-// type Routes_Input = {
-//   [keyof<ACTION_TYPES>]: (data: API_INPUT_TYPE) => API_TYPE
-// }
-// type Routes_Input = Map<ACTION_TYPES, (data: API_INPUT_TYPE) => API_TYPE>();
+type Routes_Input = {
+  [K in ACTION_TYPES]?: (data: API_INPUT_TYPE) => API_TYPE
+}
 // \ End of API

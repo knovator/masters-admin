@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react"
+import React from "react"
 import ReactDOM from "react-dom/client"
 import "./styles/index.css"
 
@@ -45,14 +45,17 @@ function Main() {
         {/* Customized Master */}
         <div className="max-h-screen overflow-auto">
           <Master
-            // routes={{
-            //   UPDATE: ({ id, module }) => ({
-            //     url: `abc/${module}/${id}`,
-            //     method: "POST",
-            //   }),
-            // }}
+            routes={{
+              UPDATE: ({ id }) => ({
+                url: `abc/${id}`,
+                method: "POST",
+              }),
+            }}
             limits={[10, 15, 20, 25]}
           >
+            <div className="bg-slate-700 text-right w-full p-1">
+              <Master.Search />
+            </div>
             {/* Table */}
             <Master.Table columns={newColumns} />
 

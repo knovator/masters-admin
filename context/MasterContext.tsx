@@ -18,6 +18,9 @@ interface MasterContextProviderProps extends React.PropsWithChildren {
   pageSize: number
   setPageSize: (size: number) => void
   totalRecords: number
+
+  // Search
+  getMastersList: (search?: string) => Promise<void>
 }
 
 const MasterContext = createContext<MasterContextType | null>(null)
@@ -41,6 +44,9 @@ const MasterContextProvider = ({
   setPageSize,
   totalPages,
   totalRecords,
+
+  // Search
+  getMastersList,
 }: MasterContextProviderProps) => {
   return (
     <MasterContext.Provider
@@ -58,6 +64,7 @@ const MasterContextProvider = ({
         setPageSize,
         totalPages,
         totalRecords,
+        getMastersList,
       }}
     >
       {children}
