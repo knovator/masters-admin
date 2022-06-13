@@ -1,20 +1,22 @@
 import { useState, useCallback, useEffect, useRef } from "react"
 
-import commonApi from "api"
 import { useProviderState } from "context"
 import usePagination from "hook/usePagination"
+import request, { getApiType } from "api"
 
 interface UseMasterProps {
   defaultLimit: number
+  routes?: Routes_Input
+  defaultSort?: SortConfigType
 }
 
-const useMaster = ({ defaultLimit }: UseMasterProps) => {
+const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1] }: UseMasterProps) => {
   const [list, setList] = useState<any>([])
   const [loader, setLoader] = useState(false)
   const [editData, setEditData] = useState({})
   const [totalPages, setTotalPages] = useState(0)
   const [totalRecords, setTotalRecords] = useState(0)
-  const sortConfigRef = useRef<SortConfigType>(["createdAt", 1])
+  const sortConfigRef = useRef<SortConfigType>(defaultSort)
 
   const { baseUrl, token, dataGetter, paginationGetter } = useProviderState()
   const { setPageSize, pageSize, currentPage, setCurrentPage, filter } = usePagination({ defaultLimit })
@@ -24,11 +26,12 @@ const useMaster = ({ defaultLimit }: UseMasterProps) => {
       try {
         let sortConfig = sortConfigRef.current
         setLoader(true)
-        let response = await commonApi({
+        let api = getApiType({ routes, action: "LIST", module: "masters" })
+        let response = await request({
           baseUrl,
           token,
-          module: "masters",
-          common: true,
+          method: api.method,
+          url: api.url,
           data: {
             search,
             options: {
@@ -41,7 +44,6 @@ const useMaster = ({ defaultLimit }: UseMasterProps) => {
               pagination: true,
             },
           },
-          action: "list",
         })
         if (response?.code === "SUCCESS") {
           setLoader(false)
@@ -55,7 +57,7 @@ const useMaster = ({ defaultLimit }: UseMasterProps) => {
         }
       } catch (error) {
         setLoader(false)
-        console.log("UNAUTHORIZED")
+        console.log(error)
       }
     },
     [currentPage, filter]
@@ -68,21 +70,23 @@ const useMaster = ({ defaultLimit }: UseMasterProps) => {
 
   const partialUpdate = useCallback(
     async (id: string, data: any) => {
-      await commonApi({
-        parameter: id,
-        module: "masters",
-        data,
-        baseUrl,
-        token,
-        common: true,
-        action: "partialUpdate",
-      }).then((response) => {
+      try {
+        let api = getApiType({ routes, action: "UPDATE", module: "masters", id })
+        let response = await request({
+          data,
+          baseUrl,
+          token,
+          method: api.method,
+          url: api.url,
+        })
         if (response?.code === "SUCCESS") {
           getMastersList()
         } else {
           // showNotification(response?.message, "error")
         }
-      })
+      } catch (error) {
+        console.log(error)
+      }
     },
     [getMastersList]
   )

@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from "react"
 
-interface ProviderProps extends React.PropsWithChildren {
+interface ProviderContextProviderProps extends React.PropsWithChildren {
   baseUrl: string
   permissions: any
   token: string
@@ -8,9 +8,16 @@ interface ProviderProps extends React.PropsWithChildren {
   paginationGetter?: (response: any) => any[]
 }
 
-const ProviderContext = createContext<MasterContextInterface | null>(null)
+const ProviderContext = createContext<ProviderContextType | null>(null)
 
-const Provider = ({ children, baseUrl, permissions, token, dataGetter, paginationGetter }: ProviderProps) => {
+const Provider = ({
+  children,
+  baseUrl,
+  permissions,
+  token,
+  dataGetter,
+  paginationGetter,
+}: ProviderContextProviderProps) => {
   let ctxDataGetter = typeof dataGetter === "function" ? dataGetter : (response: any) => response?.data?.docs
   let ctxPaginatonGetter = typeof paginationGetter === "function" ? paginationGetter : (response: any) => response?.data
   return (

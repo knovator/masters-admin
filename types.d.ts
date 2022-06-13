@@ -1,5 +1,6 @@
 declare module "@knovator/api"
 
+// Table & Pagination
 type ColumnCellType = { row: any; onUpdate: (data: any) => void }
 type ColumnSchemaType = {
   Header: String | React.ReactElement | (() => any)
@@ -23,14 +24,6 @@ interface TableActionTypes {
   showEdit?: boolean
   showDelete?: boolean
   atFirst?: boolean
-}
-
-interface MasterContextInterface {
-  baseUrl: string
-  permissions: any
-  token: string
-  dataGetter: (response: any) => any[]
-  paginationGetter: (response: any) => any
 }
 
 interface TableRendererProps {
@@ -58,3 +51,47 @@ interface PaginationProps {
 }
 
 type SortConfigType = [string, 1 | -1]
+// \ End of Table & Pagination
+
+// Context
+interface ProviderContextType {
+  baseUrl: string
+  permissions: any
+  token: string
+  dataGetter: (response: any) => any[]
+  paginationGetter: (response: any) => any
+}
+interface MasterContextType {
+  onUpdate: (id: string, data: any) => Promise<void>
+  limits: number[]
+  sortConfig: SortConfigType
+  setSortConfig: (config: SortConfigType) => void
+  sortable: boolean
+}
+// \ End of Context
+
+// API
+type ACTION_TYPES = "IMAGE_UPLOAD" | "CREATE" | "LIST" | "DELETE" | "UPDATE"
+
+interface BaseAPIProps {
+  config?: any
+  baseUrl: string
+  token: string
+  data?: any
+  url: string
+  method: string
+}
+
+type API_TYPE = {
+  url: string
+  method: string
+}
+
+type API_INPUT_TYPE = { module: string; id?: string }
+
+type Routes_Input = Record<ACTION_TYPES, (data: API_INPUT_TYPE) => API_TYPE>
+// type Routes_Input = {
+//   [keyof<ACTION_TYPES>]: (data: API_INPUT_TYPE) => API_TYPE
+// }
+// type Routes_Input = Map<ACTION_TYPES, (data: API_INPUT_TYPE) => API_TYPE>();
+// \ End of API

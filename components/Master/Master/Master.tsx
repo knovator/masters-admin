@@ -15,6 +15,7 @@ interface MasterProps extends React.PropsWithChildren {
   form?: JSX.Element
   table?: (data: TableRendererProps) => JSX.Element
   limits?: number[]
+  routes?: Routes_Input
 }
 
 const columns = [
@@ -35,7 +36,7 @@ const columns = [
   },
 ]
 
-const Master = ({ table, pagination, sortable = true, defaultSort, limits = PAGE_LIMITS }: MasterProps) => {
+const Master = ({ table, pagination, sortable = true, defaultSort, routes, limits = PAGE_LIMITS }: MasterProps) => {
   const {
     list,
     partialUpdate,
@@ -47,7 +48,11 @@ const Master = ({ table, pagination, sortable = true, defaultSort, limits = PAGE
     setPageSize,
     sortConfig,
     setSortConfig,
-  } = useMaster({ defaultLimit: Array.isArray(limits) && limits.length > 0 ? limits[0] : DEFAULT_LIMIT })
+  } = useMaster({
+    defaultLimit: Array.isArray(limits) && limits.length > 0 ? limits[0] : DEFAULT_LIMIT,
+    routes,
+    defaultSort,
+  })
 
   const renderTable = () => {
     let tableComponent

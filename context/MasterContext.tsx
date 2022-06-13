@@ -1,13 +1,5 @@
 import React, { createContext, useContext } from "react"
 
-interface MasterContextType {
-  onUpdate: (id: string, data: any) => Promise<void>
-  limits: number[]
-  sortConfig: SortConfigType
-  setSortConfig: (config: SortConfigType) => void
-  sortable: boolean
-}
-
 interface MasterContextProviderProps extends React.PropsWithChildren {
   onUpdate: (id: string, data: any) => Promise<void>
   limits: number[]

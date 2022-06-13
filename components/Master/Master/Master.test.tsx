@@ -35,6 +35,9 @@ const data1 = {
 }
 
 const restHandlers = [
+  rest.get("https://testapi.com/getAll", (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json({ ...data1, data: { docs: [{ id: "2123", name: "Milan", isActive: true }] } }))
+  }),
   rest.post("https://testapi.com/admin/masters/list", (req, res, ctx) => {
     let bodyOptions = (req.body as any).options
     let bodyDocs = [...docs]
@@ -58,7 +61,7 @@ const restHandlers = [
     }
     return res(ctx.status(200), ctx.json({ ...data1, data: { docs: bodyDocs } }))
   }),
-  rest.patch("https://testapi.com/admin/masters/partial-update/activate/2123", (req, res, ctx) => {
+  rest.put("https://testapi.com/admin/masters/update/2123", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json({ code: "SUCCESS", isActive: false }))
   }),
 ]
@@ -185,5 +188,31 @@ describe("Testing MasterTable Component", () => {
     await waitFor(() => {
       expect(container.querySelector("td")?.innerHTML).toBe("Abcd")
     })
+  })
+  it("Should consider custom routes when provided", async () => {
+    const { container } = render(
+      <Provider
+        baseUrl="https://testapi.com"
+        permissions={{}}
+        token={"abcd"}
+        dataGetter={(response) => response.data.docs}
+        paginationGetter={(response) => response.data}
+      >
+        <Master
+          routes={{
+            LIST: () => ({
+              url: "getAll",
+              method: "GET",
+            }),
+          }}
+        />
+      </Provider>
+    )
+    // Wait for Table to render fully
+    await waitFor(() => {
+      expect(screen.getByTestId("table")).toBeTruthy()
+    })
+    // check first row contains data returned by custom API
+    expect(container.querySelector("td")?.innerHTML).toBe("Milan")
   })
 })

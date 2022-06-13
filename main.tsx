@@ -29,7 +29,7 @@ let newColumns: ColumnsSchema = [
 
 function Main() {
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMGE0NDgzNTI3YzI4MTA0OGFkNjcxMyIsImVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20iLCJpYXQiOjE2NTQ4Mzk1NzksImV4cCI6MTY1NDkyNTk3OX0.aJkmAo6GCkss_zTBpiZuMHAatnVK0PE5ita3DdqqsZw"
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMGE0NDgzNTI3YzI4MTA0OGFkNjcxMyIsImVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20iLCJpYXQiOjE2NTUwOTQ0MTIsImV4cCI6MTY1NTE4MDgxMn0.IGUafegixHwhWTOk_2qfmb8YSYs8a5ouOIk2gzOjXQ4"
 
   return (
     <Provider
@@ -45,6 +45,12 @@ function Main() {
         {/* Customized Master */}
         <div className="max-h-screen overflow-auto">
           <Master
+            routes={{
+              UPDATE: ({ id, module }) => ({
+                url: `abc/${module}/${id}`,
+                method: "POST",
+              }),
+            }}
             limits={[10, 15, 20, 25]}
             table={({ data }) => (
               <Master.Table columns={newColumns} data={data} actions={{ showEdit: false, atFirst: true }} />
