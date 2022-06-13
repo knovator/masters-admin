@@ -12,8 +12,6 @@ interface MasterProps extends React.PropsWithChildren {
   sortable?: boolean
   defaultSort?: SortConfigType
   pagination?: (data: PaginationRendererProps) => JSX.Element
-  form?: JSX.Element
-  table?: (data: TableRendererProps) => JSX.Element
   limits?: number[]
   routes?: Routes_Input
 }
@@ -36,7 +34,7 @@ const columns = [
   },
 ]
 
-const Master = ({ table, pagination, sortable = true, defaultSort, routes, limits = PAGE_LIMITS }: MasterProps) => {
+const Master = ({ pagination, sortable = true, defaultSort, routes, limits = PAGE_LIMITS, children }: MasterProps) => {
   const {
     list,
     partialUpdate,
@@ -54,40 +52,6 @@ const Master = ({ table, pagination, sortable = true, defaultSort, routes, limit
     defaultSort,
   })
 
-  const renderTable = () => {
-    let tableComponent
-    if (typeof table === "function") tableComponent = table({ columns, data: list })
-    else tableComponent = <MasterTable columns={columns} data={list} />
-
-    return tableComponent
-  }
-
-  const renderPagination = () => {
-    let paginationContent
-    if (typeof pagination === "function")
-      paginationContent = pagination({
-        currentPage,
-        setCurrentPage,
-        totalPages,
-        pageSize,
-        setPageSize,
-        totalRecords,
-      })
-    else
-      paginationContent = (
-        <MasterPagination
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalPages={totalPages}
-          pageSize={pageSize}
-          setPageSize={setPageSize}
-          totalRecords={totalRecords}
-        />
-      )
-
-    return paginationContent
-  }
-
   return (
     <div>
       <MasterContextProvider
@@ -96,9 +60,25 @@ const Master = ({ table, pagination, sortable = true, defaultSort, routes, limit
         limits={limits ? limits : PAGE_LIMITS}
         sortConfig={sortConfig}
         setSortConfig={setSortConfig}
+        // Table
+        columns={columns}
+        data={list}
+        // Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
+        totalRecords={totalRecords}
       >
-        {renderTable()}
-        {renderPagination()}
+        {children ? (
+          children
+        ) : (
+          <>
+            <MasterTable />
+            <MasterPagination />
+          </>
+        )}
       </MasterContextProvider>
     </div>
   )

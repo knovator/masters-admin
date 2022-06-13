@@ -67,6 +67,18 @@ interface MasterContextType {
   sortConfig: SortConfigType
   setSortConfig: (config: SortConfigType) => void
   sortable: boolean
+
+  // Table
+  columns: ColumnsSchema
+  data: any[]
+
+  // Pagination
+  currentPage: number
+  setCurrentPage: (page: number) => void
+  totalPages: number
+  pageSize: number
+  setPageSize: (size: number) => void
+  totalRecords: number
 }
 // \ End of Context
 

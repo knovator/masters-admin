@@ -6,18 +6,17 @@ import DeleteIcon from "icons/deleteIcon"
 import EditIcon from "icons/editIcon"
 
 interface MasterTableProps {
-  columns: ColumnsSchema
-  data: any[]
+  columns?: ColumnsSchema
   actions?: false | TableActionTypes
 }
 
-const MasterTable = ({ columns, data, actions }: MasterTableProps) => {
-  const { onUpdate, sortable, sortConfig, setSortConfig } = useMasterState()
+const MasterTable = ({ columns, actions }: MasterTableProps) => {
+  const { onUpdate, sortable, sortConfig, setSortConfig, columns: defaultColumns, data } = useMasterState()
   const [tableColumns, setTableColumns] = useState<ColumnsSchema>([])
 
   useEffect(() => {
     verifyAndUpdateColumns()
-  }, [columns])
+  }, [columns, defaultColumns])
 
   function updateClosure(item: any, key: string) {
     return function (value: string) {
@@ -27,7 +26,7 @@ const MasterTable = ({ columns, data, actions }: MasterTableProps) => {
     }
   }
   function verifyAndUpdateColumns() {
-    let modifiedColumns = [...columns]
+    let modifiedColumns = [...(columns ? columns : defaultColumns)]
 
     // Handling Table Actions
     let tableActions: TableActionTypes = {
@@ -76,7 +75,7 @@ const MasterTable = ({ columns, data, actions }: MasterTableProps) => {
     setTableColumns(modifiedColumns)
   }
 
-  if (Array.isArray(data) && data.length > 0)
+  if (Array.isArray(data) && data.length > 0) {
     return (
       <Table
         columns={tableColumns}
@@ -86,6 +85,7 @@ const MasterTable = ({ columns, data, actions }: MasterTableProps) => {
         setSortConfig={setSortConfig}
       />
     )
+  }
 
   return null
 }

@@ -33,8 +33,22 @@ describe("Testing MasterTable Component", () => {
       buttonClicked = true
     }
     const { container } = render(
-      <MasterContextProvider onUpdate={onUpdate} limits={[1, 2, 3]}>
-        <MasterTable columns={columnsSchema} data={data} />
+      <MasterContextProvider
+        onUpdate={onUpdate}
+        limits={[1, 2, 3]}
+        data={data}
+        sortConfig={["createdAt", 1]}
+        setSortConfig={(config: SortConfigType) => {}}
+        sortable={true}
+        columns={[]}
+        currentPage={1}
+        setCurrentPage={(page: number) => {}}
+        totalPages={0}
+        pageSize={0}
+        setPageSize={(size: number) => {}}
+        totalRecords={0}
+      >
+        <MasterTable columns={columnsSchema} />
       </MasterContextProvider>
     )
 

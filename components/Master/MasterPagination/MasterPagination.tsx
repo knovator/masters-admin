@@ -1,17 +1,24 @@
 import { Pagination } from "components/Common"
 import { useMasterState } from "context/MasterContext"
 
-type MasterPaginationProps = Omit<PaginationProps, "limits">
+interface MasterPaginationChildrenProps {
+  currentPage: number
+  setCurrentPage: (page: number) => void
+  totalPages: number
+  pageSize: number
+  setPageSize: (size: number) => void
+  totalRecords: number
+  limits: number[]
+}
+interface MasterPaginationProps {
+  children?: (props: MasterPaginationChildrenProps) => any
+}
 
-const MasterPagination = ({
-  totalPages,
-  currentPage,
-  pageSize,
-  setPageSize,
-  setCurrentPage,
-  totalRecords,
-}: MasterPaginationProps) => {
-  const { limits } = useMasterState()
+const MasterPagination = ({ children }: MasterPaginationProps) => {
+  const { limits, currentPage, pageSize, setCurrentPage, setPageSize, totalPages, totalRecords } = useMasterState()
+  if (children && typeof children === "function") {
+    return children({ limits, currentPage, pageSize, setCurrentPage, setPageSize, totalPages, totalRecords })
+  }
   return (
     <Pagination
       currentPage={currentPage}
@@ -25,4 +32,4 @@ const MasterPagination = ({
   )
 }
 
-export default MasterPagination
+export default Object.assign(MasterPagination, { Pagination: Pagination })

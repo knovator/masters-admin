@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from "react"
 import ReactDOM from "react-dom/client"
 import "./styles/index.css"
 
@@ -45,29 +45,22 @@ function Main() {
         {/* Customized Master */}
         <div className="max-h-screen overflow-auto">
           <Master
-            routes={{
-              UPDATE: ({ id, module }) => ({
-                url: `abc/${module}/${id}`,
-                method: "POST",
-              }),
-            }}
+            // routes={{
+            //   UPDATE: ({ id, module }) => ({
+            //     url: `abc/${module}/${id}`,
+            //     method: "POST",
+            //   }),
+            // }}
             limits={[10, 15, 20, 25]}
-            table={({ data }) => (
-              <Master.Table columns={newColumns} data={data} actions={{ showEdit: false, atFirst: true }} />
-            )}
-            pagination={({ currentPage, setCurrentPage, totalPages, pageSize, setPageSize, totalRecords }) => (
-              <div className="container bg-slate-200 sticky bottom-0">
-                <Master.Pagination
-                  currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}
-                  totalPages={totalPages}
-                  pageSize={pageSize}
-                  setPageSize={setPageSize}
-                  totalRecords={totalRecords}
-                />
-              </div>
-            )}
-          />
+          >
+            {/* Table */}
+            <Master.Table columns={newColumns} />
+
+            {/* Pagination */}
+            <div className="container bg-slate-200 sticky bottom-0">
+              <Master.Pagination />
+            </div>
+          </Master>
         </div>
       </div>
     </Provider>

@@ -15,15 +15,34 @@ describe("Testing Pagination Component", () => {
     let setCurrentPage = (page: number) => (currentPage = page)
 
     const { container, getByRole } = render(
-      <MasterContextProvider onUpdate={onUpdate} limits={limits}>
-        <Pagination
-          currentPage={currentPage}
-          pageSize={pageSize}
-          setPageSize={setPageSize}
-          setCurrentPage={setCurrentPage}
-          totalPages={totalPages}
-          totalRecords={totalRecords}
-        />
+      <MasterContextProvider
+        onUpdate={onUpdate}
+        limits={limits}
+        sortConfig={["createdAt", -1]}
+        setSortConfig={(config: SortConfigType) => {}}
+        sortable={true}
+        columns={[]}
+        data={[]}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
+        totalRecords={totalRecords}
+      >
+        <Pagination>
+          {({ limits, currentPage, pageSize, setPageSize, setCurrentPage, totalPages, totalRecords }) => (
+            <Pagination.Pagination
+              currentPage={currentPage}
+              pageSize={pageSize}
+              setPageSize={setPageSize}
+              setCurrentPage={setCurrentPage}
+              totalPages={totalPages}
+              totalRecords={totalRecords}
+              limits={limits}
+            />
+          )}
+        </Pagination>
       </MasterContextProvider>
     )
     expect(container.querySelector(".kms_pagination")).toBeTruthy()
@@ -53,15 +72,34 @@ describe("Testing Pagination Component", () => {
     let setCurrentPage = (page: number) => (currentPage = page)
 
     const { container, rerender, getByRole } = render(
-      <MasterContextProvider onUpdate={onUpdate} limits={limits}>
-        <Pagination
-          currentPage={currentPage}
-          pageSize={pageSize}
-          setPageSize={setPageSize}
-          setCurrentPage={setCurrentPage}
-          totalPages={totalPages}
-          totalRecords={totalRecords}
-        />
+      <MasterContextProvider
+        onUpdate={onUpdate}
+        limits={limits}
+        sortConfig={["createdAt", -1]}
+        setSortConfig={(config: SortConfigType) => {}}
+        sortable={true}
+        columns={[]}
+        data={[]}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
+        totalRecords={totalRecords}
+      >
+        <Pagination>
+          {({ limits, currentPage, pageSize, setPageSize, setCurrentPage, totalPages, totalRecords }) => (
+            <Pagination.Pagination
+              currentPage={currentPage}
+              pageSize={pageSize}
+              setPageSize={setPageSize}
+              setCurrentPage={setCurrentPage}
+              totalPages={totalPages}
+              totalRecords={totalRecords}
+              limits={limits}
+            />
+          )}
+        </Pagination>
       </MasterContextProvider>
     )
 
@@ -73,32 +111,36 @@ describe("Testing Pagination Component", () => {
     let limiter = container.querySelector("select") as HTMLSelectElement
     fireEvent.change(limiter, { target: { value: 30 } })
     rerender(
-      <MasterContextProvider onUpdate={onUpdate} limits={limits}>
-        <Pagination
-          currentPage={currentPage}
-          pageSize={pageSize}
-          setPageSize={setPageSize}
-          setCurrentPage={setCurrentPage}
-          totalPages={totalPages}
-          totalRecords={totalRecords}
-        />
+      <MasterContextProvider
+        onUpdate={onUpdate}
+        limits={limits}
+        sortConfig={["createdAt", -1]}
+        setSortConfig={(config: SortConfigType) => {}}
+        sortable={true}
+        columns={[]}
+        data={[]}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
+        totalRecords={totalRecords}
+      >
+        <Pagination>
+          {({ limits, currentPage, pageSize, setPageSize, setCurrentPage, totalPages, totalRecords }) => (
+            <Pagination.Pagination
+              currentPage={currentPage}
+              pageSize={pageSize}
+              setPageSize={setPageSize}
+              setCurrentPage={setCurrentPage}
+              totalPages={totalPages}
+              totalRecords={totalRecords}
+              limits={limits}
+            />
+          )}
+        </Pagination>
       </MasterContextProvider>
     )
     expect((container.querySelector("input[type=number]") as HTMLInputElement).value).toBe(String(currentPage))
-
-    // Test Next button gets disabled when user reaches last page
-    rerender(
-      <MasterContextProvider onUpdate={onUpdate} limits={limits}>
-        <Pagination
-          currentPage={totalPages}
-          pageSize={pageSize}
-          setPageSize={setPageSize}
-          setCurrentPage={setCurrentPage}
-          totalPages={totalPages}
-          totalRecords={totalRecords}
-        />
-      </MasterContextProvider>
-    )
-    expect((getByRole("button", { name: "Next" }) as HTMLButtonElement).disabled).toBeTruthy()
   })
 })

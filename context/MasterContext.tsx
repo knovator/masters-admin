@@ -6,6 +6,18 @@ interface MasterContextProviderProps extends React.PropsWithChildren {
   sortConfig: SortConfigType
   setSortConfig: (config: SortConfigType) => void
   sortable: boolean
+
+  // Table
+  columns: ColumnsSchema
+  data: any[]
+
+  // Pagination
+  currentPage: number
+  setCurrentPage: (page: number) => void
+  totalPages: number
+  pageSize: number
+  setPageSize: (size: number) => void
+  totalRecords: number
 }
 
 const MasterContext = createContext<MasterContextType | null>(null)
@@ -17,9 +29,37 @@ const MasterContextProvider = ({
   sortable,
   sortConfig,
   setSortConfig,
+
+  // Table
+  columns,
+  data,
+
+  // Pagination
+  currentPage,
+  pageSize,
+  setCurrentPage,
+  setPageSize,
+  totalPages,
+  totalRecords,
 }: MasterContextProviderProps) => {
   return (
-    <MasterContext.Provider value={{ onUpdate, limits, sortConfig, setSortConfig, sortable }}>
+    <MasterContext.Provider
+      value={{
+        onUpdate,
+        limits,
+        sortConfig,
+        setSortConfig,
+        sortable,
+        columns,
+        data,
+        currentPage,
+        pageSize,
+        setCurrentPage,
+        setPageSize,
+        totalPages,
+        totalRecords,
+      }}
+    >
       {children}
     </MasterContext.Provider>
   )
