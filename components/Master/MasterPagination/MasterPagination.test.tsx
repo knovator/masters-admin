@@ -29,6 +29,7 @@ describe("Testing Pagination Component", () => {
         pageSize={pageSize}
         setPageSize={setPageSize}
         totalRecords={totalRecords}
+        getMastersList={(search?: string | undefined) => Promise.resolve()}
       >
         <Pagination>
           {({ limits, currentPage, pageSize, setPageSize, setCurrentPage, totalPages, totalRecords }) => (
@@ -86,6 +87,7 @@ describe("Testing Pagination Component", () => {
         pageSize={pageSize}
         setPageSize={setPageSize}
         totalRecords={totalRecords}
+        getMastersList={(search?: string | undefined) => Promise.resolve()}
       >
         <Pagination>
           {({ limits, currentPage, pageSize, setPageSize, setCurrentPage, totalPages, totalRecords }) => (
@@ -125,6 +127,7 @@ describe("Testing Pagination Component", () => {
         pageSize={pageSize}
         setPageSize={setPageSize}
         totalRecords={totalRecords}
+        getMastersList={(search?: string | undefined) => Promise.resolve()}
       >
         <Pagination>
           {({ limits, currentPage, pageSize, setPageSize, setCurrentPage, totalPages, totalRecords }) => (

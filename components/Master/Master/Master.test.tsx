@@ -39,8 +39,12 @@ const restHandlers = [
     return res(ctx.status(200), ctx.json({ ...data1, data: { docs: [{ id: "2123", name: "Milan", isActive: true }] } }))
   }),
   rest.post("https://testapi.com/admin/masters/list", (req, res, ctx) => {
-    let bodyOptions = (req.body as any).options
+    let body = req.body as any
+    let bodyOptions = body.options
     let bodyDocs = [...docs]
+    if (typeof body.search !== "undefined") {
+      bodyDocs = bodyDocs.filter((doc) => String(doc.name).toLowerCase().includes(String(body.search).toLowerCase()))
+    }
     if (typeof bodyOptions.sort !== "undefined") {
       let sortConfig = Object.entries(bodyOptions.sort)[0]
       bodyDocs = bodyDocs.sort((a, b) => {
@@ -214,5 +218,34 @@ describe("Testing MasterTable Component", () => {
     })
     // check first row contains data returned by custom API
     expect(container.querySelector("td")?.innerHTML).toBe("Milan")
+  })
+  it("Should search masters when search input changes", async () => {
+    const { container, getByRole } = render(
+      <Provider
+        baseUrl="https://testapi.com"
+        permissions={{}}
+        token={"abcd"}
+        dataGetter={(response) => response.data.docs}
+        paginationGetter={(response) => response.data}
+      >
+        <Master />
+      </Provider>
+    )
+    // Wait for Table to render fully
+    await waitFor(() => {
+      expect(screen.getByTestId("table")).toBeTruthy()
+    })
+    // Check all data are in tbody
+    expect(container.querySelectorAll(".kms_tbody > tr").length).toBe(docs.length)
+
+    // Change search input to "John"
+    let searchInput = container.querySelector("input[type=search]")
+    expect(searchInput).toBeTruthy()
+    fireEvent.change(searchInput!, { target: { value: "John" } })
+
+    // Wait to show only johns(1) record in tbody
+    await waitFor(() => {
+      expect(container.querySelectorAll(".kms_tbody > tr").length).toBe(1)
+    })
   })
 })

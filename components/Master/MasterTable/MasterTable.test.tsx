@@ -33,6 +33,7 @@ describe("Testing MasterTable Component", () => {
       buttonClicked = true
     }
     const { container } = render(
+      // @ts-ignore
       <MasterContextProvider
         onUpdate={onUpdate}
         limits={[1, 2, 3]}
