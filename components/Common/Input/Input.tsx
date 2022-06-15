@@ -1,8 +1,6 @@
 import classNames from "classnames"
 
 interface InputProps {
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
-  onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   value?: string | number
   placeholder?: string
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -12,13 +10,13 @@ interface InputProps {
   label?: string
   error?: string
   className?: string
+  disabled?: boolean
 }
 
 const Input = ({
-  onKeyDown,
-  onKeyPress,
   onChange,
   onInput,
+  disabled,
   value,
   type = "text",
   placeholder,
@@ -35,11 +33,10 @@ const Input = ({
         type={type}
         value={value}
         onInput={onInput}
-        onKeyDown={onKeyDown}
-        onKeyPress={onKeyPress}
         placeholder={placeholder}
         {...rest}
         onChange={onChange}
+        disabled={disabled}
       />
       {error && <p className="kms_input-error">{error}</p>}
     </div>

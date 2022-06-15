@@ -7,7 +7,7 @@
   .kms_actions {
     @apply flex items-center gap-3;
   }
-  .kms_actions-edit, .kms_actions-delete {
+  .kms_actions-update, .kms_actions-delete {
     @apply cursor-pointer;
   }
   .kms_table-container {
@@ -78,7 +78,10 @@
     @apply grid gap-4;
   }
   .kms_input {
-    @apply h-10 rounded-lg border border-slate-400 p-1 outline-none bg-transparent appearance-none focus:outline-none focus:ring-blue-500 focus:ring-2 transition;
+    @apply min-h-[40px] rounded-lg border border-slate-400 p-1 outline-none bg-transparent appearance-none focus:outline-none focus:ring-blue-500 focus:ring-2 transition;
+  }
+  .kms_input:disabled {
+    @apply bg-slate-300 cursor-not-allowed;
   }
   .kms_input-sm {
     @apply h-8;

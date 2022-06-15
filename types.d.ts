@@ -1,7 +1,5 @@
 declare module "@knovator/api"
 
-// Ref
-
 // Table & Pagination
 type ColumnCellType = { row: any; onUpdate: (data: any) => void }
 type ColumnSchemaType = {
@@ -23,7 +21,7 @@ interface TableProps {
 }
 
 interface TableActionTypes {
-  showEdit?: boolean
+  showUpdate?: boolean
   showDelete?: boolean
   atFirst?: boolean
 }
@@ -62,8 +60,8 @@ interface ProviderContextType {
   token: string
   dataGetter: (response: any) => any[]
   paginationGetter: (response: any) => any
-  onError: (code: string, message: string) => void
-  onSuccess: (code: string, message: string) => void
+  onError: (callback_code: import("constants/common").CALLBACK_CODES, code: string, message: string) => void
+  onSuccess: (callback_code: import("constants/common").CALLBACK_CODES, code: string, message: string) => void
 }
 interface MasterContextType {
   // Search
@@ -88,12 +86,15 @@ interface TableContextType {
   sortable: boolean
   columns: ColumnsSchema
   data: any[]
+  onChangeFormState: (status: FormActionTypes, data?: any) => void
 }
 interface FormContextType {
-  addNew: boolean
+  formState: FormActionTypes | undefined
   closeForm: () => void
   onDataSubmit: (data: any) => void
-  setAddNew: (status: boolean) => void
+  onChangeFormState: (status: FormActionTypes, data?: any) => void
+  updateData: any
+  loading: boolean
 }
 // \ End of Context
 
@@ -132,10 +133,12 @@ interface SchemaType {
   accessor: string
   Input?: (props: InputRendererProps) => JSX.Element
   validations?: import("react-hook-form").RegisterOptions
-  onlyEditable?: boolean
+  editable?: boolean
   onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void
   type?: "text" | "number" | "select" | "checkbox" | "textarea"
   options?: { value: string; label: string }[]
+  defaultValue?: string | number | boolean
+  placeholder?: string
 }
-
+type FormActionTypes = "ADD" | "UPDATE" | "DELETE" | null | ""
 // \ End of Form

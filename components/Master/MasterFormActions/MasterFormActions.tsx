@@ -10,10 +10,11 @@ interface MasterFormActionProps {
 }
 
 const MasterFormActions = ({ formRef }: MasterFormActionProps) => {
-  const { addNew, closeForm } = useFormState()
+  const { formState, closeForm, loading } = useFormState()
   return (
     <FormActions
-      primaryLabel={addNew ? "Add Master" : "Edit Master"}
+      loading={loading}
+      primaryLabel={formState === "ADD" ? "Add Master" : "Edit Master"}
       onPrimaryButtonClick={() =>
         formRef.current?.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }))
       }

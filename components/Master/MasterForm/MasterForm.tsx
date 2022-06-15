@@ -8,12 +8,13 @@ interface DrawerProps {
 }
 
 const MasterForm = forwardRef<HTMLFormElement | null, DrawerProps>(({}, ref) => {
-  const { onDataSubmit } = useFormState()
+  const { onDataSubmit, updateData, formState } = useFormState()
   const schema: SchemaType[] = [
     {
       label: "Name*",
       accessor: "name",
       type: "text",
+      placeholder: "Enter Name",
       onInput: handleCapitalize,
     },
     {
@@ -21,21 +22,28 @@ const MasterForm = forwardRef<HTMLFormElement | null, DrawerProps>(({}, ref) => 
       accessor: "code",
       type: "text",
       onInput: handleCode,
+      editable: false,
+      placeholder: "Enter Code",
     },
     {
       label: "Web Display*",
-      accessor: "webDis",
+      accessor: "webDsply",
       type: "text",
+      onInput: handleCapitalize,
+      placeholder: "Enter Web Display",
     },
     {
       label: "Description",
       accessor: "desc",
       type: "textarea",
+      onInput: handleCapitalize,
+      placeholder: "Enter Description",
     },
     {
       label: "Active",
       accessor: "isActive",
       type: "checkbox",
+      defaultValue: true,
     },
   ]
   function handleCapitalize(event: React.ChangeEvent<HTMLInputElement>) {
@@ -46,7 +54,9 @@ const MasterForm = forwardRef<HTMLFormElement | null, DrawerProps>(({}, ref) => 
     event.target.value = changeToCode(event.target.value)
     return event
   }
-  return <Form schema={schema} onSubmit={onDataSubmit} ref={ref} />
+  return (
+    <Form schema={schema} onSubmit={onDataSubmit} ref={ref} data={updateData} isUpdating={formState === "UPDATE"} />
+  )
 })
 
 export default MasterForm

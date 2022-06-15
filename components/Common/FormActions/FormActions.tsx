@@ -1,6 +1,7 @@
 import { Button } from ".."
 
 interface FormActionsProps {
+  loading?: boolean
   primaryLabel?: string
   secondaryLabel?: string
   onPrimaryButtonClick?: () => void
@@ -8,6 +9,7 @@ interface FormActionsProps {
 }
 
 const FormActions = ({
+  loading = false,
   primaryLabel = "Submit",
   secondaryLabel = "Cancel",
   onPrimaryButtonClick,
@@ -15,8 +17,8 @@ const FormActions = ({
 }: FormActionsProps) => {
   return (
     <>
-      <Button variant="secondary" label={secondaryLabel} onClick={onSecondaryButtonClick} />
-      <Button label={primaryLabel} onClick={onPrimaryButtonClick} />
+      <Button variant="secondary" label={secondaryLabel} disabled={loading} onClick={onSecondaryButtonClick} />
+      <Button label={primaryLabel} onClick={onPrimaryButtonClick} disabled={loading} />
     </>
   )
 }

@@ -1,16 +1,30 @@
 import React, { createContext, useContext } from "react"
 
 interface FormContextProviderProps extends React.PropsWithChildren {
-  addNew: boolean
+  formState: FormActionTypes | undefined
   closeForm: () => void
-  setAddNew: (status: boolean) => void
   onDataSubmit: (data: any) => void
+  onChangeFormState: (status: FormActionTypes) => void
+  updateData: any
+  loading: boolean
 }
 
 const FormContext = createContext<FormContextType | null>(null)
 
-const FormContextProvider = ({ addNew, setAddNew, closeForm, onDataSubmit, children }: FormContextProviderProps) => {
-  return <FormContext.Provider value={{ addNew, setAddNew, closeForm, onDataSubmit }}>{children}</FormContext.Provider>
+const FormContextProvider = ({
+  formState,
+  onChangeFormState,
+  closeForm,
+  onDataSubmit,
+  children,
+  loading,
+  updateData,
+}: FormContextProviderProps) => {
+  return (
+    <FormContext.Provider value={{ loading, formState, onChangeFormState, closeForm, onDataSubmit, updateData }}>
+      {children}
+    </FormContext.Provider>
+  )
 }
 
 export function useFormState() {

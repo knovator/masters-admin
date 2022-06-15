@@ -103,7 +103,7 @@ describe("Testing MasterTable Component", () => {
     let actionItems = container.getElementsByClassName("kms_actions")
     expect(actionItems.length).toBe(docs.length)
     // test edit actions count (Should be equal to length of records)
-    let editActions = container.getElementsByClassName("kms_actions-edit")
+    let editActions = container.getElementsByClassName("kms_actions-update")
     expect(editActions.length).toBe(docs.length)
     // test delete actions count (Should be equal to length of records having canDel = true)
     let deleteActions = container.getElementsByClassName("kms_actions-delete")

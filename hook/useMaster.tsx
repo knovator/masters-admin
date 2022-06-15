@@ -3,7 +3,7 @@ import { useState, useCallback, useEffect, useRef } from "react"
 import { useProviderState } from "context"
 import usePagination from "hook/usePagination"
 import request, { getApiType } from "api"
-import { INTERNAL_ERROR_CODE } from "constants/common"
+import { INTERNAL_ERROR_CODE, CALLBACK_CODES } from "constants/common"
 
 interface UseMasterProps {
   defaultLimit: number
@@ -12,12 +12,13 @@ interface UseMasterProps {
 }
 
 const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1] }: UseMasterProps) => {
-  const [list, setList] = useState<any>([])
-  const [loader, setLoader] = useState(false)
+  const [list, setList] = useState<any[]>([])
+  const [loading, setLoading] = useState(false)
   const [totalPages, setTotalPages] = useState(0)
-  const [addNew, setAddNew] = useState(false)
   const [totalRecords, setTotalRecords] = useState(0)
   const sortConfigRef = useRef<SortConfigType>(defaultSort)
+  const [formState, setFormState] = useState<FormActionTypes>()
+  const [updateData, setUpdateData] = useState<any | null>(null)
 
   const { baseUrl, token, dataGetter, paginationGetter, onError, onSuccess } = useProviderState()
   const { setPageSize, pageSize, currentPage, setCurrentPage, filter } = usePagination({ defaultLimit })
@@ -26,7 +27,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1] }: Use
     async (search?: string) => {
       try {
         let sortConfig = sortConfigRef.current
-        setLoader(true)
+        setLoading(true)
         let api = getApiType({ routes, action: "LIST", module: "masters" })
         let response = await request({
           baseUrl,
@@ -47,29 +48,27 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1] }: Use
           },
         })
         if (response?.code === "SUCCESS") {
-          onSuccess(response.code, response.message)
-          setLoader(false)
+          onSuccess(CALLBACK_CODES.GET_ALL, response.code, response.message)
+          setLoading(false)
           setTotalPages(paginationGetter(response).totalPages)
           setTotalRecords(paginationGetter(response).totalDocs)
           return setList(dataGetter(response))
         }
-        setLoader(false)
+        setLoading(false)
         if (response?.message === "UNAUTHENTICATED") {
-          onError(response.code, response.message)
+          onError(CALLBACK_CODES.GET_ALL, response.code, response.message)
         }
       } catch (error) {
-        setLoader(false)
-        onError(INTERNAL_ERROR_CODE, (error as Error).message)
+        setLoading(false)
+        onError(CALLBACK_CODES.GET_ALL, INTERNAL_ERROR_CODE, (error as Error).message)
       }
     },
     [currentPage, filter]
   )
-
   const onChangeSortConfig = (data: SortConfigType) => {
     sortConfigRef.current = data
     getMastersList()
   }
-
   const partialUpdate = useCallback(
     async (id: string, data: any) => {
       try {
@@ -82,23 +81,54 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1] }: Use
           url: api.url,
         })
         if (response?.code === "SUCCESS") {
-          onSuccess(response.code, response.message)
+          onSuccess(CALLBACK_CODES.UPDATE, response.code, response.message)
           getMastersList()
         } else {
-          onError(response.code, response.message)
+          onError(CALLBACK_CODES.UPDATE, response.code, response.message)
         }
       } catch (error) {
-        onError(INTERNAL_ERROR_CODE, (error as Error).message)
+        onError(CALLBACK_CODES.UPDATE, INTERNAL_ERROR_CODE, (error as Error).message)
       }
     },
     [getMastersList]
   )
-  const onDataSubmit = (data: any) => {
-    if (addNew) console.log("Adding ", data)
-    else console.log("Editing ", data)
+  const onDataSubmit = async (data: any) => {
+    setLoading(true)
+    try {
+      let api = getApiType({
+        routes,
+        action: formState === "ADD" ? "CREATE" : "UPDATE",
+        module: "masters",
+        id: updateData.id,
+      })
+      let response = await request({
+        baseUrl,
+        token,
+        method: api.method,
+        url: api.url,
+        data,
+      })
+      if (response?.code === "SUCCESS") {
+        setLoading(false)
+        onSuccess(CALLBACK_CODES.CREATE, response?.code, response?.message)
+        getMastersList()
+      } else {
+        setLoading(false)
+        onError(CALLBACK_CODES.CREATE, response?.code, response?.message)
+      }
+    } catch (error) {
+      setLoading(false)
+      onError(CALLBACK_CODES.GET_ALL, INTERNAL_ERROR_CODE, (error as Error).message)
+    }
+    onCloseForm()
   }
   const onCloseForm = () => {
-    setAddNew(false)
+    setFormState(undefined)
+    setUpdateData(null)
+  }
+  const onChangeFormState = async (state: FormActionTypes, data?: any) => {
+    setUpdateData(data || null)
+    setFormState(state)
   }
 
   useEffect(() => {
@@ -108,7 +138,8 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1] }: Use
   return {
     list,
     getMastersList,
-    loader,
+    loading,
+    setLoading,
     partialUpdate,
 
     // Pagination
@@ -123,9 +154,10 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1] }: Use
     sortConfig: sortConfigRef.current,
     setSortConfig: onChangeSortConfig,
 
-    // Add
-    addNew,
-    setAddNew,
+    // Form
+    formState,
+    updateData,
+    onChangeFormState,
     onCloseForm,
     onDataSubmit,
   }

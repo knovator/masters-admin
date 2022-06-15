@@ -8,13 +8,20 @@ interface SelectProps {
   error?: string
   options?: { value: string; label: string }[]
   className?: string
+  disabled?: boolean
 }
 
-const Select = ({ onChange, value, rest, label, error, options = [], className }: SelectProps) => {
+const Select = ({ onChange, value, rest, label, error, options = [], className, disabled }: SelectProps) => {
   return (
     <div className="kms_input-wrapper">
       <label className="kms_input-label">{label}</label>
-      <select value={value} onChange={onChange} className={classNames("kms_input", className)} {...rest}>
+      <select
+        value={value}
+        onChange={onChange}
+        className={classNames("kms_input", className)}
+        disabled={disabled}
+        {...rest}
+      >
         {options.map((option, index) => (
           <option value={option.value} key={index}>
             {option.label}

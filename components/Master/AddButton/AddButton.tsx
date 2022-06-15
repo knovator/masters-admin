@@ -2,8 +2,8 @@ import { Button } from "components/Common"
 import { useFormState } from "context/FormContext"
 
 const AddButton = () => {
-  const { setAddNew } = useFormState()
-  return <Button label="Add Master" onClick={() => setAddNew(true)} />
+  const { onChangeFormState } = useFormState()
+  return <Button label="Add Master" onClick={() => onChangeFormState("ADD")} />
 }
 
 export default AddButton

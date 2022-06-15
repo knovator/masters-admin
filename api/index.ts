@@ -39,7 +39,7 @@ const getApiType = ({
 }): API_TYPE => {
   let route: API_TYPE
   if (routes && routes[action]) {
-    route = routes[action]({ module, id })
+    route = routes[action]!({ module, id })
   } else {
     route = apiList[action]({ module, id })
   }

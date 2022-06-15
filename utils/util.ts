@@ -19,3 +19,15 @@ export const changeToCode = (string = "") =>
     .replace(/[^\s\w]/gi, "")
     ?.toUpperCase()
     ?.replace(" ", "_")
+
+export const isObject = (data: any) => data?.constructor?.name === "Object"
+export const isString = (data: any) => data?.constructor?.name === "String"
+export const isArray = (data: any) => data?.constructor?.name === "Array"
+
+export const isEmpty = (data: any) => {
+  if (isObject(data)) return Object.keys(data).length === 0
+  if (isArray(data)) return data.length === 0
+  if (isString(data)) return !data || data.length === 0
+  if ([undefined, null, ""].includes(data)) return true
+  return false
+}

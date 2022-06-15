@@ -53,6 +53,7 @@ const Master = ({
   const formRef = useRef<HTMLFormElement | null>(null)
   const {
     list,
+    loading,
     partialUpdate,
     totalPages,
     totalRecords,
@@ -64,8 +65,9 @@ const Master = ({
     setSortConfig,
     getMastersList,
     // Form
-    addNew,
-    setAddNew,
+    formState,
+    updateData,
+    onChangeFormState,
     onCloseForm,
     onDataSubmit,
   } = useMaster({
@@ -76,11 +78,15 @@ const Master = ({
 
   return (
     <div>
-      <MasterContextProvider
-        // Search
-        getMastersList={getMastersList}
-      >
-        <FormContextProvider addNew={addNew} setAddNew={setAddNew} closeForm={onCloseForm} onDataSubmit={onDataSubmit}>
+      <MasterContextProvider getMastersList={getMastersList}>
+        <FormContextProvider
+          loading={loading}
+          formState={formState}
+          onChangeFormState={onChangeFormState}
+          closeForm={onCloseForm}
+          onDataSubmit={onDataSubmit}
+          updateData={updateData}
+        >
           <PaginationContextProvider
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
@@ -92,6 +98,7 @@ const Master = ({
           >
             <TableContextProvider
               onUpdate={partialUpdate}
+              onChangeFormState={onChangeFormState}
               data={list}
               sortable={sortable}
               sortConfig={sortConfig}
@@ -111,9 +118,9 @@ const Master = ({
 
               {!explicitForm && (
                 <Drawer
-                  open={addNew}
+                  open={!!formState}
                   onClose={onCloseForm}
-                  title="Add Master"
+                  title={formState === "ADD" ? "Add Master" : "Edit Master"}
                   footerContent={<MasterFormActions formRef={formRef} />}
                 >
                   <MasterForm ref={formRef} />

@@ -4,6 +4,7 @@ interface TableContextProviderProps extends React.PropsWithChildren {
   onUpdate: (id: string, data: any) => Promise<void>
   sortConfig: SortConfigType
   setSortConfig: (config: SortConfigType) => void
+  onChangeFormState: (status: FormActionTypes, data?: any) => void
   sortable: boolean
   columns: ColumnsSchema
   data: any[]
@@ -19,9 +20,10 @@ const TableContextProvider = ({
   columns,
   data,
   children,
+  onChangeFormState,
 }: TableContextProviderProps) => {
   return (
-    <TableContext.Provider value={{ onUpdate, sortConfig, setSortConfig, sortable, columns, data }}>
+    <TableContext.Provider value={{ onChangeFormState, onUpdate, sortConfig, setSortConfig, sortable, columns, data }}>
       {children}
     </TableContext.Provider>
   )

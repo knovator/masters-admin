@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 import Table from "components/Common/Table"
 import DeleteIcon from "icons/deleteIcon"
-import EditIcon from "icons/editIcon"
+import UpdateIcon from "icons/updateIcon"
 import { useTableState } from "context/TableContext"
 
 interface MasterTableProps {
@@ -11,7 +11,15 @@ interface MasterTableProps {
 }
 
 const MasterTable = ({ columns, actions }: MasterTableProps) => {
-  const { onUpdate, sortable, sortConfig, setSortConfig, columns: defaultColumns, data } = useTableState()
+  const {
+    onUpdate,
+    sortable,
+    sortConfig,
+    setSortConfig,
+    columns: defaultColumns,
+    data,
+    onChangeFormState,
+  } = useTableState()
   const [tableColumns, setTableColumns] = useState<ColumnsSchema>([])
 
   useEffect(() => {
@@ -31,7 +39,7 @@ const MasterTable = ({ columns, actions }: MasterTableProps) => {
     // Handling Table Actions
     let tableActions: TableActionTypes = {
       showDelete: true,
-      showEdit: true,
+      showUpdate: true,
     }
     if (!!actions) {
       tableActions = {
@@ -47,7 +55,11 @@ const MasterTable = ({ columns, actions }: MasterTableProps) => {
         Cell({ row, onUpdate }) {
           return (
             <div className="kms_actions">
-              {tableActions.showEdit ? <EditIcon fill="#fff" /> : null}
+              {tableActions.showUpdate ? (
+                <button onClick={() => onChangeFormState("UPDATE", row)}>
+                  <UpdateIcon fill="#fff" />
+                </button>
+              ) : null}
               {row.canDel && tableActions.showDelete ? <DeleteIcon /> : null}
             </div>
           )

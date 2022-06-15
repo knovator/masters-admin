@@ -1,10 +1,11 @@
 import React, { createContext, useContext } from "react"
+import { CALLBACK_CODES } from "constants/common"
 
 interface ProviderContextProviderProps
   extends React.PropsWithChildren,
     Omit<ProviderContextType, "onError" | "onSuccess"> {
-  onError?: (code: string, message: string) => void
-  onSuccess?: (code: string, message: string) => void
+  onError?: (callback_code: CALLBACK_CODES, code: string, message: string) => void
+  onSuccess?: (callback_code: CALLBACK_CODES, code: string, message: string) => void
 }
 
 const ProviderContext = createContext<ProviderContextType | null>(null)
