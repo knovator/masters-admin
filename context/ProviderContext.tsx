@@ -1,11 +1,10 @@
 import React, { createContext, useContext } from "react"
 
-interface ProviderContextProviderProps extends React.PropsWithChildren {
-  baseUrl: string
-  permissions: any
-  token: string
-  dataGetter?: (response: any) => any[]
-  paginationGetter?: (response: any) => any[]
+interface ProviderContextProviderProps
+  extends React.PropsWithChildren,
+    Omit<ProviderContextType, "onError" | "onSuccess"> {
+  onError?: (code: string, message: string) => void
+  onSuccess?: (code: string, message: string) => void
 }
 
 const ProviderContext = createContext<ProviderContextType | null>(null)
@@ -17,12 +16,22 @@ const Provider = ({
   token,
   dataGetter,
   paginationGetter,
+  onError = () => {},
+  onSuccess = () => {},
 }: ProviderContextProviderProps) => {
   let ctxDataGetter = typeof dataGetter === "function" ? dataGetter : (response: any) => response?.data?.docs
   let ctxPaginatonGetter = typeof paginationGetter === "function" ? paginationGetter : (response: any) => response?.data
   return (
     <ProviderContext.Provider
-      value={{ baseUrl, permissions, token, dataGetter: ctxDataGetter, paginationGetter: ctxPaginatonGetter }}
+      value={{
+        baseUrl,
+        permissions,
+        token,
+        dataGetter: ctxDataGetter,
+        paginationGetter: ctxPaginatonGetter,
+        onError,
+        onSuccess,
+      }}
     >
       {children}
     </ProviderContext.Provider>

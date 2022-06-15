@@ -185,7 +185,7 @@ describe("Testing MasterTable Component", () => {
     })
 
     // Sorting Name field in Ascending order
-    let nameHeader = getByRole("columnheader", { name: "Name" })
+    let nameHeader = getByRole("columnheader", { name: "Name ▲ ▼" })
     fireEvent.click(nameHeader)
 
     // Wait for API respose to repaint data

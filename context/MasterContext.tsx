@@ -21,6 +21,12 @@ interface MasterContextProviderProps extends React.PropsWithChildren {
 
   // Search
   getMastersList: (search?: string) => Promise<void>
+
+  // Form
+  addNew: boolean
+  closeForm: () => void
+  setAddNew: (status: boolean) => void
+  onDataSubmit: (data: any) => void
 }
 
 const MasterContext = createContext<MasterContextType | null>(null)
@@ -47,6 +53,12 @@ const MasterContextProvider = ({
 
   // Search
   getMastersList,
+
+  // Form
+  addNew,
+  setAddNew,
+  closeForm,
+  onDataSubmit,
 }: MasterContextProviderProps) => {
   return (
     <MasterContext.Provider
@@ -65,6 +77,10 @@ const MasterContextProvider = ({
         totalPages,
         totalRecords,
         getMastersList,
+        addNew,
+        setAddNew,
+        closeForm,
+        onDataSubmit,
       }}
     >
       {children}

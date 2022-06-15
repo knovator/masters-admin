@@ -46,45 +46,40 @@ describe("Testing Table Component", () => {
   it("Should show sort marks when clicked on ield header", () => {
     let sortConfig: SortConfigType = ["createdAt", 1]
     const setSortConfig = (data: SortConfigType) => (sortConfig = data)
+    const columns = [
+      { Header: "Name", accessor: "name" },
+      { Header: "Active", accessor: "isActive" },
+    ]
+    const data = [
+      { name: "John", isActive: true },
+      { name: "Karan", isActive: false },
+    ]
 
-    const { rerender, getByRole } = render(
-      <Table
-        columns={[{ Header: "Name", accessor: "name" }]}
-        data={[{ name: "John" }, { name: "Karan" }]}
-        sortConfig={sortConfig}
-        setSortConfig={setSortConfig}
-      />
+    const { rerender, getByRole, getAllByText } = render(
+      <Table columns={columns} data={data} sortConfig={sortConfig} setSortConfig={setSortConfig} />
     )
-    // Checking No sort icons exists
-    expect(screen.queryByText("&#9650")).not.toBeTruthy() // Ascending
-    expect(screen.queryByText("&#9660;")).not.toBeTruthy() // Descending
+    // checking if all columns has up & down arrows
+    expect(getAllByText("▲").length).toBe(columns.length)
+    expect(getAllByText("▼").length).toBe(columns.length)
+
+    let nameHeader = getByRole("columnheader", { name: "Name ▲ ▼" })
 
     // Sorting Name field in Ascending order
-    let nameHeader = getByRole("columnheader", { name: "Name" })
     fireEvent.click(nameHeader)
     expect(JSON.stringify(sortConfig)).toBe(JSON.stringify(["name", 1]))
-    rerender(
-      <Table
-        columns={[{ Header: "Name", accessor: "name" }]}
-        data={[{ name: "John" }, { name: "Karan" }]}
-        sortConfig={sortConfig}
-        setSortConfig={setSortConfig}
-      />
-    )
-    nameHeader = getByRole("columnheader", { name: "Name ▲" })
-    expect(nameHeader).toBeTruthy()
+    rerender(<Table columns={columns} data={data} sortConfig={sortConfig} setSortConfig={setSortConfig} />)
+    let nameUpArrow = getAllByText("▲")
+    let nameDownArrow = getAllByText("▼")
+    expect(nameUpArrow[0].classList.contains("kms_sort-inactive")).toBeFalsy()
+    expect(nameDownArrow[0].classList.contains("kms_sort-inactive")).toBeTruthy()
 
     // Sorting Name Field in Descending order
     fireEvent.click(nameHeader)
     expect(JSON.stringify(sortConfig)).toBe(JSON.stringify(["name", -1]))
-    rerender(
-      <Table
-        columns={[{ Header: "Name", accessor: "name" }]}
-        data={[{ name: "John" }, { name: "Karan" }]}
-        sortConfig={sortConfig}
-        setSortConfig={setSortConfig}
-      />
-    )
-    expect(getByRole("columnheader", { name: "Name ▼" })).toBeTruthy()
+    rerender(<Table columns={columns} data={data} sortConfig={sortConfig} setSortConfig={setSortConfig} />)
+    nameUpArrow = getAllByText("▲")
+    nameDownArrow = getAllByText("▼")
+    expect(nameUpArrow[0].classList.contains("kms_sort-inactive")).toBeTruthy()
+    expect(nameDownArrow[0].classList.contains("kms_sort-inactive")).toBeFalsy()
   })
 })

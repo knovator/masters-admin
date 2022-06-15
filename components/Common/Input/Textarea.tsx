@@ -1,49 +1,45 @@
 import classNames from "classnames"
 
-interface InputProps {
+interface TextareaProps {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   value?: string | number
   placeholder?: string
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void
-  type?: "number" | "text" | "search" | "checkbox"
   rest?: any
   label?: string
   error?: string
   className?: string
 }
-
-const Input = ({
+const Textarea = ({
   onKeyDown,
   onKeyPress,
   onChange,
   onInput,
   value,
-  type = "text",
   placeholder,
-  rest = {},
+  rest,
   label,
   error,
   className,
-}: InputProps) => {
+}: TextareaProps) => {
   return (
     <div className="kms_input-wrapper">
       <label className="kms_input-label">{label}</label>
-      <input
+      <textarea
         className={classNames("kms_input", className)}
-        type={type}
         value={value}
-        onInput={onInput}
+        onChange={onChange}
         onKeyDown={onKeyDown}
         onKeyPress={onKeyPress}
         placeholder={placeholder}
+        onInput={onInput}
         {...rest}
-        onChange={onChange}
       />
       {error && <p className="kms_input-error">{error}</p>}
     </div>
   )
 }
 
-export default Input
+export default Textarea

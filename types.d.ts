@@ -1,5 +1,7 @@
 declare module "@knovator/api"
 
+// Ref
+
 // Table & Pagination
 type ColumnCellType = { row: any; onUpdate: (data: any) => void }
 type ColumnSchemaType = {
@@ -60,6 +62,8 @@ interface ProviderContextType {
   token: string
   dataGetter: (response: any) => any[]
   paginationGetter: (response: any) => any
+  onError: (code: string, message: string) => void
+  onSuccess: (code: string, message: string) => void
 }
 interface MasterContextType {
   onUpdate: (id: string, data: any) => Promise<void>
@@ -82,6 +86,12 @@ interface MasterContextType {
 
   // Search
   getMastersList: (search?: string) => Promise<void>
+
+  // Form
+  addNew: boolean
+  closeForm: () => void
+  onDataSubmit: (data: any) => void
+  setAddNew: (status: boolean) => void
 }
 interface SearchContextType {
   searchOnEnter: boolean
@@ -111,3 +121,22 @@ type Routes_Input = {
   [K in ACTION_TYPES]?: (data: API_INPUT_TYPE) => API_TYPE
 }
 // \ End of API
+
+// Form
+interface InputRendererProps {
+  field: any
+  error?: string
+}
+
+interface SchemaType {
+  label?: string
+  accessor: string
+  Input?: (props: InputRendererProps) => JSX.Element
+  validations?: import("react-hook-form").RegisterOptions
+  onlyEditable?: boolean
+  onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  type?: "text" | "number" | "select" | "checkbox" | "textarea"
+  options?: { value: string; label: string }[]
+}
+
+// \ End of Form

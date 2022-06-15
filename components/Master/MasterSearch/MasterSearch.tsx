@@ -1,34 +1,24 @@
-import { useEffect, useState } from "react"
+import { useRef, useState } from "react"
 
 import { Input } from "components/Common"
-import { useMasterState } from "context"
+import { useMasterState } from "context/MasterContext"
 
-interface SearchInputProps {}
-
-const MasterSearch = ({}: SearchInputProps) => {
+const MasterSearch = () => {
   const { getMastersList } = useMasterState()
+  const callerRef = useRef<NodeJS.Timeout | null>(null)
   const [search, setSearch] = useState<string>("")
 
   const onChangeSearch = (str: string) => {
     setSearch(str)
+    if (callerRef.current) clearTimeout(callerRef.current)
+
+    callerRef.current = setTimeout(() => {
+      getMastersList(str)
+    }, 300)
   }
 
-  useEffect(() => {
-    let timer = setTimeout(() => {
-      getMastersList(search)
-    }, 300)
-    return () => clearTimeout(timer)
-  }, [search])
-
   return (
-    <>
-      <Input
-        type="search"
-        value={search}
-        onChange={(e) => onChangeSearch(e.target.value)}
-        placeholder="Search Masters"
-      />
-    </>
+    <Input type="search" value={search} onChange={(e) => onChangeSearch(e.target.value)} placeholder="Search Masters" />
   )
 }
 

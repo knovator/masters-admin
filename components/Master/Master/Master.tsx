@@ -1,11 +1,15 @@
-import React from "react"
+import React, { useRef } from "react"
 import { DEFAULT_LIMIT, PAGE_LIMITS } from "constants/common"
 
 import ToggleBtn from "widgets/toggle"
+import AddButton from "../AddButton"
 import useMaster from "hook/useMaster"
+import MasterForm from "../MasterForm"
 import MasterTable from "../MasterTable"
 import MasterSearch from "../MasterSearch"
 import MasterPagination from "../MasterPagination"
+import MasterFormActions from "../MasterFormActions"
+import { Drawer } from "components/Common"
 
 import MasterContextProvider from "context/MasterContext"
 
@@ -14,6 +18,7 @@ interface MasterProps extends React.PropsWithChildren {
   defaultSort?: SortConfigType
   limits?: number[]
   routes?: Routes_Input
+  explicitForm?: boolean
 }
 
 const columns = [
@@ -34,7 +39,15 @@ const columns = [
   },
 ]
 
-const Master = ({ sortable = true, defaultSort, routes, limits = PAGE_LIMITS, children }: MasterProps) => {
+const Master = ({
+  sortable = true,
+  defaultSort,
+  routes,
+  limits = PAGE_LIMITS,
+  explicitForm = false,
+  children,
+}: MasterProps) => {
+  const formRef = useRef<HTMLFormElement | null>(null)
   const {
     list,
     partialUpdate,
@@ -47,6 +60,11 @@ const Master = ({ sortable = true, defaultSort, routes, limits = PAGE_LIMITS, ch
     sortConfig,
     setSortConfig,
     getMastersList,
+    // Form
+    addNew,
+    setAddNew,
+    onCloseForm,
+    onDataSubmit,
   } = useMaster({
     defaultLimit: Array.isArray(limits) && limits.length > 0 ? limits[0] : DEFAULT_LIMIT,
     routes,
@@ -73,19 +91,41 @@ const Master = ({ sortable = true, defaultSort, routes, limits = PAGE_LIMITS, ch
         totalRecords={totalRecords}
         // Search
         getMastersList={getMastersList}
+        // Form
+        addNew={addNew}
+        setAddNew={setAddNew}
+        closeForm={onCloseForm}
+        onDataSubmit={onDataSubmit}
       >
         {children ? (
           children
         ) : (
           <>
             <MasterSearch />
+            <AddButton />
             <MasterTable />
             <MasterPagination />
           </>
+        )}
+
+        {!explicitForm && (
+          <Drawer
+            open={addNew}
+            onClose={onCloseForm}
+            title="Add Master"
+            footerContent={<MasterFormActions formRef={formRef} />}
+          >
+            <MasterForm ref={formRef} />
+          </Drawer>
         )}
       </MasterContextProvider>
     </div>
   )
 }
 
-export default Object.assign(Master, { Table: MasterTable, Pagination: MasterPagination, Search: MasterSearch })
+export default Object.assign(Master, {
+  Table: MasterTable,
+  Pagination: MasterPagination,
+  Search: MasterSearch,
+  AddButton,
+})

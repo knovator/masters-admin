@@ -3,6 +3,7 @@ import { useState, useCallback, useEffect, useRef } from "react"
 import { useProviderState } from "context"
 import usePagination from "hook/usePagination"
 import request, { getApiType } from "api"
+import { INTERNAL_ERROR_CODE } from "constants/common"
 
 interface UseMasterProps {
   defaultLimit: number
@@ -13,12 +14,12 @@ interface UseMasterProps {
 const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1] }: UseMasterProps) => {
   const [list, setList] = useState<any>([])
   const [loader, setLoader] = useState(false)
-  const [editData, setEditData] = useState({})
   const [totalPages, setTotalPages] = useState(0)
+  const [addNew, setAddNew] = useState(false)
   const [totalRecords, setTotalRecords] = useState(0)
   const sortConfigRef = useRef<SortConfigType>(defaultSort)
 
-  const { baseUrl, token, dataGetter, paginationGetter } = useProviderState()
+  const { baseUrl, token, dataGetter, paginationGetter, onError, onSuccess } = useProviderState()
   const { setPageSize, pageSize, currentPage, setCurrentPage, filter } = usePagination({ defaultLimit })
 
   const getMastersList = useCallback(
@@ -46,6 +47,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1] }: Use
           },
         })
         if (response?.code === "SUCCESS") {
+          onSuccess(response.code, response.message)
           setLoader(false)
           setTotalPages(paginationGetter(response).totalPages)
           setTotalRecords(paginationGetter(response).totalDocs)
@@ -53,11 +55,11 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1] }: Use
         }
         setLoader(false)
         if (response?.message === "UNAUTHENTICATED") {
-          console.log("UNAUTHORIZED")
+          onError(response.code, response.message)
         }
       } catch (error) {
         setLoader(false)
-        console.log(error)
+        onError(INTERNAL_ERROR_CODE, (error as Error).message)
       }
     },
     [currentPage, filter]
@@ -80,16 +82,24 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1] }: Use
           url: api.url,
         })
         if (response?.code === "SUCCESS") {
+          onSuccess(response.code, response.message)
           getMastersList()
         } else {
-          // showNotification(response?.message, "error")
+          onError(response.code, response.message)
         }
       } catch (error) {
-        console.log(error)
+        onError(INTERNAL_ERROR_CODE, (error as Error).message)
       }
     },
     [getMastersList]
   )
+  const onDataSubmit = (data: any) => {
+    if (addNew) console.log("Adding ", data)
+    else console.log("Editing ", data)
+  }
+  const onCloseForm = () => {
+    setAddNew(false)
+  }
 
   useEffect(() => {
     getMastersList()
@@ -97,8 +107,6 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1] }: Use
 
   return {
     list,
-    editData,
-    setEditData,
     getMastersList,
     loader,
     partialUpdate,
@@ -114,6 +122,12 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1] }: Use
     // Sorting
     sortConfig: sortConfigRef.current,
     setSortConfig: onChangeSortConfig,
+
+    // Add
+    addNew,
+    setAddNew,
+    onCloseForm,
+    onDataSubmit,
   }
 }
 

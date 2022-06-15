@@ -33,7 +33,6 @@ describe("Testing MasterTable Component", () => {
       buttonClicked = true
     }
     const { container } = render(
-      // @ts-ignore
       <MasterContextProvider
         onUpdate={onUpdate}
         limits={[1, 2, 3]}
@@ -48,6 +47,7 @@ describe("Testing MasterTable Component", () => {
         pageSize={0}
         setPageSize={(size: number) => {}}
         totalRecords={0}
+        getMastersList={(search?: string) => Promise.resolve()}
       >
         <MasterTable columns={columnsSchema} />
       </MasterContextProvider>

@@ -1,14 +1,14 @@
 // import { Dialog, Transition } from "@headlessui/react"
 import CloseIcon from "icons/closeIcon"
 
-interface DrawerWrapperProps extends React.PropsWithChildren {
+interface DrawerProps extends React.PropsWithChildren {
   open: boolean
   onClose: () => void
   title?: string
   footerContent?: React.ReactNode
 }
 
-const DrawerWrapper = ({ children, open, onClose, title, footerContent }: DrawerWrapperProps) => {
+const Drawer = ({ children, open, onClose, title, footerContent }: DrawerProps) => {
   if (!open) return null
   return (
     <div className="fixed inset-0 overflow-hidden" aria-labelledby="modal" role="dialog" aria-modal="true">
@@ -41,7 +41,7 @@ const DrawerWrapper = ({ children, open, onClose, title, footerContent }: Drawer
                 {/* /End replace */}
               </div>
               {footerContent && (
-                <div className="flex items-center justify-end gap-3 px-4 py-4 border-t modal-footer bg-slate-300 border-light-gray">
+                <div className="flex items-center justify-end gap-3 px-4 py-4 border-t modal-footer bg-slate-50 border-light-gray">
                   {footerContent}
                 </div>
               )}
@@ -53,4 +53,4 @@ const DrawerWrapper = ({ children, open, onClose, title, footerContent }: Drawer
   )
 }
 
-export default DrawerWrapper
+export default Drawer
