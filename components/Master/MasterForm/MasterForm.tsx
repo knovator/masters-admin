@@ -1,14 +1,14 @@
 import React, { forwardRef, MutableRefObject } from "react"
 import { capitalizeFirstLetter, changeToCode } from "utils/util"
 import { Form } from "components/Common"
-import { useMasterState } from "context"
+import { useFormState } from "context/FormContext"
 
 interface DrawerProps {
   ref: MutableRefObject<HTMLFormElement | null>
 }
 
 const MasterForm = forwardRef<HTMLFormElement | null, DrawerProps>(({}, ref) => {
-  const { onDataSubmit } = useMasterState()
+  const { onDataSubmit } = useFormState()
   const schema: SchemaType[] = [
     {
       label: "Name*",

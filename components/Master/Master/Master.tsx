@@ -11,7 +11,10 @@ import MasterPagination from "../MasterPagination"
 import MasterFormActions from "../MasterFormActions"
 import { Drawer } from "components/Common"
 
+import TableContextProvider from "context/TableContext"
 import MasterContextProvider from "context/MasterContext"
+import PaginationContextProvider from "context/PaginationContext"
+import FormContextProvider from "context/FormContext"
 
 interface MasterProps extends React.PropsWithChildren {
   sortable?: boolean
@@ -74,50 +77,51 @@ const Master = ({
   return (
     <div>
       <MasterContextProvider
-        sortable={sortable}
-        onUpdate={partialUpdate}
-        limits={limits ? limits : PAGE_LIMITS}
-        sortConfig={sortConfig}
-        setSortConfig={setSortConfig}
-        // Table
-        columns={columns}
-        data={list}
-        // Pagination
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalPages={totalPages}
-        pageSize={pageSize}
-        setPageSize={setPageSize}
-        totalRecords={totalRecords}
         // Search
         getMastersList={getMastersList}
-        // Form
-        addNew={addNew}
-        setAddNew={setAddNew}
-        closeForm={onCloseForm}
-        onDataSubmit={onDataSubmit}
       >
-        {children ? (
-          children
-        ) : (
-          <>
-            <MasterSearch />
-            <AddButton />
-            <MasterTable />
-            <MasterPagination />
-          </>
-        )}
-
-        {!explicitForm && (
-          <Drawer
-            open={addNew}
-            onClose={onCloseForm}
-            title="Add Master"
-            footerContent={<MasterFormActions formRef={formRef} />}
+        <FormContextProvider addNew={addNew} setAddNew={setAddNew} closeForm={onCloseForm} onDataSubmit={onDataSubmit}>
+          <PaginationContextProvider
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={totalPages}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+            totalRecords={totalRecords}
+            limits={limits ? limits : PAGE_LIMITS}
           >
-            <MasterForm ref={formRef} />
-          </Drawer>
-        )}
+            <TableContextProvider
+              onUpdate={partialUpdate}
+              data={list}
+              sortable={sortable}
+              sortConfig={sortConfig}
+              setSortConfig={setSortConfig}
+              columns={columns}
+            >
+              {children ? (
+                children
+              ) : (
+                <>
+                  <MasterSearch />
+                  <AddButton />
+                  <MasterTable />
+                  <MasterPagination />
+                </>
+              )}
+
+              {!explicitForm && (
+                <Drawer
+                  open={addNew}
+                  onClose={onCloseForm}
+                  title="Add Master"
+                  footerContent={<MasterFormActions formRef={formRef} />}
+                >
+                  <MasterForm ref={formRef} />
+                </Drawer>
+              )}
+            </TableContextProvider>
+          </PaginationContextProvider>
+        </FormContextProvider>
       </MasterContextProvider>
     </div>
   )

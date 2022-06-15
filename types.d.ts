@@ -66,35 +66,34 @@ interface ProviderContextType {
   onSuccess: (code: string, message: string) => void
 }
 interface MasterContextType {
-  onUpdate: (id: string, data: any) => Promise<void>
-  limits: number[]
-  sortConfig: SortConfigType
-  setSortConfig: (config: SortConfigType) => void
-  sortable: boolean
-
-  // Table
-  columns: ColumnsSchema
-  data: any[]
-
-  // Pagination
+  // Search
+  getMastersList: (search?: string) => Promise<void>
+}
+interface SearchContextType {
+  searchOnEnter: boolean
+}
+interface PaginationContextType {
   currentPage: number
   setCurrentPage: (page: number) => void
   totalPages: number
   pageSize: number
   setPageSize: (size: number) => void
   totalRecords: number
-
-  // Search
-  getMastersList: (search?: string) => Promise<void>
-
-  // Form
+  limits: number[]
+}
+interface TableContextType {
+  sortConfig: SortConfigType
+  setSortConfig: (config: SortConfigType) => void
+  onUpdate: (id: string, data: any) => Promise<void>
+  sortable: boolean
+  columns: ColumnsSchema
+  data: any[]
+}
+interface FormContextType {
   addNew: boolean
   closeForm: () => void
   onDataSubmit: (data: any) => void
   setAddNew: (status: boolean) => void
-}
-interface SearchContextType {
-  searchOnEnter: boolean
 }
 // \ End of Context
 

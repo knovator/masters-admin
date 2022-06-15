@@ -1,6 +1,6 @@
 import { MutableRefObject } from "react"
 import { FormActions } from "components/Common"
-import { useMasterState } from "context"
+import { useFormState } from "context/FormContext"
 
 interface MasterFormActionProps {
   addNew?: boolean
@@ -10,7 +10,7 @@ interface MasterFormActionProps {
 }
 
 const MasterFormActions = ({ formRef }: MasterFormActionProps) => {
-  const { addNew, closeForm } = useMasterState()
+  const { addNew, closeForm } = useFormState()
   return (
     <FormActions
       primaryLabel={addNew ? "Add Master" : "Edit Master"}

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
-import { useMasterState } from "context/MasterContext"
 
 import Table from "components/Common/Table"
 import DeleteIcon from "icons/deleteIcon"
 import EditIcon from "icons/editIcon"
+import { useTableState } from "context/TableContext"
 
 interface MasterTableProps {
   columns?: ColumnsSchema
@@ -11,7 +11,7 @@ interface MasterTableProps {
 }
 
 const MasterTable = ({ columns, actions }: MasterTableProps) => {
-  const { onUpdate, sortable, sortConfig, setSortConfig, columns: defaultColumns, data } = useMasterState()
+  const { onUpdate, sortable, sortConfig, setSortConfig, columns: defaultColumns, data } = useTableState()
   const [tableColumns, setTableColumns] = useState<ColumnsSchema>([])
 
   useEffect(() => {
