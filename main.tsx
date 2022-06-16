@@ -79,7 +79,7 @@ function Main() {
             <Master.Pagination />
           </div>
 
-          <Master.FormWrapper>
+          {/* <Master.FormWrapper>
             {({ formState, open, onClose }) => {
               if (!open) return null
               else
@@ -90,7 +90,7 @@ function Main() {
                   </div>
                 )
             }}
-          </Master.FormWrapper>
+          </Master.FormWrapper> */}
         </LayoutMaster>
       </Master>
     </Provider>

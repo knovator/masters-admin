@@ -197,7 +197,7 @@
     @apply relative flex-1 px-6 py-6 overflow-auto;
   }
   .kms_drawer-footer {
-    @apply flex items-center justify-end gap-3 px-4 py-4 border-t modal-footer bg-slate-50 border-slate-400;
+    @apply flex items-center justify-end gap-3 px-4 py-4 border-t bg-slate-50 border-slate-400;
   }
   /* \ End of Drawer */
 
@@ -233,5 +233,37 @@
     @apply p-4;
   }
   /* \ End of Modal */
+
+  /* Animations */
+  .kms_drawer-enter {
+    opacity: 0.1;
+  }
+  .kms_drawer-enter.kms_drawer-enter-active {
+    opacity: 1;
+    transition: opacity 200ms ease-in;
+  }
+  .kms_drawer-exit {
+    opacity: 1;
+  }
+  .kms_drawer-exit.kms_drawer-exit-active {
+    opacity: 0.01;
+    transition: opacity 200ms ease-in;
+  }
+
+  .kms_modal-enter {
+    opacity: 0.01;
+  }
+  .kms_modal-enter.kms_modal-enter-active {
+    opacity: 0.5;
+    transition: opacity 200ms ease-in;
+  }
+  .kms_modal-exit {
+    opacity: 1;
+  }
+  .kms_modal-exit.kms_modal-exit-active {
+    opacity: 0.01;
+    transition: opacity 200ms ease-in;
+  }
+  /* \ End of Animations */
 }
 
