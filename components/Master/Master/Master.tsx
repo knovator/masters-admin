@@ -26,6 +26,7 @@ interface MasterProps extends React.PropsWithChildren {
   routes?: Routes_Input
   loader?: JSX.Element
   explicitForm?: boolean
+  permissions: PermissionsObj
   preConfirmDelete?: (data: { row: any }) => Promise<boolean>
 }
 
@@ -56,6 +57,7 @@ const Master = ({
   children,
   preConfirmDelete,
   loader,
+  permissions,
 }: MasterProps) => {
   const formRef = useRef<HTMLFormElement | null>(null)
   const {
@@ -82,6 +84,7 @@ const Master = ({
     defaultLimit: Array.isArray(limits) && limits.length > 0 ? limits[0] : DEFAULT_LIMIT,
     routes,
     defaultSort,
+    permissions,
     preConfirmDelete,
   })
 
@@ -95,6 +98,8 @@ const Master = ({
           closeForm={onCloseForm}
           onDataSubmit={onDataSubmit}
           updateData={itemData}
+          canAdd={permissions?.add}
+          canUpdate={permissions?.update}
         >
           <PaginationContextProvider
             currentPage={currentPage}
@@ -104,6 +109,7 @@ const Master = ({
             setPageSize={setPageSize}
             totalRecords={totalRecords}
             limits={limits ? limits : PAGE_LIMITS}
+            canList={permissions?.list}
           >
             <TableContextProvider
               onUpdate={partialUpdate}
@@ -115,6 +121,9 @@ const Master = ({
               columns={columns}
               loader={loader}
               loading={loading}
+              canDelete={permissions?.destroy}
+              canList={permissions?.list}
+              canUpdate={permissions?.update}
             >
               {children ? (
                 children

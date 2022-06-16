@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client"
 import "./styles/index.css"
 
 import Master from "components/Master"
-import { Provider } from "context"
+import Provider from "context/ProviderContext"
 
 let newColumns: ColumnsSchema = [
   {
@@ -47,7 +47,6 @@ function Main() {
   return (
     <Provider
       baseUrl="https://api.orbitjobs.knovator.in"
-      permissions={{}}
       token={token}
       dataGetter={(response) => response.data.docs}
       paginationGetter={(response) => response.data}
@@ -60,12 +59,20 @@ function Main() {
         //     method: "POST",
         //   }),
         // }}
-        loader={<p>Loading....</p>}
-        preConfirmDelete={({ row }) => {
-          console.log(row)
-          return Promise.resolve(true)
-        }}
+        // loader={<p>Loading....</p>}
+        // preConfirmDelete={({ row }) => {
+        //   console.log(row)
+        //   return Promise.resolve(true)
+        // }}
         limits={[10, 15, 20, 25]}
+        permissions={{
+          list: true,
+          add: true,
+          destroy: true,
+          partialUpdate: false,
+          sequencing: false,
+          update: true,
+        }}
       >
         <LayoutMaster
           headerDetail={

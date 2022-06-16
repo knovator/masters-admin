@@ -1,4 +1,4 @@
-import { render, fireEvent } from "@testing-library/react"
+import { render, fireEvent, screen } from "@testing-library/react"
 import TableContextProvider from "context/TableContext"
 import MasterTable from "./MasterTable"
 
@@ -40,6 +40,9 @@ describe("Testing MasterTable Component", () => {
         setSortConfig={(config: SortConfigType) => {}}
         sortable={true}
         columns={[]}
+        onChangeFormState={(status, data) => onUpdate("1", 2)}
+        canPartialUpdate={true}
+        canList={true}
       >
         <MasterTable columns={columnsSchema} />
       </TableContextProvider>

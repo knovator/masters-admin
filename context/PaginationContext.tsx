@@ -1,14 +1,6 @@
 import React, { createContext, useContext } from "react"
 
-interface PaginationContextProviderProps extends React.PropsWithChildren {
-  currentPage: number
-  setCurrentPage: (page: number) => void
-  totalPages: number
-  pageSize: number
-  setPageSize: (size: number) => void
-  totalRecords: number
-  limits: number[]
-}
+interface PaginationContextProviderProps extends React.PropsWithChildren, PaginationContextType {}
 
 const PaginationContext = createContext<PaginationContextType | null>(null)
 
@@ -21,10 +13,11 @@ const PaginationContextProvider = ({
   totalPages,
   totalRecords,
   children,
+  canList,
 }: PaginationContextProviderProps) => {
   return (
     <PaginationContext.Provider
-      value={{ currentPage, pageSize, setCurrentPage, setPageSize, totalPages, totalRecords, limits }}
+      value={{ currentPage, pageSize, setCurrentPage, setPageSize, totalPages, totalRecords, limits, canList }}
     >
       {children}
     </PaginationContext.Provider>

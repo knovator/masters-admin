@@ -23,6 +23,7 @@ describe("Testing Pagination Component", () => {
         pageSize={pageSize}
         setPageSize={setPageSize}
         totalRecords={totalRecords}
+        canList={true}
       >
         <Pagination />
       </PaginationContextProvider>
@@ -62,6 +63,7 @@ describe("Testing Pagination Component", () => {
         pageSize={pageSize}
         setPageSize={setPageSize}
         totalRecords={totalRecords}
+        canList={true}
       >
         <Pagination />
       </PaginationContextProvider>
@@ -83,6 +85,7 @@ describe("Testing Pagination Component", () => {
         pageSize={pageSize}
         setPageSize={setPageSize}
         totalRecords={totalRecords}
+        canList={true}
       >
         <Pagination />
       </PaginationContextProvider>

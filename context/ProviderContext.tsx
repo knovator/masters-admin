@@ -13,7 +13,6 @@ const ProviderContext = createContext<ProviderContextType | null>(null)
 const Provider = ({
   children,
   baseUrl,
-  permissions,
   token,
   dataGetter,
   paginationGetter,
@@ -26,7 +25,6 @@ const Provider = ({
     <ProviderContext.Provider
       value={{
         baseUrl,
-        permissions,
         token,
         dataGetter: ctxDataGetter,
         paginationGetter: ctxPaginatonGetter,

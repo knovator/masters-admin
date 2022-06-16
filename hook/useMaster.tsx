@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from "react"
 
-import { useProviderState } from "context"
+import { useProviderState } from "context/ProviderContext"
 import usePagination from "hook/usePagination"
 import request, { getApiType } from "api"
 import { INTERNAL_ERROR_CODE, CALLBACK_CODES } from "constants/common"
@@ -9,10 +9,17 @@ interface UseMasterProps {
   defaultLimit: number
   routes?: Routes_Input
   defaultSort?: SortConfigType
+  permissions: PermissionsObj
   preConfirmDelete?: (data: { row: any }) => Promise<boolean>
 }
 
-const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preConfirmDelete }: UseMasterProps) => {
+const useMaster = ({
+  defaultLimit,
+  routes,
+  defaultSort = ["createdAt", 1],
+  preConfirmDelete,
+  permissions,
+}: UseMasterProps) => {
   const [list, setList] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
   const [totalPages, setTotalPages] = useState(0)

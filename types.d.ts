@@ -58,7 +58,6 @@ type SortConfigType = [string, 1 | -1]
 // Context
 interface ProviderContextType {
   baseUrl: string
-  permissions: any
   token: string
   dataGetter: (response: any) => any[]
   paginationGetter: (response: any) => any
@@ -66,7 +65,6 @@ interface ProviderContextType {
   onSuccess: (callback_code: import("constants/common").CALLBACK_CODES, code: string, message: string) => void
 }
 interface MasterContextType {
-  // Search
   getMastersList: (search?: string) => Promise<void>
 }
 interface SearchContextType {
@@ -80,6 +78,7 @@ interface PaginationContextType {
   setPageSize: (size: number) => void
   totalRecords: number
   limits: number[]
+  canList?: boolean
 }
 interface TableContextType {
   sortConfig: SortConfigType
@@ -91,6 +90,10 @@ interface TableContextType {
   loader?: JSX.Element
   loading?: boolean
   onChangeFormState: (status: FormActionTypes, data?: any) => void
+  canList?: boolean
+  canUpdate?: boolean
+  canDelete?: boolean
+  canPartialUpdate?: boolean
 }
 interface FormContextType {
   formState: FormActionTypes | undefined
@@ -99,6 +102,8 @@ interface FormContextType {
   onChangeFormState: (status: FormActionTypes, data?: any) => void
   updateData: any
   loading: boolean
+  canAdd?: boolean
+  canUpdate?: boolean
 }
 type onDelete = ({ data, confirmDelete }: { data: any; confirmDelete: () => void }) => any
 // \ End of Context
@@ -147,3 +152,12 @@ interface SchemaType {
 }
 type FormActionTypes = "ADD" | "UPDATE" | "DELETE" | null | ""
 // \ End of Form
+
+interface PermissionsObj {
+  list: boolean
+  sequencing: boolean
+  add: boolean
+  update: boolean
+  partialUpdate: boolean
+  destroy: boolean
+}

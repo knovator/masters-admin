@@ -2,8 +2,10 @@ import { Pagination } from "components/Common"
 import { usePaginationState } from "context/PaginationContext"
 
 const MasterPagination = () => {
-  const { limits, currentPage, pageSize, setCurrentPage, setPageSize, totalPages, totalRecords } = usePaginationState()
+  const { limits, currentPage, pageSize, setCurrentPage, setPageSize, totalPages, totalRecords, canList } =
+    usePaginationState()
 
+  if (!canList) return null
   return (
     <Pagination
       currentPage={currentPage}

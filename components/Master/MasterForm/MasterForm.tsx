@@ -9,7 +9,7 @@ interface MasterFormProps {
 }
 
 const MasterForm = forwardRef<HTMLFormElement | null, MasterFormProps>(({ schema }, ref) => {
-  const { onDataSubmit, updateData, formState } = useFormState()
+  const { onDataSubmit, updateData, formState, canAdd, canUpdate } = useFormState()
   const defaultSchema: SchemaType[] = [
     {
       label: "Name*",
@@ -61,6 +61,7 @@ const MasterForm = forwardRef<HTMLFormElement | null, MasterFormProps>(({ schema
     event.target.value = changeToCode(event.target.value)
     return event
   }
+  if (!canAdd && !canUpdate) return null
   return (
     <Form
       schema={schema ? schema : defaultSchema}

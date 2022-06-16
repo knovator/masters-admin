@@ -21,6 +21,10 @@ const MasterTable = ({ columns, actions }: MasterTableProps) => {
     onChangeFormState,
     loading,
     loader,
+    canDelete,
+    canList,
+    canUpdate,
+    canPartialUpdate,
   } = useTableState()
   const [tableColumns, setTableColumns] = useState<ColumnsSchema>([])
 
@@ -30,7 +34,7 @@ const MasterTable = ({ columns, actions }: MasterTableProps) => {
 
   function updateClosure(item: any, key: string) {
     return function (value: string) {
-      if (onUpdate) {
+      if (onUpdate && canPartialUpdate) {
         onUpdate(item.id, { [key]: value })
       }
     }
@@ -57,12 +61,12 @@ const MasterTable = ({ columns, actions }: MasterTableProps) => {
         Cell({ row, onUpdate }) {
           return (
             <div className="kms_actions">
-              {tableActions.showUpdate ? (
+              {tableActions.showUpdate && canUpdate ? (
                 <button onClick={() => onChangeFormState("UPDATE", row)}>
                   <UpdateIcon fill="#fff" />
                 </button>
               ) : null}
-              {row.canDel && tableActions.showDelete ? (
+              {row.canDel && tableActions.showDelete && canDelete ? (
                 <button onClick={() => onChangeFormState("DELETE", row)}>
                   <DeleteIcon />
                 </button>
@@ -93,7 +97,7 @@ const MasterTable = ({ columns, actions }: MasterTableProps) => {
     setTableColumns(modifiedColumns)
   }
 
-  if (Array.isArray(data) && data.length > 0) {
+  if (Array.isArray(data) && data.length > 0 && canList) {
     return (
       <Table
         columns={tableColumns}

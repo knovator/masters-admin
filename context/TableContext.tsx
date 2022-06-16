@@ -1,16 +1,6 @@
 import React, { createContext, useContext } from "react"
 
-interface TableContextProviderProps extends React.PropsWithChildren {
-  onUpdate: (id: string, data: any) => Promise<void>
-  sortConfig: SortConfigType
-  setSortConfig: (config: SortConfigType) => void
-  onChangeFormState: (status: FormActionTypes, data?: any) => void
-  sortable: boolean
-  columns: ColumnsSchema
-  data: any[]
-  loader?: JSX.Element
-  loading?: boolean
-}
+interface TableContextProviderProps extends React.PropsWithChildren, TableContextType {}
 
 const TableContext = createContext<TableContextType | null>(null)
 
@@ -25,10 +15,28 @@ const TableContextProvider = ({
   loader,
   loading,
   onChangeFormState,
+  canDelete = false,
+  canList = false,
+  canUpdate = false,
+  canPartialUpdate = false,
 }: TableContextProviderProps) => {
   return (
     <TableContext.Provider
-      value={{ onChangeFormState, onUpdate, sortConfig, setSortConfig, sortable, columns, data, loader, loading }}
+      value={{
+        onChangeFormState,
+        onUpdate,
+        sortConfig,
+        setSortConfig,
+        sortable,
+        columns,
+        data,
+        loader,
+        loading,
+        canDelete,
+        canList,
+        canUpdate,
+        canPartialUpdate,
+      }}
     >
       {children}
     </TableContext.Provider>

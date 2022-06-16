@@ -1,13 +1,6 @@
 import React, { createContext, useContext } from "react"
 
-interface FormContextProviderProps extends React.PropsWithChildren {
-  formState: FormActionTypes | undefined
-  closeForm: () => void
-  onDataSubmit: (data: any) => void
-  onChangeFormState: (status: FormActionTypes) => void
-  updateData: any
-  loading: boolean
-}
+interface FormContextProviderProps extends React.PropsWithChildren, FormContextType {}
 
 const FormContext = createContext<FormContextType | null>(null)
 
@@ -19,9 +12,13 @@ const FormContextProvider = ({
   children,
   loading,
   updateData,
+  canAdd,
+  canUpdate,
 }: FormContextProviderProps) => {
   return (
-    <FormContext.Provider value={{ loading, formState, onChangeFormState, closeForm, onDataSubmit, updateData }}>
+    <FormContext.Provider
+      value={{ loading, formState, onChangeFormState, closeForm, onDataSubmit, updateData, canAdd, canUpdate }}
+    >
       {children}
     </FormContext.Provider>
   )

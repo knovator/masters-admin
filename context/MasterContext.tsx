@@ -1,17 +1,10 @@
 import React, { createContext, useContext } from "react"
 
-interface MasterContextProviderProps extends React.PropsWithChildren {
-  // Search
-  getMastersList: (search?: string) => Promise<void>
-}
+interface MasterContextProviderProps extends React.PropsWithChildren, MasterContextType {}
 
 const MasterContext = createContext<MasterContextType | null>(null)
 
-const MasterContextProvider = ({
-  children,
-  // Search
-  getMastersList,
-}: MasterContextProviderProps) => {
+const MasterContextProvider = ({ children, getMastersList }: MasterContextProviderProps) => {
   return (
     <MasterContext.Provider
       value={{

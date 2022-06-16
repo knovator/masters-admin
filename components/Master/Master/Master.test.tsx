@@ -3,7 +3,7 @@ import { render, screen, waitFor, fireEvent } from "@testing-library/react"
 import { setupServer } from "msw/node"
 import { rest } from "msw"
 
-import { Provider } from "context"
+import Provider from "context/ProviderContext"
 import Master from "./Master"
 
 const docs = [
@@ -80,17 +80,25 @@ afterAll(() => server.close())
 // Reset handlers after each test `important for test isolation`
 afterEach(() => server.resetHandlers())
 
+let permissions = {
+  list: true,
+  update: true,
+  partialUpdate: true,
+  destroy: true,
+  add: true,
+  sequencing: true,
+}
+
 describe("Testing MasterTable Component", () => {
   it("Should show table with actions and active checkbox", async () => {
     const { container } = render(
       <Provider
         baseUrl="https://testapi.com"
-        permissions={{}}
         token={"abcd"}
         dataGetter={(response) => response.data.docs}
         paginationGetter={(response) => response.data}
       >
-        <Master />
+        <Master permissions={permissions} />
       </Provider>
     )
     // Wait for Table to render fully
@@ -113,12 +121,11 @@ describe("Testing MasterTable Component", () => {
     const { container } = render(
       <Provider
         baseUrl="https://testapi.com"
-        permissions={{}}
         token={"abcd"}
         dataGetter={(response) => response.data.docs}
         paginationGetter={(response) => response.data}
       >
-        <Master />
+        <Master permissions={permissions} />
       </Provider>
     )
     // Test switches and actions count
@@ -135,12 +142,11 @@ describe("Testing MasterTable Component", () => {
     const { container, getByRole } = render(
       <Provider
         baseUrl="https://testapi.com"
-        permissions={{}}
         token={"abcd"}
         dataGetter={(response) => response.data.docs}
         paginationGetter={(response) => response.data}
       >
-        <Master limits={[1, 2]} />
+        <Master limits={[1, 2]} permissions={permissions} />
       </Provider>
     )
     // Wait for Table to render fully
@@ -171,12 +177,11 @@ describe("Testing MasterTable Component", () => {
     const { container, getByRole } = render(
       <Provider
         baseUrl="https://testapi.com"
-        permissions={{}}
         token={"abcd"}
         dataGetter={(response) => response.data.docs}
         paginationGetter={(response) => response.data}
       >
-        <Master limits={[1, 2]} />
+        <Master limits={[1, 2]} permissions={permissions} />
       </Provider>
     )
     // Wait for Table to render fully
@@ -197,7 +202,6 @@ describe("Testing MasterTable Component", () => {
     const { container } = render(
       <Provider
         baseUrl="https://testapi.com"
-        permissions={{}}
         token={"abcd"}
         dataGetter={(response) => response.data.docs}
         paginationGetter={(response) => response.data}
@@ -209,6 +213,7 @@ describe("Testing MasterTable Component", () => {
               method: "GET",
             }),
           }}
+          permissions={permissions}
         />
       </Provider>
     )
@@ -223,12 +228,11 @@ describe("Testing MasterTable Component", () => {
     const { container, getByRole } = render(
       <Provider
         baseUrl="https://testapi.com"
-        permissions={{}}
         token={"abcd"}
         dataGetter={(response) => response.data.docs}
         paginationGetter={(response) => response.data}
       >
-        <Master />
+        <Master permissions={permissions} />
       </Provider>
     )
     // Wait for Table to render fully

@@ -7,11 +7,13 @@ interface MasterFormActionProps {
 }
 
 const MasterFormActions = ({ formRef }: MasterFormActionProps) => {
-  const { formState, closeForm, loading } = useFormState()
+  const { formState, closeForm, loading, canAdd, canUpdate } = useFormState()
   const onSubmitClick = (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (!formRef.current) e?.preventDefault()
     else formRef.current?.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }))
   }
+
+  if (!canAdd && !canUpdate) return null
   return (
     <FormActions
       loading={loading}
