@@ -21,7 +21,7 @@ const Input = ({
   type = "text",
   placeholder,
   rest = {},
-  label,
+  label = "",
   error,
   className,
 }: InputProps) => {
@@ -29,6 +29,7 @@ const Input = ({
     <div className="kms_input-wrapper">
       <label className="kms_input-label">{label}</label>
       <input
+        data-testid={`input-${type}-${label}`}
         className={classNames("kms_input", className)}
         type={type}
         value={value}

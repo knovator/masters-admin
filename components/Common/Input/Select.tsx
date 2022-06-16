@@ -16,6 +16,7 @@ const Select = ({ onChange, value, rest, label, error, options = [], className, 
     <div className="kms_input-wrapper">
       <label className="kms_input-label">{label}</label>
       <select
+        data-testid={`input-select-${label}`}
         value={value}
         onChange={onChange}
         className={classNames("kms_input", className)}
@@ -23,7 +24,7 @@ const Select = ({ onChange, value, rest, label, error, options = [], className, 
         {...rest}
       >
         {options.map((option, index) => (
-          <option value={option.value} key={index}>
+          <option value={option.value} key={index} data-testid="select-option">
             {option.label}
           </option>
         ))}

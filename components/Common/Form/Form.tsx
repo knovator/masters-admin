@@ -1,4 +1,4 @@
-import React, { MutableRefObject, forwardRef, useEffect, useCallback } from "react"
+import React, { MutableRefObject, forwardRef, useEffect } from "react"
 import { useForm, Controller } from "react-hook-form"
 import { isEmpty } from "utils/util"
 import Input from "../Input"
@@ -21,6 +21,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(({ schema, onSubmit, 
     setValue,
   } = useForm()
 
+  // setting data values
   useEffect(() => {
     if (!isEmpty(data)) {
       schema.forEach((schemaItem) => {
@@ -29,6 +30,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(({ schema, onSubmit, 
     }
   }, [data, reset, setValue])
 
+  // setting default values
   useEffect(() => {
     if (isEmpty(data)) {
       let defaultValues = schema.reduce((values: Record<string, string | number | boolean>, schemaItem: SchemaType) => {

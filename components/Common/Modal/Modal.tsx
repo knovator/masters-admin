@@ -19,7 +19,7 @@ const Modal = ({ open, onClose, title, children }: ModalProps) => {
       mountOnEnter
       unmountOnExit
     >
-      <div className="kms_modal-wrapper-1" ref={nodeRef}>
+      <div className="kms_modal-wrapper-1" ref={nodeRef} data-testid="modal">
         <div className="kms_modal-wrapper-2">
           <div className="kms_modal-backdrop" role="backdrop" onClick={onClose} />
           <div className="kms_modal-container-1">
@@ -27,7 +27,7 @@ const Modal = ({ open, onClose, title, children }: ModalProps) => {
               <div className="kms_modal-main">
                 <div className="kms_modal-header">
                   <span className="kms_modal-title">{title}</span>
-                  <a href="#" className="kms_modal-close" onClick={onClose}>
+                  <a href="#" className="kms_modal-close" onClick={onClose} data-testid="modal-close">
                     <CloseIcon />
                   </a>
                 </div>

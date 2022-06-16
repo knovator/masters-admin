@@ -26,6 +26,7 @@ const Textarea = ({
     <div className="kms_input-wrapper">
       <label className="kms_input-label">{label}</label>
       <textarea
+        data-testid={`input-textarea-${label}`}
         className={classNames("kms_input", className)}
         value={value}
         onChange={onChange}
