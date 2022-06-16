@@ -10,13 +10,13 @@ import MasterSearch from "../MasterSearch"
 import MasterPagination from "../MasterPagination"
 import MasterFormWrapper from "../MasterFormWrapper"
 import MasterFormActions from "../MasterFormActions"
-import { Drawer, Input, Button } from "components/Common"
+import { Drawer } from "components/Common"
 
 import TableContextProvider from "context/TableContext"
 import MasterContextProvider from "context/MasterContext"
 import PaginationContextProvider from "context/PaginationContext"
 import FormContextProvider from "context/FormContext"
-import Modal from "components/Common/Modal/Modal"
+
 import DeleteModal from "../DeleteModal"
 
 interface MasterProps extends React.PropsWithChildren {
@@ -24,6 +24,7 @@ interface MasterProps extends React.PropsWithChildren {
   defaultSort?: SortConfigType
   limits?: number[]
   routes?: Routes_Input
+  loader?: JSX.Element
   explicitForm?: boolean
   preConfirmDelete?: (data: { row: any }) => Promise<boolean>
 }
@@ -54,6 +55,7 @@ const Master = ({
   explicitForm = false,
   children,
   preConfirmDelete,
+  loader,
 }: MasterProps) => {
   const formRef = useRef<HTMLFormElement | null>(null)
   const {
@@ -111,6 +113,8 @@ const Master = ({
               sortConfig={sortConfig}
               setSortConfig={setSortConfig}
               columns={columns}
+              loader={loader}
+              loading={loading}
             >
               {children ? (
                 children

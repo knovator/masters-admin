@@ -60,6 +60,7 @@ function Main() {
         //     method: "POST",
         //   }),
         // }}
+        loader={<p>Loading....</p>}
         preConfirmDelete={({ row }) => {
           console.log(row)
           return Promise.resolve(true)

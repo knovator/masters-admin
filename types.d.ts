@@ -13,6 +13,8 @@ type ColumnsSchema = ColumnSchemaType[]
 
 interface TableProps {
   data: any
+  loading?: boolean
+  loader?: JSX.Element 
   columns: ColumnsSchema
   sequencing?: boolean
   sortable?: boolean
@@ -86,6 +88,8 @@ interface TableContextType {
   sortable: boolean
   columns: ColumnsSchema
   data: any[]
+  loader?: JSX.Element
+  loading?: boolean
   onChangeFormState: (status: FormActionTypes, data?: any) => void
 }
 interface FormContextType {

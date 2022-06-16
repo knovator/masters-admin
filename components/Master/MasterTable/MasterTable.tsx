@@ -19,6 +19,8 @@ const MasterTable = ({ columns, actions }: MasterTableProps) => {
     columns: defaultColumns,
     data,
     onChangeFormState,
+    loading,
+    loader,
   } = useTableState()
   const [tableColumns, setTableColumns] = useState<ColumnsSchema>([])
 
@@ -99,6 +101,8 @@ const MasterTable = ({ columns, actions }: MasterTableProps) => {
         sortable={sortable}
         sortConfig={sortConfig}
         setSortConfig={setSortConfig}
+        loader={loader}
+        loading={loading}
       />
     )
   }

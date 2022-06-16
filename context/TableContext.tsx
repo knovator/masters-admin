@@ -8,6 +8,8 @@ interface TableContextProviderProps extends React.PropsWithChildren {
   sortable: boolean
   columns: ColumnsSchema
   data: any[]
+  loader?: JSX.Element
+  loading?: boolean
 }
 
 const TableContext = createContext<TableContextType | null>(null)
@@ -20,10 +22,14 @@ const TableContextProvider = ({
   columns,
   data,
   children,
+  loader,
+  loading,
   onChangeFormState,
 }: TableContextProviderProps) => {
   return (
-    <TableContext.Provider value={{ onChangeFormState, onUpdate, sortConfig, setSortConfig, sortable, columns, data }}>
+    <TableContext.Provider
+      value={{ onChangeFormState, onUpdate, sortConfig, setSortConfig, sortable, columns, data, loader, loading }}
+    >
       {children}
     </TableContext.Provider>
   )

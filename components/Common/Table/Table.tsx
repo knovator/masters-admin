@@ -2,7 +2,7 @@ import { useTable } from "react-table"
 import { SORT_ASCENDING, SORT_DESCENDING, EXCLUDE_SORT_COLUMNS } from "constants/common"
 import { useCallback } from "react"
 
-const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig }: TableProps) => {
+const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, loader, loading }: TableProps) => {
   const getSortConfigClassName = useCallback(
     (accessor: string, up = true) => {
       if (!sortConfig || accessor !== sortConfig[0]) return "kms_sort-inactive"
@@ -45,37 +45,43 @@ const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig }: Ta
   })
 
   return (
-    <div className={`kms_table-container`} data-testid="table">
-      <table className="kms_table" {...getTableProps()}>
-        <thead className="kms_thead">
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps()}
-                  onClick={() => onClickSort(column.id)}
-                  className="cursor-pointer hover:bg-opacity-50"
-                >
-                  {column.render("Header")}
-                  {sortConfigRenderer(column.id)}
-                </th>
+    <div className={`kms_table-container`} style={{ height: "calc(100vh - 252px)" }} data-testid="table">
+      <div className={`kms_table-height`}>
+        {loading && loader ? (
+          <div className="kms_table-height">{loader}</div>
+        ) : (
+          <table className="kms_table" {...getTableProps()}>
+            <thead className="kms_thead">
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
+                    <th
+                      {...column.getHeaderProps()}
+                      onClick={() => onClickSort(column.id)}
+                      className="cursor-pointer hover:bg-opacity-50"
+                    >
+                      {column.render("Header")}
+                      {sortConfigRenderer(column.id)}
+                    </th>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody className="kms_tbody" {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row)
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                })}
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
+            </thead>
+            <tbody className="kms_tbody" {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row)
+                return (
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map((cell) => {
+                      return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    })}
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   )
 }

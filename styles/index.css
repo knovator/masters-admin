@@ -34,7 +34,10 @@
   .kms_sort-inactive {
     @apply opacity-40;
   }
-
+  .kms_table-height {
+    @apply justify-center overflow-auto;
+    height: calc(100vh - 252px);
+  }
   /* \ End of Table */
 
   /* Pagination */
