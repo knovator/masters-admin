@@ -3,19 +3,23 @@ import { capitalizeFirstLetter, changeToCode } from "utils/util"
 import { Form } from "components/Common"
 import { useFormState } from "context/FormContext"
 
-interface DrawerProps {
+interface MasterFormProps {
+  schema?: SchemaType[]
   ref: MutableRefObject<HTMLFormElement | null>
 }
 
-const MasterForm = forwardRef<HTMLFormElement | null, DrawerProps>(({}, ref) => {
+const MasterForm = forwardRef<HTMLFormElement | null, MasterFormProps>(({ schema }, ref) => {
   const { onDataSubmit, updateData, formState } = useFormState()
-  const schema: SchemaType[] = [
+  const defaultSchema: SchemaType[] = [
     {
       label: "Name*",
       accessor: "name",
       type: "text",
       placeholder: "Enter Name",
       onInput: handleCapitalize,
+      validations: {
+        required: "Name is Required",
+      },
     },
     {
       label: "Code*",
@@ -24,9 +28,12 @@ const MasterForm = forwardRef<HTMLFormElement | null, DrawerProps>(({}, ref) => 
       onInput: handleCode,
       editable: false,
       placeholder: "Enter Code",
+      validations: {
+        required: "Code is Required",
+      },
     },
     {
-      label: "Web Display*",
+      label: "Web Display",
       accessor: "webDsply",
       type: "text",
       onInput: handleCapitalize,
@@ -55,7 +62,13 @@ const MasterForm = forwardRef<HTMLFormElement | null, DrawerProps>(({}, ref) => 
     return event
   }
   return (
-    <Form schema={schema} onSubmit={onDataSubmit} ref={ref} data={updateData} isUpdating={formState === "UPDATE"} />
+    <Form
+      schema={schema ? schema : defaultSchema}
+      onSubmit={onDataSubmit}
+      ref={ref}
+      data={updateData}
+      isUpdating={formState === "UPDATE"}
+    />
   )
 })
 

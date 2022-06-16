@@ -2,7 +2,7 @@ import classNames from "classnames"
 
 interface ButtonProps {
   label: string
-  onClick?: () => void
+  onClick?: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   disabled?: boolean
   variant?: "primary" | "secondary"
   size?: "sm" | "md"

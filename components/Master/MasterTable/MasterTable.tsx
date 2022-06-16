@@ -60,7 +60,11 @@ const MasterTable = ({ columns, actions }: MasterTableProps) => {
                   <UpdateIcon fill="#fff" />
                 </button>
               ) : null}
-              {row.canDel && tableActions.showDelete ? <DeleteIcon /> : null}
+              {row.canDel && tableActions.showDelete ? (
+                <button onClick={() => onChangeFormState("DELETE", row)}>
+                  <DeleteIcon />
+                </button>
+              ) : null}
             </div>
           )
         },

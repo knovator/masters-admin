@@ -4,7 +4,7 @@ interface FormActionsProps {
   loading?: boolean
   primaryLabel?: string
   secondaryLabel?: string
-  onPrimaryButtonClick?: () => void
+  onPrimaryButtonClick?: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   onSecondaryButtonClick?: () => void
 }
 

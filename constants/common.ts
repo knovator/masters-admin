@@ -17,11 +17,11 @@ const INTERNAL_ERROR_CODE = "INTERNAL_ERROR"
 // }
 
 enum CALLBACK_CODES {
-  "GET_ALL",
-  "GET_SINGLE",
-  "CREATE",
-  "UPDATE",
-  "DELETE"
+  "GET_ALL" = "GET_ALL",
+  "GET_SINGLE" = "GET_SINGLE",
+  "CREATE" = "CREATE",
+  "UPDATE" = "UPDATE",
+  "DELETE" = "DELETE"
 }
 
 export {

@@ -9,16 +9,18 @@ interface UseMasterProps {
   defaultLimit: number
   routes?: Routes_Input
   defaultSort?: SortConfigType
+  preConfirmDelete?: (data: { row: any }) => Promise<boolean>
 }
 
-const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1] }: UseMasterProps) => {
+const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preConfirmDelete }: UseMasterProps) => {
   const [list, setList] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
   const [totalPages, setTotalPages] = useState(0)
   const [totalRecords, setTotalRecords] = useState(0)
-  const sortConfigRef = useRef<SortConfigType>(defaultSort)
+  const [itemData, setItemData] = useState<any | null>(null)
   const [formState, setFormState] = useState<FormActionTypes>()
-  const [updateData, setUpdateData] = useState<any | null>(null)
+
+  const sortConfigRef = useRef<SortConfigType>(defaultSort)
 
   const { baseUrl, token, dataGetter, paginationGetter, onError, onSuccess } = useProviderState()
   const { setPageSize, pageSize, currentPage, setCurrentPage, filter } = usePagination({ defaultLimit })
@@ -55,9 +57,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1] }: Use
           return setList(dataGetter(response))
         }
         setLoading(false)
-        if (response?.message === "UNAUTHENTICATED") {
-          onError(CALLBACK_CODES.GET_ALL, response.code, response.message)
-        }
+        onError(CALLBACK_CODES.GET_ALL, response.code, response.message)
       } catch (error) {
         setLoading(false)
         onError(CALLBACK_CODES.GET_ALL, INTERNAL_ERROR_CODE, (error as Error).message)
@@ -99,7 +99,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1] }: Use
         routes,
         action: formState === "ADD" ? "CREATE" : "UPDATE",
         module: "masters",
-        id: updateData.id,
+        id: itemData.id,
       })
       let response = await request({
         baseUrl,
@@ -124,10 +124,54 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1] }: Use
   }
   const onCloseForm = () => {
     setFormState(undefined)
-    setUpdateData(null)
+    setItemData(null)
+  }
+  const onCofirmDeleteMaster = async () => {
+    try {
+      let proceed = true
+      if (typeof preConfirmDelete === "function") {
+        try {
+          proceed = await preConfirmDelete({ row: itemData })
+        } catch (error) {
+          proceed = false
+        }
+      }
+
+      if (proceed) {
+        setLoading(true)
+        let api = getApiType({
+          routes,
+          action: "DELETE",
+          module: "masters",
+        })
+        let response = await request({
+          baseUrl,
+          token,
+          method: api.method,
+          url: api.url,
+          data: {
+            id: [itemData?.id],
+          },
+        })
+        if (response?.code === "SUCCESS") {
+          setLoading(false)
+          onSuccess(CALLBACK_CODES.DELETE, response?.code, response?.message)
+          getMastersList()
+          onCloseForm()
+          return
+        }
+        setLoading(false)
+        onError(CALLBACK_CODES.DELETE, response?.code, response?.message)
+        onCloseForm()
+      }
+    } catch (error) {
+      setLoading(false)
+      onError(CALLBACK_CODES.GET_ALL, INTERNAL_ERROR_CODE, (error as Error).message)
+      onCloseForm()
+    }
   }
   const onChangeFormState = async (state: FormActionTypes, data?: any) => {
-    setUpdateData(data || null)
+    setItemData(data || null)
     setFormState(state)
   }
 
@@ -156,10 +200,11 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1] }: Use
 
     // Form
     formState,
-    updateData,
+    itemData,
     onChangeFormState,
     onCloseForm,
     onDataSubmit,
+    onCofirmDeleteMaster,
   }
 }
 

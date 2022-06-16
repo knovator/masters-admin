@@ -78,7 +78,7 @@
     @apply grid gap-4;
   }
   .kms_input {
-    @apply min-h-[40px] rounded-lg border border-slate-400 p-1 outline-none bg-transparent appearance-none focus:outline-none focus:ring-blue-500 focus:ring-2 transition;
+    @apply min-h-[40px] rounded-lg border border-slate-400 p-2 outline-none bg-transparent appearance-none focus:outline-none focus:ring-blue-500 focus:ring-2 transition;
   }
   .kms_input:disabled {
     @apply bg-slate-300 cursor-not-allowed;
@@ -158,5 +158,80 @@
     background-position: center; */
   }
   /* \ End of Switch */
+
+  /* Drawer */
+  .kms_drawer-wrapper-1 {
+    @apply fixed inset-0 overflow-hidden;
+  }
+  .kms_drawer-wrapper-2 {
+    @apply absolute inset-0 overflow-hidden;
+  }
+  .kms_drawer-backdrop {
+    @apply absolute inset-0 transition-opacity bg-black bg-opacity-75 backdrop-blur-sm;
+  }
+  .kms_drawer-container-1 {
+    @apply fixed inset-y-0 right-0 flex max-w-full pl-10;
+  }
+  .kms_drawer-container-2 {
+    @apply relative w-screen max-w-xl;
+  }
+  .kms_drawer-close-section {
+    @apply absolute top-0 left-0 flex pt-4 pr-2 -ml-8 sm:-ml-10 sm:pr-4;
+  }
+  .kms_drawer-close-btn {
+    @apply flex items-center justify-center w-8 h-8 transition bg-white rounded-full focus:outline-none hover:rotate-90;
+  }
+  .kms_sr-only {
+    @apply sr-only;
+  }
+  .kms_drawer-main {
+    @apply flex flex-col h-full overflow-y-scroll bg-white shadow-xl;
+  }
+  .kms_drawer-header {
+    @apply px-4 py-6 border-b border-slate-400 sm:px-6 bg-slate-300;
+  }
+  .kms_drawer-header-title {
+    @apply text-xl font-medium;
+  }
+  .kms_darwer-content {
+    @apply relative flex-1 px-6 py-6 overflow-auto;
+  }
+  .kms_drawer-footer {
+    @apply flex items-center justify-end gap-3 px-4 py-4 border-t modal-footer bg-slate-50 border-slate-400;
+  }
+  /* \ End of Drawer */
+
+  /* Modal */
+  .kms_modal-wrapper-1 {
+    @apply fixed inset-0 z-10 overflow-y-auto;
+  }
+  .kms_modal-wrapper-2 {
+    @apply flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0 relative;
+  }
+  .kms_modal-backdrop {
+    @apply absolute inset-0 transition-opacity bg-black bg-opacity-75 backdrop-blur-sm;
+  }
+  .kms_modal-container-1 {
+    @apply opacity-100 min-h-screen flex justify-center items-center;
+  }
+  .kms_modal-container-2 {
+    @apply inline-block overflow-hidden text-left align-bottom transition-all transform shadow-xl sm:my-8 sm:align-middle sm:max-w-xl sm:w-full rounded-lg;
+  }
+  .kms_modal-main {
+    @apply bg-white;
+  }
+  .kms_modal-header {
+    @apply relative p-4 pb-4 border-b border-gray-200;
+  }
+  .kms_modal-title {
+    @apply text-sm font-semibold;
+  }
+  .kms_modal-close {
+    @apply absolute right-5 top-5 focus:outline-none;
+  }
+  .kms_modal-content {
+    @apply p-4;
+  }
+  /* \ End of Modal */
 }
 

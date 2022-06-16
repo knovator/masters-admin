@@ -96,6 +96,7 @@ interface FormContextType {
   updateData: any
   loading: boolean
 }
+type onDelete = ({ data, confirmDelete }: { data: any; confirmDelete: () => void }) => any
 // \ End of Context
 
 // API

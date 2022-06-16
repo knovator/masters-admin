@@ -46,7 +46,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(({ schema, onSubmit, 
         case "checkbox":
           input = (
             <Input.Checkbox
-              error={errors[schema.accessor]}
+              error={errors[schema.accessor]?.message}
               label={schema.label}
               rest={register(schema.accessor, schema.validations || {})}
               className="block"
@@ -59,7 +59,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(({ schema, onSubmit, 
             <Input.Select
               options={schema.options}
               label={schema.label}
-              error={errors[schema.accessor]}
+              error={errors[schema.accessor]?.message}
               rest={register(schema.accessor, schema.validations || {})}
               className="w-full"
               disabled={isUpdating && typeof schema.editable !== "undefined" && !schema.editable}
@@ -69,7 +69,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(({ schema, onSubmit, 
         case "textarea":
           input = (
             <Input.Textarea
-              error={errors[schema.accessor]}
+              error={errors[schema.accessor]?.message}
               label={schema.label}
               rest={register(schema.accessor, schema.validations || {})}
               onInput={schema.onInput}
@@ -87,7 +87,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(({ schema, onSubmit, 
               rest={register(schema.accessor, schema.validations || {})}
               label={schema.label}
               onInput={schema.onInput}
-              error={errors[schema.accessor]}
+              error={errors[schema.accessor]?.message}
               type={schema.type}
               className="w-full p-2"
               placeholder={schema.placeholder}
@@ -102,7 +102,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(({ schema, onSubmit, 
           control={control}
           name={schema.accessor}
           rules={schema.validations}
-          render={({ field }) => schema.Input!({ field, error: errors[schema.accessor] })}
+          render={({ field }) => schema.Input!({ field, error: errors[schema.accessor]?.message })}
         />
       )
     } else throw new Error(`Please provide Input or type prop to render input Labeled ${schema.label}`)
@@ -129,6 +129,9 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(({ schema, onSubmit, 
       {schema.map((schema, i) => (
         <React.Fragment key={i}>{inputRenderer(schema)}</React.Fragment>
       ))}
+      <p>
+        <b>*</b> Indicates fields are required
+      </p>
     </form>
   )
 })

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useRef } from "react"
 import ReactDOM from "react-dom/client"
 import "./styles/index.css"
 
@@ -42,8 +42,8 @@ const LayoutMaster = ({ headerDetail, children }: LayoutMasterProps) => {
 
 function Main() {
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTg1YjM0NjNhMTNmY2MzNGMxZDNjMSIsImVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20iLCJpYXQiOjE2NTUyNjc5NjMsImV4cCI6MTY1NTM1NDM2M30.qpaK8Ap-wmMz7pGx24h9bpRsJpjhJmdQHqbRzcWgUV4"
-
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTg1YjM0NjNhMTNmY2MzNGMxZDNjMSIsImVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20iLCJpYXQiOjE2NTUzNTQ3NjQsImV4cCI6MTY1NTQ0MTE2NH0.FVdNVzUHynb0OUV2owqFHaVSYPITfoQ5LLI2qLbtQnk"
+  const formRef = useRef<HTMLFormElement>(null)
   return (
     <Provider
       baseUrl="https://api.orbitjobs.knovator.in"
@@ -60,6 +60,10 @@ function Main() {
         //     method: "POST",
         //   }),
         // }}
+        preConfirmDelete={({ row }) => {
+          console.log(row)
+          return Promise.resolve(true)
+        }}
         limits={[10, 15, 20, 25]}
       >
         <LayoutMaster
@@ -74,6 +78,19 @@ function Main() {
           <div className="bg-slate-200 sticky bottom-0">
             <Master.Pagination />
           </div>
+
+          <Master.FormWrapper>
+            {({ formState, open, onClose }) => {
+              if (!open) return null
+              else
+                return (
+                  <div>
+                    <Master.Form ref={formRef} />
+                    <Master.FormActions formRef={formRef} />
+                  </div>
+                )
+            }}
+          </Master.FormWrapper>
         </LayoutMaster>
       </Master>
     </Provider>

@@ -8,13 +8,16 @@ import MasterForm from "../MasterForm"
 import MasterTable from "../MasterTable"
 import MasterSearch from "../MasterSearch"
 import MasterPagination from "../MasterPagination"
+import MasterFormWrapper from "../MasterFormWrapper"
 import MasterFormActions from "../MasterFormActions"
-import { Drawer } from "components/Common"
+import { Drawer, Input, Button } from "components/Common"
 
 import TableContextProvider from "context/TableContext"
 import MasterContextProvider from "context/MasterContext"
 import PaginationContextProvider from "context/PaginationContext"
 import FormContextProvider from "context/FormContext"
+import Modal from "components/Common/Modal/Modal"
+import DeleteModal from "../DeleteModal"
 
 interface MasterProps extends React.PropsWithChildren {
   sortable?: boolean
@@ -22,6 +25,7 @@ interface MasterProps extends React.PropsWithChildren {
   limits?: number[]
   routes?: Routes_Input
   explicitForm?: boolean
+  preConfirmDelete?: (data: { row: any }) => Promise<boolean>
 }
 
 const columns = [
@@ -49,6 +53,7 @@ const Master = ({
   limits = PAGE_LIMITS,
   explicitForm = false,
   children,
+  preConfirmDelete,
 }: MasterProps) => {
   const formRef = useRef<HTMLFormElement | null>(null)
   const {
@@ -66,14 +71,16 @@ const Master = ({
     getMastersList,
     // Form
     formState,
-    updateData,
+    itemData,
     onChangeFormState,
     onCloseForm,
     onDataSubmit,
+    onCofirmDeleteMaster,
   } = useMaster({
     defaultLimit: Array.isArray(limits) && limits.length > 0 ? limits[0] : DEFAULT_LIMIT,
     routes,
     defaultSort,
+    preConfirmDelete,
   })
 
   return (
@@ -85,7 +92,7 @@ const Master = ({
           onChangeFormState={onChangeFormState}
           closeForm={onCloseForm}
           onDataSubmit={onDataSubmit}
-          updateData={updateData}
+          updateData={itemData}
         >
           <PaginationContextProvider
             currentPage={currentPage}
@@ -118,7 +125,7 @@ const Master = ({
 
               {!explicitForm && (
                 <Drawer
-                  open={!!formState}
+                  open={formState === "ADD" || formState === "UPDATE"}
                   onClose={onCloseForm}
                   title={formState === "ADD" ? "Add Master" : "Edit Master"}
                   footerContent={<MasterFormActions formRef={formRef} />}
@@ -126,6 +133,13 @@ const Master = ({
                   <MasterForm ref={formRef} />
                 </Drawer>
               )}
+
+              <DeleteModal
+                formState={formState}
+                itemData={itemData}
+                onClose={onCloseForm}
+                onConfirmDelete={onCofirmDeleteMaster}
+              />
             </TableContextProvider>
           </PaginationContextProvider>
         </FormContextProvider>
@@ -139,4 +153,7 @@ export default Object.assign(Master, {
   Pagination: MasterPagination,
   Search: MasterSearch,
   AddButton,
+  Form: MasterForm,
+  FormActions: MasterFormActions,
+  FormWrapper: MasterFormWrapper,
 })
