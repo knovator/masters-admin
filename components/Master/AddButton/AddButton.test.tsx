@@ -8,14 +8,14 @@ describe("Testing Addbutton component", () => {
       <FormContextProvider
         closeForm={() => {}}
         formState={undefined}
-        onDataSubmit={(data: any) => {}}
-        onChangeFormState={(status: FormActionTypes, data?: any) => {}}
+        onDataSubmit={() => {}}
+        onChangeFormState={() => {}}
         updateData={undefined}
         loading={false}
         canAdd={false}
       >
         <AddButton />
-      </FormContextProvider>
+      </FormContextProvider>,
     )
     expect(container.firstChild).toBeFalsy()
   })
@@ -26,14 +26,14 @@ describe("Testing Addbutton component", () => {
       <FormContextProvider
         closeForm={() => {}}
         formState={formState}
-        onDataSubmit={(data: any) => {}}
+        onDataSubmit={() => {}}
         onChangeFormState={onChangeFormState}
         updateData={undefined}
         loading={false}
         canAdd={true}
       >
         <AddButton />
-      </FormContextProvider>
+      </FormContextProvider>,
     )
     let addButton = getByRole("button", { name: "Add Master" })
     fireEvent.click(addButton)

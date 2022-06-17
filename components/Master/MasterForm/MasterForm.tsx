@@ -1,7 +1,7 @@
-import React, { forwardRef, MutableRefObject } from "react"
-import { capitalizeFirstLetter, changeToCode } from "utils/util"
 import { Form } from "components/Common"
 import { useFormState } from "context/FormContext"
+import React, { forwardRef, MutableRefObject } from "react"
+import { capitalizeFirstLetter, changeToCode } from "utils/util"
 
 interface MasterFormProps {
   schema?: SchemaType[]

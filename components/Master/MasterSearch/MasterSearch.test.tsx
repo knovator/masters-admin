@@ -1,18 +1,18 @@
-import { render, fireEvent } from "@testing-library/react"
-import MasterSearch from "./MasterSearch"
+import { fireEvent, render } from "@testing-library/react"
 import MasterContextProvider from "context/MasterContext"
+import MasterSearch from "./MasterSearch"
 
 describe("Testing MasterSearch Component", () => {
   it("Should call getMastersList when Search Changes", async () => {
     let functionCalled = false
-    const getMastersList = (search?: string) => {
+    const getMastersList = () => {
       functionCalled = true
       return Promise.resolve()
     }
     const { container } = render(
       <MasterContextProvider getMastersList={getMastersList}>
         <MasterSearch />
-      </MasterContextProvider>
+      </MasterContextProvider>,
     )
     const searchInput = container.querySelector("input[type=search]")
     expect(searchInput).toBeDefined()

@@ -1,6 +1,7 @@
-import { MutableRefObject } from "react"
 import { render } from "@testing-library/react"
 import FormContextProvider from "context/FormContext"
+import { MutableRefObject } from "react"
+
 import MasteForm from "."
 
 describe("Testing MasterForm component", () => {
@@ -25,17 +26,15 @@ describe("Testing MasterForm component", () => {
       <FormContextProvider
         closeForm={() => {}}
         formState={"ADD"}
-        onDataSubmit={(data: any) => {
-          console.log("Submitted", data)
-        }}
-        onChangeFormState={(status: FormActionTypes, data?: any) => {}}
+        onDataSubmit={() => {}}
+        onChangeFormState={() => {}}
         updateData={undefined}
         loading={false}
         canAdd={true}
         canUpdate={true}
       >
         <MasteForm ref={ref} schema={customSchema} />
-      </FormContextProvider>
+      </FormContextProvider>,
     )
     let inputs = container.querySelectorAll(".kms_input")
     expect(inputs.length).toBe(2)

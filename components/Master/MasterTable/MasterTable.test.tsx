@@ -1,4 +1,4 @@
-import { render, fireEvent, screen } from "@testing-library/react"
+import { fireEvent, render } from "@testing-library/react"
 import TableContextProvider from "context/TableContext"
 import MasterTable from "./MasterTable"
 
@@ -29,7 +29,7 @@ let data = [
 describe("Testing MasterTable Component", () => {
   it("Should call onUpdate when rendered element gets changed", () => {
     let buttonClicked = false
-    let onUpdate = async (id: string, data: any) => {
+    let onUpdate = async () => {
       buttonClicked = true
     }
     const { container } = render(
@@ -37,15 +37,15 @@ describe("Testing MasterTable Component", () => {
         onUpdate={onUpdate}
         data={data}
         sortConfig={["createdAt", 1]}
-        setSortConfig={(config: SortConfigType) => {}}
+        setSortConfig={() => {}}
         sortable={true}
         columns={[]}
-        onChangeFormState={(status, data) => onUpdate("1", 2)}
+        onChangeFormState={() => onUpdate()}
         canPartialUpdate={true}
         canList={true}
       >
         <MasterTable columns={columnsSchema} />
-      </TableContextProvider>
+      </TableContextProvider>,
     )
 
     let activeCheckbox = container.querySelector("input[type=checkbox]")

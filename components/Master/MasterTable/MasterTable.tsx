@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react"
-
+import { useCallback, useEffect, useState } from "react"
+import { useTableState } from "context/TableContext"
 import Table from "components/Common/Table"
 import DeleteIcon from "icons/deleteIcon"
 import UpdateIcon from "icons/updateIcon"
-import { useTableState } from "context/TableContext"
 
 interface MasterTableProps {
   columns?: ColumnsSchema
@@ -28,18 +27,18 @@ const MasterTable = ({ columns, actions }: MasterTableProps) => {
   } = useTableState()
   const [tableColumns, setTableColumns] = useState<ColumnsSchema>([])
 
-  useEffect(() => {
-    verifyAndUpdateColumns()
-  }, [columns, defaultColumns])
-
-  function updateClosure(item: any, key: string) {
-    return function (value: string) {
-      if (onUpdate && canPartialUpdate) {
-        onUpdate(item.id, { [key]: value })
+  const updateClosure = useCallback(
+    (item: any, key: string) => {
+      return function (value: string) {
+        if (onUpdate && canPartialUpdate) {
+          onUpdate(item.id, { [key]: value })
+        }
       }
-    }
-  }
-  function verifyAndUpdateColumns() {
+    },
+    [canPartialUpdate, onUpdate],
+  )
+
+  const verifyAndUpdateColumns = useCallback(() => {
     let modifiedColumns = [...(columns ? columns : defaultColumns)]
 
     // Handling Table Actions
@@ -47,7 +46,7 @@ const MasterTable = ({ columns, actions }: MasterTableProps) => {
       showDelete: true,
       showUpdate: true,
     }
-    if (!!actions) {
+    if (actions) {
       tableActions = {
         ...tableActions,
         ...actions,
@@ -58,7 +57,7 @@ const MasterTable = ({ columns, actions }: MasterTableProps) => {
       let modification: ColumnSchemaType = {
         Header: "Actions",
         accessor: "actions",
-        Cell({ row, onUpdate }) {
+        Cell({ row }) {
           return (
             <div className="kms_actions">
               {tableActions.showUpdate && canUpdate ? (
@@ -95,7 +94,11 @@ const MasterTable = ({ columns, actions }: MasterTableProps) => {
     })
 
     setTableColumns(modifiedColumns)
-  }
+  }, [actions, canDelete, canUpdate, columns, defaultColumns, onChangeFormState, updateClosure])
+
+  useEffect(() => {
+    verifyAndUpdateColumns()
+  }, [columns, defaultColumns, verifyAndUpdateColumns])
 
   if (Array.isArray(data) && data.length > 0 && canList) {
     return (

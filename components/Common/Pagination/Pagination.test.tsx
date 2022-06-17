@@ -1,4 +1,4 @@
-import { render, fireEvent } from "@testing-library/react"
+import { fireEvent, render } from "@testing-library/react"
 import Pagination from "./Pagination"
 
 describe("Testing Pagination Component", () => {
@@ -20,7 +20,7 @@ describe("Testing Pagination Component", () => {
         totalPages={totalPages}
         totalRecords={totalRecords}
         limits={limits}
-      />
+      />,
     )
     expect(container.querySelector(".kms_pagination")).toBeTruthy()
     expect(container.querySelector(".kms_pagination-pager")).toBeTruthy()
@@ -57,7 +57,7 @@ describe("Testing Pagination Component", () => {
         totalPages={totalPages}
         totalRecords={totalRecords}
         limits={limits}
-      />
+      />,
     )
 
     // Test Next button is working
@@ -76,7 +76,7 @@ describe("Testing Pagination Component", () => {
         totalPages={totalPages}
         totalRecords={totalRecords}
         limits={limits}
-      />
+      />,
     )
     expect((container.querySelector("input[type=number]") as HTMLInputElement).value).toBe(String(currentPage))
 
@@ -90,7 +90,7 @@ describe("Testing Pagination Component", () => {
         totalPages={totalPages}
         totalRecords={totalRecords}
         limits={limits}
-      />
+      />,
     )
     expect((getByRole("button", { name: "Next" }) as HTMLButtonElement).disabled).toBeTruthy()
   })

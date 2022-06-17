@@ -14,7 +14,7 @@ type ColumnsSchema = ColumnSchemaType[]
 interface TableProps {
   data: any
   loading?: boolean
-  loader?: JSX.Element 
+  loader?: JSX.Element
   columns: ColumnsSchema
   sequencing?: boolean
   sortable?: boolean

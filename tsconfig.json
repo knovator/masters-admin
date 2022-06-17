@@ -16,8 +16,6 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
-    "types": [
-      "vitest/globals"
-    ]
+    "types": ["vitest/globals"]
   }
 }

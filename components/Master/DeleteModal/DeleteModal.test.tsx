@@ -6,7 +6,7 @@ describe("Testing DeleteModal component", () => {
     let functionCalled = false
     const onClose = () => (functionCalled = true)
     const { container, rerender, getByTestId } = render(
-      <DeleteModal formState="ADD" itemData={{}} onClose={onClose} onConfirmDelete={() => {}} />
+      <DeleteModal formState="ADD" itemData={{}} onClose={onClose} onConfirmDelete={() => {}} />,
     )
     expect(container.firstChild).toBeFalsy()
     rerender(<DeleteModal formState="DELETE" itemData={{}} onClose={onClose} onConfirmDelete={() => {}} />)
@@ -19,10 +19,15 @@ describe("Testing DeleteModal component", () => {
     let functionCalled = false
     const onConfirmDelete = () => (functionCalled = true)
     const onClose = () => {}
-    const { container, getByTestId } = render(
-      <DeleteModal formState="DELETE" itemData={{ name: "John" }} onClose={onClose} onConfirmDelete={onConfirmDelete} />
+    const { container, getByRole } = render(
+      <DeleteModal
+        formState="DELETE"
+        itemData={{ name: "John" }}
+        onClose={onClose}
+        onConfirmDelete={onConfirmDelete}
+      />,
     )
-    const button = container.querySelector("button")
+    const button = getByRole("button", { name: "Confirm" }) as HTMLButtonElement
     expect(button?.disabled).toBeTruthy()
 
     const input = container.querySelector("input")

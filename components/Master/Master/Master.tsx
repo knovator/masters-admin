@@ -1,23 +1,21 @@
 import React, { useRef } from "react"
-import { DEFAULT_LIMIT, PAGE_LIMITS } from "constants/common"
-
-import ToggleBtn from "widgets/toggle"
-import AddButton from "../AddButton"
 import useMaster from "hook/useMaster"
-import MasterForm from "../MasterForm"
-import MasterTable from "../MasterTable"
-import MasterSearch from "../MasterSearch"
-import MasterPagination from "../MasterPagination"
-import MasterFormWrapper from "../MasterFormWrapper"
-import MasterFormActions from "../MasterFormActions"
+import ToggleBtn from "widgets/toggle"
 import { Drawer } from "components/Common"
-
+import FormContextProvider from "context/FormContext"
 import TableContextProvider from "context/TableContext"
 import MasterContextProvider from "context/MasterContext"
+import { DEFAULT_LIMIT, PAGE_LIMITS } from "constants/common"
 import PaginationContextProvider from "context/PaginationContext"
-import FormContextProvider from "context/FormContext"
 
+import AddButton from "../AddButton"
 import DeleteModal from "../DeleteModal"
+import MasterForm from "../MasterForm"
+import MasterFormActions from "../MasterFormActions"
+import MasterFormWrapper from "../MasterFormWrapper"
+import MasterPagination from "../MasterPagination"
+import MasterSearch from "../MasterSearch"
+import MasterTable from "../MasterTable"
 
 interface MasterProps extends React.PropsWithChildren {
   sortable?: boolean
@@ -84,7 +82,6 @@ const Master = ({
     defaultLimit: Array.isArray(limits) && limits.length > 0 ? limits[0] : DEFAULT_LIMIT,
     routes,
     defaultSort,
-    permissions,
     preConfirmDelete,
   })
 

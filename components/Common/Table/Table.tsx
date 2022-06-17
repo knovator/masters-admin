@@ -1,6 +1,6 @@
-import { useTable } from "react-table"
-import { SORT_ASCENDING, SORT_DESCENDING, EXCLUDE_SORT_COLUMNS } from "constants/common"
 import { useCallback } from "react"
+import { useTable } from "react-table"
+import { EXCLUDE_SORT_COLUMNS, SORT_ASCENDING, SORT_DESCENDING } from "constants/common"
 
 const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, loader, loading }: TableProps) => {
   const getSortConfigClassName = useCallback(
@@ -12,7 +12,7 @@ const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, load
         else return "kms_sort-inactive"
       }
     },
-    [sortConfig]
+    [sortConfig],
   )
   const sortConfigRenderer = useCallback(
     (accessor: string) => {
@@ -26,7 +26,7 @@ const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, load
         </div>
       )
     },
-    [getSortConfigClassName]
+    [getSortConfigClassName, sortable],
   )
   const onClickSort = useCallback(
     (id: string) => {
@@ -36,7 +36,7 @@ const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, load
         else setSortConfig([id, SORT_ASCENDING])
       }
     },
-    [sortConfig]
+    [setSortConfig, sortConfig],
   )
   const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } = useTable({
     // @ts-ignore
@@ -52,11 +52,12 @@ const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, load
         ) : (
           <table className="kms_table" {...getTableProps()}>
             <thead className="kms_thead">
-              {headerGroups.map((headerGroup) => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column) => (
+              {headerGroups.map((headerGroup, i) => (
+                <tr {...headerGroup.getHeaderGroupProps()} key={i}>
+                  {headerGroup.headers.map((column, j) => (
                     <th
                       {...column.getHeaderProps()}
+                      key={j}
                       onClick={() => onClickSort(column.id)}
                       className="cursor-pointer hover:bg-opacity-50"
                     >
@@ -68,12 +69,16 @@ const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, load
               ))}
             </thead>
             <tbody className="kms_tbody" {...getTableBodyProps()}>
-              {rows.map((row) => {
+              {rows.map((row, i) => {
                 prepareRow(row)
                 return (
-                  <tr {...row.getRowProps()}>
-                    {row.cells.map((cell) => {
-                      return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                  <tr {...row.getRowProps()} key={i}>
+                    {row.cells.map((cell, j) => {
+                      return (
+                        <td {...cell.getCellProps()} key={j}>
+                          {cell.render("Cell")}
+                        </td>
+                      )
                     })}
                   </tr>
                 )

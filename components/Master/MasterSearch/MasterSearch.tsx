@@ -1,7 +1,6 @@
-import { useRef, useState } from "react"
-
 import { Input } from "components/Common"
 import { useMasterState } from "context/MasterContext"
+import { useRef, useState } from "react"
 
 const MasterSearch = () => {
   const { getMastersList } = useMasterState()

@@ -1,5 +1,5 @@
-import { Modal, Input, Button } from "components/Common"
 import { useState } from "react"
+import { Button, Input, Modal } from "components/Common"
 
 interface DeleteModalProps {
   formState: FormActionTypes | undefined

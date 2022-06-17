@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react"
+import { fireEvent, render } from "@testing-library/react"
 import Table from "./Table"
 
 describe("Testing Table Component", () => {
@@ -16,7 +16,7 @@ describe("Testing Table Component", () => {
   })
   it("should show rows when passed column names and data", () => {
     const { container } = render(
-      <Table columns={[{ Header: "Name", accessor: "name" }]} data={[{ name: "John" }, { name: "Karan" }]} />
+      <Table columns={[{ Header: "Name", accessor: "name" }]} data={[{ name: "John" }, { name: "Karan" }]} />,
     )
     let ths = container.querySelectorAll("th")
     expect(ths[0].innerHTML).toContain("Name")
@@ -36,7 +36,7 @@ describe("Testing Table Component", () => {
           },
         ]}
         data={[{ name: "John" }]}
-      />
+      />,
     )
     let ths = container.querySelectorAll("th")
     expect(ths[0].innerHTML).toContain("<b>Name</b>")
@@ -56,7 +56,7 @@ describe("Testing Table Component", () => {
     ]
 
     const { rerender, getByRole, getAllByText } = render(
-      <Table columns={columns} data={data} sortConfig={sortConfig} setSortConfig={setSortConfig} />
+      <Table columns={columns} data={data} sortConfig={sortConfig} setSortConfig={setSortConfig} />,
     )
     // checking if all columns has up & down arrows
     expect(getAllByText("▲").length).toBe(columns.length)

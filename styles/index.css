@@ -7,7 +7,8 @@
   .kms_actions {
     @apply flex items-center gap-3;
   }
-  .kms_actions-update, .kms_actions-delete {
+  .kms_actions-update,
+  .kms_actions-delete {
     @apply cursor-pointer;
   }
   .kms_table-container {
@@ -90,7 +91,7 @@
     @apply h-8;
   }
   .kms_input-label {
-    @apply inline-block mb-2 text-sm font-semibold text-black
+    @apply inline-block mb-2 text-sm font-semibold text-black;
   }
   .kms_input-wrapper {
     @apply text-left w-full;
@@ -98,7 +99,8 @@
   .kms_input-error {
     @apply mt-1 text-sm text-red-500;
   }
-  .kms_input-checkbox {}
+  .kms_input-checkbox {
+  }
   /* \ End of Input */
 
   /* Switch */
@@ -269,4 +271,3 @@
   }
   /* \ End of Animations */
 }
-

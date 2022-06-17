@@ -16,10 +16,10 @@ const apiList = {
     url: `admin/${module}/update/${id}`,
     method: "PUT",
   }),
-  DELETE: ({ module, id }: API_INPUT_TYPE) => ({
+  DELETE: ({ module }: API_INPUT_TYPE) => ({
     url: `admin/${module}/soft-delete`,
     method: "PUT",
   }),
 }
 
-export default apiList;
+export default apiList

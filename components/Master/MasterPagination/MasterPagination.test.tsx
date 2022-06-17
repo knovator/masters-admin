@@ -1,8 +1,6 @@
-import { render, fireEvent } from "@testing-library/react"
+import { fireEvent, render } from "@testing-library/react"
 import PaginationContextProvider from "context/PaginationContext"
 import Pagination from "./MasterPagination"
-
-let onUpdate = async (id: string, data: any) => {}
 
 describe("Testing Pagination Component", () => {
   it("should render Pagination component when all parameters provided", () => {
@@ -26,7 +24,7 @@ describe("Testing Pagination Component", () => {
         canList={true}
       >
         <Pagination />
-      </PaginationContextProvider>
+      </PaginationContextProvider>,
     )
     expect(container.querySelector(".kms_pagination")).toBeTruthy()
     expect(container.querySelector(".kms_pagination-pager")).toBeTruthy()
@@ -66,7 +64,7 @@ describe("Testing Pagination Component", () => {
         canList={true}
       >
         <Pagination />
-      </PaginationContextProvider>
+      </PaginationContextProvider>,
     )
 
     // Test Next button is working
@@ -88,7 +86,7 @@ describe("Testing Pagination Component", () => {
         canList={true}
       >
         <Pagination />
-      </PaginationContextProvider>
+      </PaginationContextProvider>,
     )
     expect((container.querySelector("input[type=number]") as HTMLInputElement).value).toBe(String(currentPage))
   })

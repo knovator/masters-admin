@@ -1,9 +1,9 @@
-import { afterAll, afterEach, beforeAll } from "vitest"
-import { render, screen, waitFor, fireEvent } from "@testing-library/react"
-import { setupServer } from "msw/node"
-import { rest } from "msw"
-
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import Provider from "context/ProviderContext"
+import { rest } from "msw"
+import { setupServer } from "msw/node"
+import { afterAll, afterEach, beforeAll } from "vitest"
+
 import Master from "./Master"
 
 const docs = [
@@ -99,7 +99,7 @@ describe("Testing MasterTable Component", () => {
         paginationGetter={(response) => response.data}
       >
         <Master permissions={permissions} />
-      </Provider>
+      </Provider>,
     )
     // Wait for Table to render fully
     await waitFor(() => {
@@ -126,7 +126,7 @@ describe("Testing MasterTable Component", () => {
         paginationGetter={(response) => response.data}
       >
         <Master permissions={permissions} />
-      </Provider>
+      </Provider>,
     )
     // Test switches and actions count
     await waitFor(() => {
@@ -147,7 +147,7 @@ describe("Testing MasterTable Component", () => {
         paginationGetter={(response) => response.data}
       >
         <Master limits={[1, 2]} permissions={permissions} />
-      </Provider>
+      </Provider>,
     )
     // Wait for Table to render fully
     await waitFor(() => {
@@ -182,7 +182,7 @@ describe("Testing MasterTable Component", () => {
         paginationGetter={(response) => response.data}
       >
         <Master limits={[1, 2]} permissions={permissions} />
-      </Provider>
+      </Provider>,
     )
     // Wait for Table to render fully
     await waitFor(() => {
@@ -215,7 +215,7 @@ describe("Testing MasterTable Component", () => {
           }}
           permissions={permissions}
         />
-      </Provider>
+      </Provider>,
     )
     // Wait for Table to render fully
     await waitFor(() => {
@@ -225,7 +225,7 @@ describe("Testing MasterTable Component", () => {
     expect(container.querySelector("td")?.innerHTML).toBe("Milan")
   })
   it("Should search masters when search input changes", async () => {
-    const { container, getByRole } = render(
+    const { container } = render(
       <Provider
         baseUrl="https://testapi.com"
         token={"abcd"}
@@ -233,7 +233,7 @@ describe("Testing MasterTable Component", () => {
         paginationGetter={(response) => response.data}
       >
         <Master permissions={permissions} />
-      </Provider>
+      </Provider>,
     )
     // Wait for Table to render fully
     await waitFor(() => {

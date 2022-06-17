@@ -1,5 +1,5 @@
-import React, { MutableRefObject, forwardRef, useEffect } from "react"
-import { useForm, Controller } from "react-hook-form"
+import React, { forwardRef, MutableRefObject, useEffect } from "react"
+import { Controller, useForm } from "react-hook-form"
 import { isEmpty } from "utils/util"
 import Input from "../Input"
 
@@ -28,7 +28,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(({ schema, onSubmit, 
         setValue(schemaItem.accessor, data[schemaItem.accessor])
       })
     }
-  }, [data, reset, setValue])
+  }, [data, reset, schema, setValue])
 
   // setting default values
   useEffect(() => {
@@ -39,7 +39,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(({ schema, onSubmit, 
       }, {})
       reset(defaultValues)
     }
-  }, [data, reset])
+  }, [data, reset, schema])
 
   const inputRenderer = (schema: SchemaType) => {
     let input

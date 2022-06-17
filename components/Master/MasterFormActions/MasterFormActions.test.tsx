@@ -13,15 +13,15 @@ describe("Testing MasterFormActions component", () => {
       <FormContextProvider
         closeForm={onClose}
         formState={"ADD"}
-        onDataSubmit={(data: any) => {}}
-        onChangeFormState={(status: FormActionTypes, data?: any) => {}}
+        onDataSubmit={() => {}}
+        onChangeFormState={() => {}}
         updateData={undefined}
         loading={false}
         canAdd={true}
         canUpdate={true}
       >
         <MasterFormActions formRef={ref} />
-      </FormContextProvider>
+      </FormContextProvider>,
     )
     let submitButton = getByRole("button", { name: "Add Master" })
     let cancelButton = getByRole("button", { name: "Cancel" })

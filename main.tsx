@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import React from "react"
 import ReactDOM from "react-dom/client"
 import "./styles/index.css"
 
@@ -42,14 +42,15 @@ const LayoutMaster = ({ headerDetail, children }: LayoutMasterProps) => {
 
 function Main() {
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTg1YjM0NjNhMTNmY2MzNGMxZDNjMSIsImVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20iLCJpYXQiOjE2NTUzNTQ3NjQsImV4cCI6MTY1NTQ0MTE2NH0.FVdNVzUHynb0OUV2owqFHaVSYPITfoQ5LLI2qLbtQnk"
-  const formRef = useRef<HTMLFormElement>(null)
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTg1YjM0NjNhMTNmY2MzNGMxZDNjMSIsImVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20iLCJpYXQiOjE2NTU0NDY4ODUsImV4cCI6MTY1NTUzMzI4NX0.kq9nyV5wg0L-OPO-w5ehZNWr50JFASHF5Vwr7GApcGg"
+  // const formRef = useRef<HTMLFormElement>(null)
   return (
     <Provider
       baseUrl="https://api.orbitjobs.knovator.in"
       token={token}
       dataGetter={(response) => response.data.docs}
       paginationGetter={(response) => response.data}
+      // eslint-disable-next-line no-console
       onError={(callbackcode, code, message) => console.error(callbackcode, code, message)}
     >
       <Master
@@ -110,5 +111,5 @@ const root = ReactDOM.createRoot(document.getElementById("root")!)
 root.render(
   <React.StrictMode>
     <Main />
-  </React.StrictMode>
+  </React.StrictMode>,
 )

@@ -29,7 +29,7 @@ const Drawer = ({ children, open, onClose, title, footerContent }: DrawerProps) 
         data-testid="drawer"
       >
         <div className="kms_drawer-wrapper-2">
-          <div className="kms_drawer-backdrop" onClick={onClose} />
+          <div className="kms_drawer-backdrop" role="button" onClick={onClose} onKeyDown={onClose} tabIndex={0} />
           <div className="kms_drawer-container-1">
             <div className="kms_drawer-container-2">
               <div className="kms_drawer-close-section">

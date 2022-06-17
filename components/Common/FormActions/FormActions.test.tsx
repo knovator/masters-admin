@@ -9,7 +9,7 @@ describe("Testing FormActions component", () => {
     const onSecondaryButtonClick = () => (secondaryClicked = true)
 
     const { getByRole } = render(
-      <FormActions onPrimaryButtonClick={onPrimaryButtonClick} onSecondaryButtonClick={onSecondaryButtonClick} />
+      <FormActions onPrimaryButtonClick={onPrimaryButtonClick} onSecondaryButtonClick={onSecondaryButtonClick} />,
     )
 
     let primaryButton = getByRole("button", { name: "Submit" })
@@ -29,7 +29,7 @@ describe("Testing FormActions component", () => {
         onPrimaryButtonClick={onPrimaryButtonClick}
         loading={true}
         onSecondaryButtonClick={onSecondaryButtonClick}
-      />
+      />,
     )
     let primaryButton = getByRole("button", { name: "Submit" })
     expect((primaryButton as HTMLButtonElement).disabled).toBeTruthy()
@@ -48,7 +48,7 @@ describe("Testing FormActions component", () => {
         primaryLabel="Add"
         secondaryLabel="Subtract"
         onSecondaryButtonClick={onSecondaryButtonClick}
-      />
+      />,
     )
 
     let primaryButton = getByRole("button", { name: "Add" })

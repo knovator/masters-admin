@@ -1,5 +1,5 @@
-import { act, fireEvent, render } from "@testing-library/react"
 import { MutableRefObject } from "react"
+import { act, fireEvent, render } from "@testing-library/react"
 import { capitalizeFirstLetter, changeToCode } from "utils/util"
 import Form from "./Form"
 
@@ -59,9 +59,9 @@ describe("Testing Form Component", () => {
       event.target.value = changeToCode(event.target.value)
       return event
     }
-    const { container, getByTestId } = render(
+    const { getByTestId } = render(
       // @ts-ignore
-      <Form schema={defaultSchema} onSubmit={onDataSubmit} ref={ref} data={{}} isUpdating={false} />
+      <Form schema={defaultSchema} onSubmit={onDataSubmit} ref={ref} data={{}} isUpdating={false} />,
     )
     let nameTextInput = getByTestId("input-text-Name*")
     expect(nameTextInput).toBeTruthy()
@@ -128,7 +128,7 @@ describe("Testing Form Component", () => {
     ]
     const { getAllByTestId, getByTestId } = render(
       // @ts-ignore
-      <Form schema={defaultSchema} onSubmit={onDataSubmit} ref={ref} data={{}} isUpdating={false} />
+      <Form schema={defaultSchema} onSubmit={onDataSubmit} ref={ref} data={{}} isUpdating={false} />,
     )
 
     let nameTextInput = getByTestId("input-text-Name*")
@@ -197,7 +197,7 @@ describe("Testing Form Component", () => {
     ]
     const { getAllByTestId, getByTestId } = render(
       // @ts-ignore
-      <Form schema={defaultSchema} onSubmit={onDataSubmit} ref={ref} data={data} isUpdating={false} />
+      <Form schema={defaultSchema} onSubmit={onDataSubmit} ref={ref} data={data} isUpdating={false} />,
     )
 
     let nameTextInput = getByTestId("input-text-Name*")
@@ -257,7 +257,7 @@ describe("Testing Form Component", () => {
     }
     const { container, getByTestId } = render(
       // @ts-ignore
-      <Form schema={defaultSchema} onSubmit={onDataSubmit} ref={ref} data={{}} isUpdating={false} />
+      <Form schema={defaultSchema} onSubmit={onDataSubmit} ref={ref} data={{}} isUpdating={false} />,
     )
     let nameTextInput = container.querySelector("input[data-testid='input-text-Name*']")
     expect(nameTextInput).toBeTruthy()
@@ -276,9 +276,7 @@ describe("Testing Form Component", () => {
   })
   it("Should validate inputs when form submited", async () => {
     const ref = { current: {} } as MutableRefObject<HTMLFormElement | null>
-    const onDataSubmit = (data: any) => {
-      console.log("Submitted Data", data)
-    }
+    const onDataSubmit = () => {}
     const defaultSchema: SchemaType[] = [
       {
         label: "Name*",
@@ -301,7 +299,7 @@ describe("Testing Form Component", () => {
       },
     ]
     const { container } = render(
-      <Form schema={defaultSchema} onSubmit={onDataSubmit} ref={ref} data={{}} isUpdating={false} />
+      <Form schema={defaultSchema} onSubmit={onDataSubmit} ref={ref} data={{}} isUpdating={false} />,
     )
     // submit the form to show errors for empty inputs
     act(() => {

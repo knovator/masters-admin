@@ -1,25 +1,17 @@
-import { useState, useCallback, useEffect, useRef } from "react"
-
+import { useCallback, useEffect, useRef, useState } from "react"
+import { CALLBACK_CODES, INTERNAL_ERROR_CODE } from "constants/common"
 import { useProviderState } from "context/ProviderContext"
 import usePagination from "hook/usePagination"
 import request, { getApiType } from "api"
-import { INTERNAL_ERROR_CODE, CALLBACK_CODES } from "constants/common"
 
 interface UseMasterProps {
   defaultLimit: number
   routes?: Routes_Input
   defaultSort?: SortConfigType
-  permissions: PermissionsObj
   preConfirmDelete?: (data: { row: any }) => Promise<boolean>
 }
 
-const useMaster = ({
-  defaultLimit,
-  routes,
-  defaultSort = ["createdAt", 1],
-  preConfirmDelete,
-  permissions,
-}: UseMasterProps) => {
+const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preConfirmDelete }: UseMasterProps) => {
   const [list, setList] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
   const [totalPages, setTotalPages] = useState(0)
@@ -70,7 +62,18 @@ const useMaster = ({
         onError(CALLBACK_CODES.GET_ALL, INTERNAL_ERROR_CODE, (error as Error).message)
       }
     },
-    [currentPage, filter]
+    [
+      baseUrl,
+      currentPage,
+      dataGetter,
+      filter.limit,
+      filter.offset,
+      onError,
+      onSuccess,
+      paginationGetter,
+      routes,
+      token,
+    ],
   )
   const onChangeSortConfig = (data: SortConfigType) => {
     sortConfigRef.current = data
@@ -97,7 +100,7 @@ const useMaster = ({
         onError(CALLBACK_CODES.UPDATE, INTERNAL_ERROR_CODE, (error as Error).message)
       }
     },
-    [getMastersList]
+    [baseUrl, getMastersList, onError, onSuccess, routes, token],
   )
   const onDataSubmit = async (data: any) => {
     setLoading(true)
@@ -184,6 +187,7 @@ const useMaster = ({
 
   useEffect(() => {
     getMastersList()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageSize, currentPage])
 
   return {
