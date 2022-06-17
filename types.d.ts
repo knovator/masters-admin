@@ -64,9 +64,6 @@ interface ProviderContextType {
   onError: (callback_code: import("constants/common").CALLBACK_CODES, code: string, message: string) => void
   onSuccess: (callback_code: import("constants/common").CALLBACK_CODES, code: string, message: string) => void
 }
-interface MasterContextType {
-  getMastersList: (search?: string) => Promise<void>
-}
 interface SearchContextType {
   searchOnEnter: boolean
 }
@@ -94,6 +91,7 @@ interface TableContextType {
   canUpdate?: boolean
   canDelete?: boolean
   canPartialUpdate?: boolean
+  getMastersList: (search?: string) => Promise<void>
 }
 interface FormContextType {
   formState: FormActionTypes | undefined

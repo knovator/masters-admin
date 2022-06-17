@@ -4,7 +4,6 @@ import ToggleBtn from "widgets/toggle"
 import { Drawer } from "components/Common"
 import FormContextProvider from "context/FormContext"
 import TableContextProvider from "context/TableContext"
-import MasterContextProvider from "context/MasterContext"
 import { DEFAULT_LIMIT, PAGE_LIMITS } from "constants/common"
 import PaginationContextProvider from "context/PaginationContext"
 
@@ -87,73 +86,72 @@ const Master = ({
 
   return (
     <div>
-      <MasterContextProvider getMastersList={getMastersList}>
-        <FormContextProvider
-          loading={loading}
-          formState={formState}
-          onChangeFormState={onChangeFormState}
-          closeForm={onCloseForm}
-          onDataSubmit={onDataSubmit}
-          updateData={itemData}
-          canAdd={permissions?.add}
-          canUpdate={permissions?.update}
+      <FormContextProvider
+        loading={loading}
+        formState={formState}
+        onChangeFormState={onChangeFormState}
+        closeForm={onCloseForm}
+        onDataSubmit={onDataSubmit}
+        updateData={itemData}
+        canAdd={permissions?.add}
+        canUpdate={permissions?.update}
+      >
+        <PaginationContextProvider
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+          totalRecords={totalRecords}
+          limits={limits ? limits : PAGE_LIMITS}
+          canList={permissions?.list}
         >
-          <PaginationContextProvider
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            totalPages={totalPages}
-            pageSize={pageSize}
-            setPageSize={setPageSize}
-            totalRecords={totalRecords}
-            limits={limits ? limits : PAGE_LIMITS}
+          <TableContextProvider
+            onUpdate={partialUpdate}
+            onChangeFormState={onChangeFormState}
+            data={list}
+            sortable={sortable}
+            sortConfig={sortConfig}
+            setSortConfig={setSortConfig}
+            columns={columns}
+            loader={loader}
+            loading={loading}
+            canDelete={permissions?.destroy}
             canList={permissions?.list}
+            canUpdate={permissions?.update}
+            getMastersList={getMastersList}
           >
-            <TableContextProvider
-              onUpdate={partialUpdate}
-              onChangeFormState={onChangeFormState}
-              data={list}
-              sortable={sortable}
-              sortConfig={sortConfig}
-              setSortConfig={setSortConfig}
-              columns={columns}
-              loader={loader}
-              loading={loading}
-              canDelete={permissions?.destroy}
-              canList={permissions?.list}
-              canUpdate={permissions?.update}
-            >
-              {children ? (
-                children
-              ) : (
-                <>
-                  <MasterSearch />
-                  <AddButton />
-                  <MasterTable />
-                  <MasterPagination />
-                </>
-              )}
+            {children ? (
+              children
+            ) : (
+              <>
+                <MasterSearch />
+                <AddButton />
+                <MasterTable />
+                <MasterPagination />
+              </>
+            )}
 
-              {!explicitForm && (
-                <Drawer
-                  open={formState === "ADD" || formState === "UPDATE"}
-                  onClose={onCloseForm}
-                  title={formState === "ADD" ? "Add Master" : "Edit Master"}
-                  footerContent={<MasterFormActions formRef={formRef} />}
-                >
-                  <MasterForm ref={formRef} />
-                </Drawer>
-              )}
-
-              <DeleteModal
-                formState={formState}
-                itemData={itemData}
+            {!explicitForm && (
+              <Drawer
+                open={formState === "ADD" || formState === "UPDATE"}
                 onClose={onCloseForm}
-                onConfirmDelete={onCofirmDeleteMaster}
-              />
-            </TableContextProvider>
-          </PaginationContextProvider>
-        </FormContextProvider>
-      </MasterContextProvider>
+                title={formState === "ADD" ? "Add Master" : "Edit Master"}
+                footerContent={<MasterFormActions formRef={formRef} />}
+              >
+                <MasterForm ref={formRef} />
+              </Drawer>
+            )}
+
+            <DeleteModal
+              formState={formState}
+              itemData={itemData}
+              onClose={onCloseForm}
+              onConfirmDelete={onCofirmDeleteMaster}
+            />
+          </TableContextProvider>
+        </PaginationContextProvider>
+      </FormContextProvider>
     </div>
   )
 }

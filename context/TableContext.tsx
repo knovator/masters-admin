@@ -19,6 +19,7 @@ const TableContextProvider = ({
   canList = false,
   canUpdate = false,
   canPartialUpdate = false,
+  getMastersList,
 }: TableContextProviderProps) => {
   return (
     <TableContext.Provider
@@ -36,6 +37,7 @@ const TableContextProvider = ({
         canList,
         canUpdate,
         canPartialUpdate,
+        getMastersList,
       }}
     >
       {children}

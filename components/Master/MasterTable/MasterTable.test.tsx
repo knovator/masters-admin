@@ -43,6 +43,7 @@ describe("Testing MasterTable Component", () => {
         onChangeFormState={() => onUpdate()}
         canPartialUpdate={true}
         canList={true}
+        getMastersList={() => Promise.resolve()}
       >
         <MasterTable columns={columnsSchema} />
       </TableContextProvider>,
