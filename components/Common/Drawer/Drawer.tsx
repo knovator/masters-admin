@@ -20,13 +20,20 @@ const Drawer = ({ children, open, onClose, title, footerContent }: DrawerProps) 
       mountOnEnter
       unmountOnExit
     >
-      <div className="kms_drawer-wrapper-1" aria-labelledby="modal" role="dialog" aria-modal="true" ref={nodeRef}>
+      <div
+        className="kms_drawer-wrapper-1"
+        aria-labelledby="modal"
+        role="dialog"
+        aria-modal="true"
+        ref={nodeRef}
+        data-testid="drawer"
+      >
         <div className="kms_drawer-wrapper-2">
           <div className="kms_drawer-backdrop" onClick={onClose} />
           <div className="kms_drawer-container-1">
             <div className="kms_drawer-container-2">
               <div className="kms_drawer-close-section">
-                <button type="button" className="kms_drawer-close-btn" onClick={onClose}>
+                <button type="button" className="kms_drawer-close-btn" onClick={onClose} data-testid="drawer-close">
                   <span className="kms_sr-only">Close panel</span>
                   <CloseIcon />
                 </button>

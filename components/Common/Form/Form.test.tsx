@@ -1,4 +1,5 @@
-import { fireEvent, render } from "@testing-library/react"
+import { act, fireEvent, render } from "@testing-library/react"
+import { MutableRefObject } from "react"
 import { capitalizeFirstLetter, changeToCode } from "utils/util"
 import Form from "./Form"
 
@@ -219,7 +220,7 @@ describe("Testing Form Component", () => {
     expect((options[0] as HTMLOptionElement).selected).toBeTruthy()
     expect((options[1] as HTMLOptionElement).selected).toBeFalsy()
   })
-  it("Should call onInput for schema item provided and should be having default values", async () => {
+  it("Should call onInput for schema item provided", () => {
     const ref = { current: {} }
     const onDataSubmit = () => {}
     const defaultSchema: SchemaType[] = [
@@ -229,9 +230,6 @@ describe("Testing Form Component", () => {
         type: "text",
         placeholder: "Enter Name",
         onInput: handleCapitalize,
-        validations: {
-          required: "Name is Required",
-        },
       },
       {
         label: "Code*",
@@ -240,9 +238,6 @@ describe("Testing Form Component", () => {
         onInput: handleCode,
         editable: false,
         placeholder: "Enter Code",
-        validations: {
-          required: "Code is Required",
-        },
       },
       {
         label: "Description",
@@ -253,7 +248,6 @@ describe("Testing Form Component", () => {
       },
     ]
     function handleCapitalize(event: React.ChangeEvent<HTMLInputElement>) {
-      console.log("asdfasdf")
       event.target.value = capitalizeFirstLetter(event.target.value)
       return event
     }
@@ -267,18 +261,59 @@ describe("Testing Form Component", () => {
     )
     let nameTextInput = container.querySelector("input[data-testid='input-text-Name*']")
     expect(nameTextInput).toBeTruthy()
-    fireEvent.change(nameTextInput!, { target: { value: "john" } })
-    // console.log(nameTextInput.onInput)
-    // console.log(nameTextInput.value)
-    // await new Promise((r) => setTimeout(r, 100))
-    // expect(nameTextInput.value).toBe("John")
+    fireEvent.input(nameTextInput!, { target: { value: "john" } })
+    expect((nameTextInput as HTMLInputElement).value).toBe("John")
 
-    // let codeTextInput = getByTestId("input-text-Code*")
-    // expect(codeTextInput).toBeTruthy()
-    // expect((codeTextInput as any).type).toBe("text")
+    let descTextareaInput = getByTestId("input-textarea-Description")
+    expect(descTextareaInput).toBeTruthy()
+    fireEvent.input(descTextareaInput!, { target: { value: "hello world!" } })
+    expect((descTextareaInput as HTMLTextAreaElement).value).toBe("Hello world!")
 
-    // let descTextareaInput = getByTestId("input-textarea-Description")
-    // expect(descTextareaInput).toBeTruthy()
-    // expect((descTextareaInput as any).type).toBe("textarea")
+    let codeTextInput = getByTestId("input-text-Code*")
+    expect(codeTextInput).toBeTruthy()
+    fireEvent.input(codeTextInput!, { target: { value: "a bb cc" } })
+    expect((codeTextInput as HTMLInputElement).value).toBe("A_BB_CC")
+  })
+  it("Should validate inputs when form submited", async () => {
+    const ref = { current: {} } as MutableRefObject<HTMLFormElement | null>
+    const onDataSubmit = (data: any) => {
+      console.log("Submitted Data", data)
+    }
+    const defaultSchema: SchemaType[] = [
+      {
+        label: "Name*",
+        accessor: "name",
+        type: "text",
+        placeholder: "Enter Name",
+        validations: {
+          required: "Name is Required",
+        },
+      },
+      {
+        label: "Code*",
+        accessor: "code",
+        type: "text",
+        editable: false,
+        placeholder: "Enter Code",
+        validations: {
+          required: "Code is Required",
+        },
+      },
+    ]
+    const { container } = render(
+      <Form schema={defaultSchema} onSubmit={onDataSubmit} ref={ref} data={{}} isUpdating={false} />
+    )
+    // submit the form to show errors for empty inputs
+    act(() => {
+      ref.current?.submit()
+      // ref.current?.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }))
+    })
+    await new Promise((r) => setTimeout(r, 100))
+
+    // Checking Errors
+    let errors = container.querySelectorAll(".kms_input-error")
+    expect(errors.length).toBe(2)
+    expect(errors[0].innerHTML).toBe("Name is Required")
+    expect(errors[1].innerHTML).toBe("Code is Required")
   })
 })
