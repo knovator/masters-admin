@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react"
-import { useTableState } from "context/TableContext"
+import { useMasterState } from "context/MasterContext"
 import Table from "components/Common/Table"
 import DeleteIcon from "icons/deleteIcon"
 import UpdateIcon from "icons/updateIcon"
@@ -24,7 +24,7 @@ const MasterTable = ({ columns, actions }: MasterTableProps) => {
     canList,
     canUpdate,
     canPartialUpdate,
-  } = useTableState()
+  } = useMasterState()
   const [tableColumns, setTableColumns] = useState<ColumnsSchema>([])
 
   const updateClosure = useCallback(

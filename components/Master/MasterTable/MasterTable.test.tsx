@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/react"
-import TableContextProvider from "context/TableContext"
+import MasterContextProvider from "context/MasterContext"
 import MasterTable from "./MasterTable"
 
 let columnsSchema: ColumnsSchema = [
@@ -33,7 +33,7 @@ describe("Testing MasterTable Component", () => {
       buttonClicked = true
     }
     const { container } = render(
-      <TableContextProvider
+      <MasterContextProvider
         onUpdate={onUpdate}
         data={data}
         sortConfig={["createdAt", 1]}
@@ -46,7 +46,7 @@ describe("Testing MasterTable Component", () => {
         getMastersList={() => Promise.resolve()}
       >
         <MasterTable columns={columnsSchema} />
-      </TableContextProvider>,
+      </MasterContextProvider>,
     )
 
     let activeCheckbox = container.querySelector("input[type=checkbox]")

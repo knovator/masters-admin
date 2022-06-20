@@ -1,14 +1,14 @@
-import { useFormState } from "context/FormContext"
+import { useMasterState } from "context/MasterContext"
 
 interface MasterFormWrapperProps {
   children: (data: { formState: FormActionTypes | undefined; onClose: () => void; open: boolean }) => JSX.Element | null
 }
 const MasterFormWrapper = ({ children }: MasterFormWrapperProps) => {
-  const { formState, closeForm } = useFormState()
-  if (typeof children !== "function")
-    throw new Error("Children should be passed as function, i.e. {({ formState, closeForm, open }) => {...}}")
+  const { formState, closeForm } = useMasterState()
 
-  return children({ formState, onClose: closeForm, open: formState === "ADD" || formState === "UPDATE" })
+  return typeof children === "function"
+    ? children({ formState, onClose: closeForm, open: formState === "ADD" || formState === "UPDATE" })
+    : null
 }
 
 export default MasterFormWrapper

@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/react"
-import TableContextProvider from "context/TableContext"
+import MasterContextProvider from "context/MasterContext"
 import MasterSearch from "./MasterSearch"
 
 describe("Testing MasterSearch Component", () => {
@@ -10,7 +10,7 @@ describe("Testing MasterSearch Component", () => {
       return Promise.resolve()
     }
     const { container } = render(
-      <TableContextProvider
+      <MasterContextProvider
         getMastersList={getMastersList}
         sortConfig={["createdAt", -1]}
         setSortConfig={() => {}}
@@ -21,7 +21,7 @@ describe("Testing MasterSearch Component", () => {
         onChangeFormState={() => {}}
       >
         <MasterSearch />
-      </TableContextProvider>,
+      </MasterContextProvider>,
     )
     const searchInput = container.querySelector("input[type=search]")
     expect(searchInput).toBeDefined()

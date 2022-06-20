@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/react"
-import FormContextProvider from "context/FormContext"
+import MasterContextProvider from "context/MasterContext"
 import MasterFormActions from "."
 
 describe("Testing MasterFormActions component", () => {
@@ -10,7 +10,7 @@ describe("Testing MasterFormActions component", () => {
 
     const ref = { current: { dispatchEvent: () => (submitClicked = true) } } as any
     const { getByRole } = render(
-      <FormContextProvider
+      <MasterContextProvider
         closeForm={onClose}
         formState={"ADD"}
         onDataSubmit={() => {}}
@@ -21,7 +21,7 @@ describe("Testing MasterFormActions component", () => {
         canUpdate={true}
       >
         <MasterFormActions formRef={ref} />
-      </FormContextProvider>,
+      </MasterContextProvider>,
     )
     let submitButton = getByRole("button", { name: "Add Master" })
     let cancelButton = getByRole("button", { name: "Cancel" })

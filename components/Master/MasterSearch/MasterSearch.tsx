@@ -1,9 +1,9 @@
 import { Input } from "components/Common"
-import { useTableState } from "context/TableContext"
+import { useMasterState } from "context/MasterContext"
 import { useRef, useState } from "react"
 
 const MasterSearch = () => {
-  const { getMastersList } = useTableState()
+  const { getMastersList } = useMasterState()
   const callerRef = useRef<NodeJS.Timeout | null>(null)
   const [search, setSearch] = useState<string>("")
 

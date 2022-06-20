@@ -123,8 +123,8 @@
     right: 0;
     bottom: 0;
     background-color: #888;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
+    -webkit-transition: all 0.4s ease-in;
+    transition: all 0.4s ease-in;
   }
   .kms_switch .slider:before {
     position: absolute;
@@ -134,8 +134,8 @@
     left: 5px;
     bottom: 4px;
     background-color: #fff;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
+    -webkit-transition: all 0.4s ease-in;
+    transition: all 0.4s ease-in;
     box-shadow: 0px 0px 6px #00000029;
     /* background-image: url(../public/images/close.png); */
     /* background-repeat: no-repeat; */
@@ -270,4 +270,26 @@
     transition: opacity 200ms ease-in;
   }
   /* \ End of Animations */
+
+  .kms_list-wrapper {
+    @apply grid gap-3 my-2;
+  }
+  .kms_list-item {
+    @apply flex items-center gap-3 p-2 transition-all rounded-lg bg-slate-100 cursor-pointer outline-none;
+  }
+  .kms_list-item.selected {
+    @apply bg-blue-500 cursor-default;
+  }
+  .kms_list-item.selected .kms_list-item-heading {
+    @apply text-black;
+  }
+  .kms_list-item-highlight {
+    @apply flex items-center justify-center w-10 h-10 uppercase rounded-lg bg-slate-200;
+  }
+  .kms_list-item-heading {
+    @apply text-sm text-gray-500 transition-all group-hover:text-black duration-300;
+  }
+  .kms_list-item-subheading {
+    @apply text-xs text-gray-700;
+  }
 }

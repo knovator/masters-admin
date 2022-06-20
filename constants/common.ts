@@ -16,6 +16,15 @@ enum CALLBACK_CODES {
   "DELETE" = "DELETE",
 }
 
+const DEFAULT_PERMISSIONS = {
+  list: true,
+  add: true,
+  destroy: true,
+  partialUpdate: true,
+  sequencing: false,
+  update: true,
+}
+
 export {
   CALLBACK_CODES,
   DECIMAL_REDIX,
@@ -27,4 +36,5 @@ export {
   PAGE_LIMITS,
   SORT_ASCENDING,
   SORT_DESCENDING,
+  DEFAULT_PERMISSIONS,
 }
