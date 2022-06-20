@@ -1,11 +1,11 @@
 import { fireEvent, render } from "@testing-library/react"
-import FormContextProvider from "context/FormContext"
+import MasterContextProvider from "context/MasterContext"
 import AddButton from "."
 
 describe("Testing Addbutton component", () => {
   it("Should be empty when add permission is not provided", () => {
     const { container } = render(
-      <FormContextProvider
+      <MasterContextProvider
         closeForm={() => {}}
         formState={undefined}
         onDataSubmit={() => {}}
@@ -15,7 +15,7 @@ describe("Testing Addbutton component", () => {
         canAdd={false}
       >
         <AddButton />
-      </FormContextProvider>,
+      </MasterContextProvider>,
     )
     expect(container.firstChild).toBeFalsy()
   })
@@ -23,7 +23,7 @@ describe("Testing Addbutton component", () => {
     let formState: FormActionTypes = ""
     const onChangeFormState = (state: FormActionTypes) => (formState = state)
     const { getByRole } = render(
-      <FormContextProvider
+      <MasterContextProvider
         closeForm={() => {}}
         formState={formState}
         onDataSubmit={() => {}}
@@ -33,7 +33,7 @@ describe("Testing Addbutton component", () => {
         canAdd={true}
       >
         <AddButton />
-      </FormContextProvider>,
+      </MasterContextProvider>,
     )
     let addButton = getByRole("button", { name: "Add Master" })
     fireEvent.click(addButton)

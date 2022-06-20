@@ -20,6 +20,7 @@ interface TableProps {
   sortable?: boolean
   sortConfig?: SortConfigType
   setSortConfig?: (data: SortConfigType) => void
+  onMove?: (id: string, seq: number) => void
 }
 
 interface TableActionTypes {
@@ -59,15 +60,24 @@ type SortConfigType = [string, 1 | -1]
 interface ProviderContextType {
   baseUrl: string
   token: string
+  masterCode: string
+  setMasterCode: (code: string) => void
   dataGetter: (response: any) => any[]
   paginationGetter: (response: any) => any
   onError: (callback_code: import("constants/common").CALLBACK_CODES, code: string, message: string) => void
   onSuccess: (callback_code: import("constants/common").CALLBACK_CODES, code: string, message: string) => void
 }
-interface SearchContextType {
-  searchOnEnter: boolean
-}
-interface PaginationContextType {
+interface MasterContextType {
+  // Form
+  formState: FormActionTypes | undefined
+  closeForm: () => void
+  onDataSubmit: (data: any) => void
+  onChangeFormState: (status: FormActionTypes, data?: any) => void
+  updateData: any
+  loading: boolean
+  canAdd: boolean
+  canUpdate: boolean
+  // Pagination
   currentPage: number
   setCurrentPage: (page: number) => void
   totalPages: number
@@ -75,9 +85,8 @@ interface PaginationContextType {
   setPageSize: (size: number) => void
   totalRecords: number
   limits: number[]
-  canList?: boolean
-}
-interface TableContextType {
+  canList: boolean
+  // Table
   sortConfig: SortConfigType
   setSortConfig: (config: SortConfigType) => void
   onUpdate: (id: string, data: any) => Promise<void>
@@ -85,23 +94,40 @@ interface TableContextType {
   columns: ColumnsSchema
   data: any[]
   loader?: JSX.Element
-  loading?: boolean
-  onChangeFormState: (status: FormActionTypes, data?: any) => void
-  canList?: boolean
-  canUpdate?: boolean
   canDelete?: boolean
   canPartialUpdate?: boolean
   getMastersList: (search?: string) => Promise<void>
 }
-interface FormContextType {
+interface SubMasterContextType {
+  // Form
   formState: FormActionTypes | undefined
   closeForm: () => void
   onDataSubmit: (data: any) => void
   onChangeFormState: (status: FormActionTypes, data?: any) => void
   updateData: any
   loading: boolean
-  canAdd?: boolean
-  canUpdate?: boolean
+  canAdd: boolean
+  canUpdate: boolean
+  // Pagination
+  currentPage: number
+  setCurrentPage: (page: number) => void
+  totalPages: number
+  pageSize: number
+  setPageSize: (size: number) => void
+  totalRecords: number
+  limits: number[]
+  canList: boolean
+  // Table
+  sortConfig: SortConfigType
+  setSortConfig: (config: SortConfigType) => void
+  onUpdate: (id: string, data: any) => Promise<void>
+  sortable: boolean
+  columns: ColumnsSchema
+  data: any[]
+  loader?: JSX.Element
+  canDelete?: boolean
+  canPartialUpdate?: boolean
+  getSubMastersList: (search?: string) => Promise<void>
 }
 type onDelete = ({ data, confirmDelete }: { data: any; confirmDelete: () => void }) => any
 // \ End of Context

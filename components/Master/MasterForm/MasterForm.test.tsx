@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react"
-import FormContextProvider from "context/FormContext"
+import MasterContextProvider from "context/MasterContext"
 import { MutableRefObject } from "react"
 
 import MasteForm from "."
@@ -23,7 +23,7 @@ describe("Testing MasterForm component", () => {
       },
     ]
     const { container } = render(
-      <FormContextProvider
+      <MasterContextProvider
         closeForm={() => {}}
         formState={"ADD"}
         onDataSubmit={() => {}}
@@ -34,7 +34,7 @@ describe("Testing MasterForm component", () => {
         canUpdate={true}
       >
         <MasteForm ref={ref} schema={customSchema} />
-      </FormContextProvider>,
+      </MasterContextProvider>,
     )
     let inputs = container.querySelectorAll(".kms_input")
     expect(inputs.length).toBe(2)

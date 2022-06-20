@@ -1,0 +1,29 @@
+import { Input } from "components/Common"
+import { useSubMasterState } from "context/SubMasterContext"
+import { useRef, useState } from "react"
+
+const SubMasterSearch = () => {
+  const { getSubMastersList } = useSubMasterState()
+  const callerRef = useRef<NodeJS.Timeout | null>(null)
+  const [search, setSearch] = useState<string>("")
+
+  const onChangeSearch = (str: string) => {
+    setSearch(str)
+    if (callerRef.current) clearTimeout(callerRef.current)
+
+    callerRef.current = setTimeout(() => {
+      getSubMastersList(str)
+    }, 300)
+  }
+
+  return (
+    <Input
+      type="search"
+      value={search}
+      onChange={(e) => onChangeSearch(e.target.value)}
+      placeholder="Search Sub Masters"
+    />
+  )
+}
+
+export default SubMasterSearch

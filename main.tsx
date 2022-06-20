@@ -2,57 +2,27 @@ import React from "react"
 import ReactDOM from "react-dom/client"
 import "./styles/index.css"
 
-import Master from "components/Master"
 import Provider from "context/ProviderContext"
+import Master from "components/Master"
+import SubMaster from "components/SubMaster"
 
-let newColumns: ColumnsSchema = [
-  {
-    Header: <u className="text-lg text-gray-500">Header</u>,
-    accessor: "name",
-    sortable: false,
-  },
-  {
-    Header: "Description",
-    accessor: "desc",
-  },
-  {
-    Header: "Active",
-    accessor: "isActive",
-    Cell: ({ row, onUpdate }) => (
-      <select value={row.isActive} onChange={(e) => onUpdate(e.target.value)}>
-        <option value={"false"}>FALSE</option>
-        <option value={"true"}>TRUE</option>
-      </select>
-    ),
-  },
-]
+const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTg1YjM0NjNhMTNmY2MzNGMxZDNjMSIsImVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20iLCJpYXQiOjE2NTU2OTk5NTcsImV4cCI6MTY1NTc4NjM1N30.qc0CTEufRVDl7RjLr09UbybBNLIhFF5XE-k2AeNxrOw"
+const API_URL = "https://api.orbitjobs.knovator.in"
 
-interface LayoutMasterProps extends React.PropsWithChildren {
-  headerDetail: any
-}
-
-const LayoutMaster = ({ headerDetail, children }: LayoutMasterProps) => {
-  return (
-    <div className="max-h-screen overflow-auto">
-      <div className="bg-slate-100 sticky top-0">{headerDetail}</div>
-      <div>{children}</div>
-    </div>
-  )
-}
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Main() {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTg1YjM0NjNhMTNmY2MzNGMxZDNjMSIsImVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20iLCJpYXQiOjE2NTU0NDY4ODUsImV4cCI6MTY1NTUzMzI4NX0.kq9nyV5wg0L-OPO-w5ehZNWr50JFASHF5Vwr7GApcGg"
   // const formRef = useRef<HTMLFormElement>(null)
   return (
     <Provider
-      baseUrl="https://api.orbitjobs.knovator.in"
+      baseUrl={API_URL}
       token={token}
       dataGetter={(response) => response.data.docs}
       paginationGetter={(response) => response.data}
       // eslint-disable-next-line no-console
       onError={(callbackcode, code, message) => console.error(callbackcode, code, message)}
     >
+      <h1>Masters</h1>
       <Master
         // routes={{
         //   UPDATE: ({ id }) => ({
@@ -70,25 +40,22 @@ function Main() {
           list: true,
           add: true,
           destroy: true,
-          partialUpdate: false,
+          partialUpdate: true,
           sequencing: false,
           update: true,
         }}
       >
-        <LayoutMaster
-          headerDetail={
-            <>
-              <Master.Search />
-              <Master.AddButton />
-            </>
-          }
-        >
-          <Master.Table columns={newColumns} />
-          <div className="bg-slate-200 sticky bottom-0">
-            <Master.Pagination />
-          </div>
+        <Master.Search />
+        <Master.Lister />
 
-          {/* <Master.FormWrapper>
+        {/* <Master.Search />
+          <Master.AddButton /> */}
+        {/* <Master.Table columns={newColumns} /> */}
+        {/* <div className="bg-slate-200 sticky bottom-0">
+            <Master.Pagination />
+          </div> */}
+
+        {/* <Master.FormWrapper>
             {({ formState, open, onClose }) => {
               if (!open) return null
               else
@@ -100,8 +67,19 @@ function Main() {
                 )
             }}
           </Master.FormWrapper> */}
-        </LayoutMaster>
       </Master>
+
+      <h2>SubMasters</h2>
+      <SubMaster
+        permissions={{
+          list: true,
+          add: true,
+          destroy: true,
+          partialUpdate: true,
+          sequencing: false,
+          update: true,
+        }}
+      />
     </Provider>
   )
 }

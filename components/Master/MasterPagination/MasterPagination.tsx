@@ -1,9 +1,9 @@
 import { Pagination } from "components/Common"
-import { usePaginationState } from "context/PaginationContext"
+import { useMasterState } from "context/MasterContext"
 
 const MasterPagination = () => {
   const { limits, currentPage, pageSize, setCurrentPage, setPageSize, totalPages, totalRecords, canList } =
-    usePaginationState()
+    useMasterState()
 
   if (!canList) return null
   return (

@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/react"
-import PaginationContextProvider from "context/PaginationContext"
+import MasterContextProvider from "context/MasterContext"
 import Pagination from "./MasterPagination"
 
 describe("Testing Pagination Component", () => {
@@ -13,7 +13,7 @@ describe("Testing Pagination Component", () => {
     let setCurrentPage = (page: number) => (currentPage = page)
 
     const { container, getByRole } = render(
-      <PaginationContextProvider
+      <MasterContextProvider
         limits={limits}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
@@ -24,7 +24,7 @@ describe("Testing Pagination Component", () => {
         canList={true}
       >
         <Pagination />
-      </PaginationContextProvider>,
+      </MasterContextProvider>,
     )
     expect(container.querySelector(".kms_pagination")).toBeTruthy()
     expect(container.querySelector(".kms_pagination-pager")).toBeTruthy()
@@ -53,7 +53,7 @@ describe("Testing Pagination Component", () => {
     let setCurrentPage = (page: number) => (currentPage = page)
 
     const { container, rerender, getByRole } = render(
-      <PaginationContextProvider
+      <MasterContextProvider
         limits={limits}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
@@ -64,7 +64,7 @@ describe("Testing Pagination Component", () => {
         canList={true}
       >
         <Pagination />
-      </PaginationContextProvider>,
+      </MasterContextProvider>,
     )
 
     // Test Next button is working
@@ -75,7 +75,7 @@ describe("Testing Pagination Component", () => {
     let limiter = container.querySelector("select") as HTMLSelectElement
     fireEvent.change(limiter, { target: { value: 30 } })
     rerender(
-      <PaginationContextProvider
+      <MasterContextProvider
         limits={limits}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
@@ -86,7 +86,7 @@ describe("Testing Pagination Component", () => {
         canList={true}
       >
         <Pagination />
-      </PaginationContextProvider>,
+      </MasterContextProvider>,
     )
     expect((container.querySelector("input[type=number]") as HTMLInputElement).value).toBe(String(currentPage))
   })

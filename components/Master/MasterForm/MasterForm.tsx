@@ -1,7 +1,8 @@
-import { Form } from "components/Common"
-import { useFormState } from "context/FormContext"
 import React, { forwardRef, MutableRefObject } from "react"
 import { capitalizeFirstLetter, changeToCode } from "utils/util"
+import { useMasterState } from "context/MasterContext"
+
+import { Form } from "components/Common"
 
 interface MasterFormProps {
   schema?: SchemaType[]
@@ -9,7 +10,7 @@ interface MasterFormProps {
 }
 
 const MasterForm = forwardRef<HTMLFormElement | null, MasterFormProps>(({ schema }, ref) => {
-  const { onDataSubmit, updateData, formState, canAdd, canUpdate } = useFormState()
+  const { onDataSubmit, updateData, formState, canAdd, canUpdate } = useMasterState()
   const defaultSchema: SchemaType[] = [
     {
       label: "Name*",

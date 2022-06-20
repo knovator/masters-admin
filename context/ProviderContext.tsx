@@ -1,9 +1,9 @@
-import React, { createContext, useContext } from "react"
+import React, { createContext, useContext, useState } from "react"
 import { CALLBACK_CODES } from "constants/common"
 
 interface ProviderContextProviderProps
   extends React.PropsWithChildren,
-    Omit<ProviderContextType, "onError" | "onSuccess"> {
+    Omit<ProviderContextType, "onError" | "onSuccess" | "masterCode" | "setMasterCode"> {
   onError?: (callback_code: CALLBACK_CODES, code: string, message: string) => void
   onSuccess?: (callback_code: CALLBACK_CODES, code: string, message: string) => void
 }
@@ -19,6 +19,7 @@ const Provider = ({
   onError = () => {},
   onSuccess = () => {},
 }: ProviderContextProviderProps) => {
+  const [masterCode, setMasterCode] = useState<string>("")
   let ctxDataGetter = typeof dataGetter === "function" ? dataGetter : (response: any) => response?.data?.docs
   let ctxPaginatonGetter = typeof paginationGetter === "function" ? paginationGetter : (response: any) => response?.data
   return (
@@ -30,6 +31,8 @@ const Provider = ({
         paginationGetter: ctxPaginatonGetter,
         onError,
         onSuccess,
+        masterCode,
+        setMasterCode,
       }}
     >
       {children}
