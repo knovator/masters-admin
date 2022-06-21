@@ -66,6 +66,7 @@ interface ProviderContextType {
   paginationGetter: (response: any) => any
   onError: (callback_code: import("constants/common").CALLBACK_CODES, code: string, message: string) => void
   onSuccess: (callback_code: import("constants/common").CALLBACK_CODES, code: string, message: string) => void
+  onLogout: () => void
 }
 interface MasterContextType {
   // Form
@@ -143,6 +144,7 @@ interface BaseAPIProps {
   data?: any
   url: string
   method: string
+  onError?: (error: Error) => void
 }
 
 type API_TYPE = {

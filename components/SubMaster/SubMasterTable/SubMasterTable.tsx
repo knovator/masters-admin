@@ -104,8 +104,8 @@ const SubMasterTable = ({ columns, actions }: MasterTableProps) => {
 
     if (sortable && canPartialUpdate)
       modifiedColumns.push({
-        id: "seq",
-        accessor: "seq",
+        id: "sequence",
+        accessor: "sequence",
         Header: () => {
           return <div />
         },

@@ -21,8 +21,16 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
 
   const sortConfigRef = useRef<SortConfigType>(defaultSort)
 
-  const { baseUrl, token, dataGetter, paginationGetter, onError, onSuccess, masterCode } = useProviderState()
+  const { baseUrl, token, dataGetter, paginationGetter, onError, onSuccess, onLogout, masterCode } = useProviderState()
   const { setPageSize, pageSize, currentPage, setCurrentPage, filter } = usePagination({ defaultLimit })
+
+  const handleError = (code: CALLBACK_CODES) => (error: any) => {
+    const { data = {} } = error?.response || {}
+    if (data?.code === "UNAUTHENTICATED") {
+      onLogout()
+    }
+    onError(code, "error", data?.message)
+  }
 
   const getSubMastersList = useCallback(
     async (search?: string) => {
@@ -35,6 +43,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
           token,
           method: api.method,
           url: api.url,
+          onError: handleError(CALLBACK_CODES.GET_ALL),
           data: {
             search,
             query: {
@@ -93,6 +102,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
           token,
           method: api.method,
           url: api.url,
+          onError: handleError(CALLBACK_CODES.UPDATE),
         })
         if (response?.code === "SUCCESS") {
           onSuccess(CALLBACK_CODES.UPDATE, response.code, response.message)
@@ -110,6 +120,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
     setLoading(true)
     let finalData = { ...data }
     if (formState === "ADD") finalData.parentCode = masterCode
+    let code = formState === "ADD" ? CALLBACK_CODES.CREATE : CALLBACK_CODES.UPDATE
     try {
       let api = getApiType({
         routes,
@@ -123,20 +134,21 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
         method: api.method,
         url: api.url,
         data: finalData,
+        onError: handleError(code),
       })
       if (response?.code === "SUCCESS") {
         setLoading(false)
-        onSuccess(CALLBACK_CODES.CREATE, response?.code, response?.message)
+        onSuccess(code, response?.code, response?.message)
         getSubMastersList()
+        onCloseForm()
       } else {
         setLoading(false)
-        onError(CALLBACK_CODES.CREATE, response?.code, response?.message)
+        onError(code, response?.code, response?.message)
       }
     } catch (error) {
       setLoading(false)
-      onError(CALLBACK_CODES.GET_ALL, INTERNAL_ERROR_CODE, (error as Error).message)
+      onError(code, INTERNAL_ERROR_CODE, (error as Error).message)
     }
-    onCloseForm()
   }
   const onCloseForm = () => {
     setFormState(undefined)
@@ -165,6 +177,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
           token,
           method: api.method,
           url: api.url,
+          onError: handleError(CALLBACK_CODES.DELETE),
           data: {
             id: [itemData?.id],
           },
@@ -182,7 +195,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
       }
     } catch (error) {
       setLoading(false)
-      onError(CALLBACK_CODES.GET_ALL, INTERNAL_ERROR_CODE, (error as Error).message)
+      onError(CALLBACK_CODES.DELETE, INTERNAL_ERROR_CODE, (error as Error).message)
       onCloseForm()
     }
   }
@@ -199,6 +212,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
         token,
         method: api.method,
         url: api.url,
+        onError: handleError(CALLBACK_CODES.SEQUENCE_UPDATE),
       })
       if (response?.code === "SUCCESS") {
         onSuccess(CALLBACK_CODES.SEQUENCE_UPDATE, response.code, response.message)
@@ -208,7 +222,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
         onError(CALLBACK_CODES.SEQUENCE_UPDATE, response.code, response.message)
       }
     } catch (error) {
-      onError(CALLBACK_CODES.UPDATE, INTERNAL_ERROR_CODE, (error as Error).message)
+      onError(CALLBACK_CODES.SEQUENCE_UPDATE, INTERNAL_ERROR_CODE, (error as Error).message)
     }
   }
 

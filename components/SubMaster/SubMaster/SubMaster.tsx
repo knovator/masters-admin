@@ -28,6 +28,10 @@ interface SubMasterProps extends React.PropsWithChildren {
 
 const columns = [
   {
+    Header: "Sequence",
+    accessor: "seq",
+  },
+  {
     Header: "Name",
     accessor: "name",
   },

@@ -100,7 +100,7 @@ const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, load
                             <tr ref={provided.innerRef} {...provided.draggableProps} {...row.getRowProps()} key={i}>
                               {row.cells.map((cell, j) => (
                                 <td
-                                  {...(cell.column.id === "seq" ? provided.dragHandleProps : {})}
+                                  {...(cell.column.id === "sequence" ? provided.dragHandleProps : {})}
                                   {...cell.getCellProps()}
                                   key={j}
                                 >

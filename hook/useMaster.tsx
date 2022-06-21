@@ -21,9 +21,16 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
 
   const sortConfigRef = useRef<SortConfigType>(defaultSort)
 
-  const { baseUrl, token, dataGetter, paginationGetter, onError, onSuccess } = useProviderState()
+  const { baseUrl, token, dataGetter, paginationGetter, onError, onLogout, onSuccess } = useProviderState()
   const { setPageSize, pageSize, currentPage, setCurrentPage, filter } = usePagination({ defaultLimit })
 
+  const handleError = (code: CALLBACK_CODES) => (error: any) => {
+    const { data = {} } = error?.response || {}
+    if (data?.code === "UNAUTHENTICATED") {
+      onLogout()
+    }
+    onError(code, "error", data?.message)
+  }
   const getMastersList = useCallback(
     async (search?: string) => {
       try {
@@ -35,6 +42,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
           token,
           method: api.method,
           url: api.url,
+          onError: handleError(CALLBACK_CODES.GET_ALL),
           data: {
             search,
             options: {
@@ -87,8 +95,9 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
           data,
           baseUrl,
           token,
-          method: api.method,
           url: api.url,
+          method: api.method,
+          onError: handleError(CALLBACK_CODES.UPDATE),
         })
         if (response?.code === "SUCCESS") {
           onSuccess(CALLBACK_CODES.UPDATE, response.code, response.message)
@@ -104,6 +113,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
   )
   const onDataSubmit = async (data: any) => {
     setLoading(true)
+    let code = formState === "ADD" ? CALLBACK_CODES.CREATE : CALLBACK_CODES.UPDATE
     try {
       let api = getApiType({
         routes,
@@ -114,23 +124,24 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
       let response = await request({
         baseUrl,
         token,
-        method: api.method,
-        url: api.url,
         data,
+        url: api.url,
+        method: api.method,
+        onError: handleError(code),
       })
       if (response?.code === "SUCCESS") {
         setLoading(false)
-        onSuccess(CALLBACK_CODES.CREATE, response?.code, response?.message)
+        onSuccess(code, response?.code, response?.message)
         getMastersList()
+        onCloseForm()
       } else {
         setLoading(false)
-        onError(CALLBACK_CODES.CREATE, response?.code, response?.message)
+        onError(code, response?.code, response?.message)
       }
     } catch (error) {
       setLoading(false)
-      onError(CALLBACK_CODES.GET_ALL, INTERNAL_ERROR_CODE, (error as Error).message)
+      onError(code, INTERNAL_ERROR_CODE, (error as Error).message)
     }
-    onCloseForm()
   }
   const onCloseForm = () => {
     setFormState(undefined)
@@ -159,6 +170,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
           token,
           method: api.method,
           url: api.url,
+          onError: handleError(CALLBACK_CODES.DELETE),
           data: {
             id: [itemData?.id],
           },
@@ -176,7 +188,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
       }
     } catch (error) {
       setLoading(false)
-      onError(CALLBACK_CODES.GET_ALL, INTERNAL_ERROR_CODE, (error as Error).message)
+      onError(CALLBACK_CODES.DELETE, INTERNAL_ERROR_CODE, (error as Error).message)
       onCloseForm()
     }
   }

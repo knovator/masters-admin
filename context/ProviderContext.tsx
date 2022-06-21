@@ -3,9 +3,10 @@ import { CALLBACK_CODES } from "constants/common"
 
 interface ProviderContextProviderProps
   extends React.PropsWithChildren,
-    Omit<ProviderContextType, "onError" | "onSuccess" | "masterCode" | "setMasterCode"> {
+    Omit<ProviderContextType, "onError" | "onSuccess" | "masterCode" | "onLogout" | "setMasterCode"> {
   onError?: (callback_code: CALLBACK_CODES, code: string, message: string) => void
   onSuccess?: (callback_code: CALLBACK_CODES, code: string, message: string) => void
+  onLogout?: () => void
 }
 
 const ProviderContext = createContext<ProviderContextType | null>(null)
@@ -18,6 +19,7 @@ const Provider = ({
   paginationGetter,
   onError = () => {},
   onSuccess = () => {},
+  onLogout = () => {},
 }: ProviderContextProviderProps) => {
   const [masterCode, setMasterCode] = useState<string>("")
   let ctxDataGetter = typeof dataGetter === "function" ? dataGetter : (response: any) => response?.data?.docs
@@ -33,6 +35,7 @@ const Provider = ({
         onSuccess,
         masterCode,
         setMasterCode,
+        onLogout,
       }}
     >
       {children}

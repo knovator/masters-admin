@@ -2,6 +2,10 @@ import fetchUrl, { setAPIConfig } from "@knovator/api"
 
 import apiList from "./list"
 
+const handleError = (error: Error) => {
+  console.log(error)
+}
+
 const commonApi = async ({
   data,
   config,
@@ -11,12 +15,14 @@ const commonApi = async ({
 
   url,
   method,
+
+  onError = handleError,
 }: BaseAPIProps) => {
   setAPIConfig({
     baseUrl,
     tokenPrefix: "jwt",
     getToken: token,
-    onError: (error: any) => console.log(error),
+    onError,
   })
   return fetchUrl({
     type: method,
