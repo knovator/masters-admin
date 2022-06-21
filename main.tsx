@@ -7,7 +7,7 @@ import Master from "components/Master"
 import SubMaster from "components/SubMaster"
 
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTg1YjM0NjNhMTNmY2MzNGMxZDNjMSIsImVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20iLCJpYXQiOjE2NTU2OTk5NTcsImV4cCI6MTY1NTc4NjM1N30.qc0CTEufRVDl7RjLr09UbybBNLIhFF5XE-k2AeNxrOw"
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTg1YjM0NjNhMTNmY2MzNGMxZDNjMSIsImVtYWlsIjoiYWRtaW5AbWFpbGluYXRvci5jb20iLCJpYXQiOjE2NTU3OTk5NzgsImV4cCI6MTY1NTg4NjM3OH0.kGlBTHHm0J3GIAJ_vTLetjtzlgOA0ZbNULioWQkEfJ0"
 const API_URL = "https://api.orbitjobs.knovator.in"
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -47,14 +47,7 @@ function Main() {
       >
         <Master.Search />
         <Master.Lister />
-
-        {/* <Master.Search />
-          <Master.AddButton /> */}
-        {/* <Master.Table columns={newColumns} /> */}
-        {/* <div className="bg-slate-200 sticky bottom-0">
-            <Master.Pagination />
-          </div> */}
-
+        <Master.Pagination />
         {/* <Master.FormWrapper>
             {({ formState, open, onClose }) => {
               if (!open) return null

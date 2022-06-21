@@ -76,7 +76,7 @@ const SubMaster = ({
     onChangeFormState,
     onCloseForm,
     onDataSubmit,
-
+    onChangeSequence,
     onCofirmDeleteMaster,
   } = useSubMaster({
     defaultLimit: Array.isArray(limits) && limits.length > 0 ? limits[0] : DEFAULT_LIMIT,
@@ -117,6 +117,7 @@ const SubMaster = ({
         canDelete={permissions?.destroy}
         getSubMastersList={getSubMastersList}
         canPartialUpdate={permissions?.partialUpdate}
+        onChangeSequence={onChangeSequence}
       >
         {children ? (
           children

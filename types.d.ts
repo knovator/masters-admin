@@ -128,12 +128,13 @@ interface SubMasterContextType {
   canDelete?: boolean
   canPartialUpdate?: boolean
   getSubMastersList: (search?: string) => Promise<void>
+  onChangeSequence: (id: string, seq: number) => Promise<void>
 }
 type onDelete = ({ data, confirmDelete }: { data: any; confirmDelete: () => void }) => any
 // \ End of Context
 
 // API
-type ACTION_TYPES = "IMAGE_UPLOAD" | "CREATE" | "LIST" | "DELETE" | "UPDATE"
+type ACTION_TYPES = "IMAGE_UPLOAD" | "CREATE" | "LIST" | "DELETE" | "UPDATE" | "SEQUENCE"
 
 interface BaseAPIProps {
   config?: any

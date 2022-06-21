@@ -35,6 +35,7 @@ const SubMasterContextProvider = ({
   canDelete = false,
   canPartialUpdate = false,
   loader = undefined,
+  onChangeSequence = () => Promise.resolve(),
   // other
   children,
 }: MasterContextProviderProps) => {
@@ -70,6 +71,7 @@ const SubMasterContextProvider = ({
         canDelete,
         canPartialUpdate,
         loader,
+        onChangeSequence,
       }}
     >
       {children}

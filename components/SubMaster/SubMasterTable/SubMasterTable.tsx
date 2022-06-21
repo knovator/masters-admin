@@ -25,6 +25,7 @@ const SubMasterTable = ({ columns, actions }: MasterTableProps) => {
     canList,
     canUpdate,
     canPartialUpdate,
+    onChangeSequence,
   } = useSubMasterState()
   const [tableColumns, setTableColumns] = useState<ColumnsSchema>([])
 
@@ -41,8 +42,7 @@ const SubMasterTable = ({ columns, actions }: MasterTableProps) => {
 
   const updateSequence = useCallback(
     (id: string, seq: number) => {
-      onUpdate(id, { seq })
-      setSortConfig(["seq", 1])
+      onChangeSequence(id, seq)
     },
     [onUpdate, setSortConfig],
   )

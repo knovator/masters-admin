@@ -190,6 +190,27 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
     setItemData(data || null)
     setFormState(state)
   }
+  const onChangeSequence = async (id: string, seq: number) => {
+    try {
+      let api = getApiType({ routes, action: "SEQUENCE", module: "masters", id })
+      let response = await request({
+        data: { seq },
+        baseUrl,
+        token,
+        method: api.method,
+        url: api.url,
+      })
+      if (response?.code === "SUCCESS") {
+        onSuccess(CALLBACK_CODES.SEQUENCE_UPDATE, response.code, response.message)
+        sortConfigRef.current = ["seq", 1]
+        getSubMastersList()
+      } else {
+        onError(CALLBACK_CODES.SEQUENCE_UPDATE, response.code, response.message)
+      }
+    } catch (error) {
+      onError(CALLBACK_CODES.UPDATE, INTERNAL_ERROR_CODE, (error as Error).message)
+    }
+  }
 
   useEffect(() => {
     if (masterCode) getSubMastersList()
@@ -202,6 +223,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
     loading,
     setLoading,
     partialUpdate,
+    onChangeSequence,
 
     // Pagination
     pageSize,

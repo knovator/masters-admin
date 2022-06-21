@@ -20,6 +20,10 @@ const apiList = {
     url: `admin/${module}/soft-delete`,
     method: "PUT",
   }),
+  SEQUENCE: ({ module, id }: API_INPUT_TYPE) => ({
+    url: `admin/${module}/partial-update/sequence/${id}`,
+    method: "PATCH",
+  }),
 }
 
 export default apiList
