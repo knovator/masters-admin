@@ -8,6 +8,7 @@ const Pagination = ({
   setCurrentPage,
   totalRecords,
   limits,
+  pageLable = "Page",
 }: PaginationProps) => {
   const pageHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -38,7 +39,7 @@ const Pagination = ({
           disabled={currentPage - 1 === 0}
         />
         <div className="kms_pagination-pager">
-          Page
+          {pageLable}
           <input
             className="kms_input kms_input-sm w-10"
             maxLength={3}

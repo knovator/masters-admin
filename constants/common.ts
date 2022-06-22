@@ -27,10 +27,39 @@ const DEFAULT_PERMISSIONS = {
   update: true,
 }
 
-const TRANSLATION_PAIRS = {
+const TRANSLATION_PAIRS_SUBMASTERS = {
   uploadFile: "Upload a file",
   dragDrop: "or drag and drop",
   allowedFormat: "PNG, JPG, SVG up to 2 MB",
+}
+
+const TRANSLATION_PAIRS_MASTERS = {
+  addMaster: "Add Master",
+  updateMaster: "Edit Master",
+  searchMaster: "Search Masters",
+  name: "Name", // Table, Form
+  enterName: "Enter Name", // Form Placeholder
+  requiredName: "Name is Required", // Name Required Validation
+  code: "Code", // Table, Form
+  enterCode: "Enter Code", // Form Placeholder
+  requiredCode: "Code is Required", // Code Required Validation
+  webDisplay: "Web Display", // Form, Web Display Field
+  enterWebDisplay: "Enter Web Display", // Web Display Placeholder
+  description: "Discription", // Form,
+  enterDiscription: "Enter Description", // Description Placeholder
+  active: "Active",
+}
+
+const TRANSLATION_PAIRS_COMMON = {
+  permanentlyDelete: "You are about to permanently delete the",
+  lossOfData: "This action can lead to data loss. To prevent accidental actions we ask you to confirm your intention.",
+  pleaseType: "Please type",
+  toProceedOrCancel: "to processed or close this modal to cancel.",
+  confirm: "Confirm",
+  "common:actions": "Actions",
+  "common:cancel": "Cancel",
+  page: "Page",
+  indicatesRequired: "Indicates fields are required",
 }
 
 export {
@@ -45,5 +74,7 @@ export {
   SORT_ASCENDING,
   SORT_DESCENDING,
   DEFAULT_PERMISSIONS,
-  TRANSLATION_PAIRS,
+  TRANSLATION_PAIRS_SUBMASTERS,
+  TRANSLATION_PAIRS_MASTERS,
+  TRANSLATION_PAIRS_COMMON,
 }

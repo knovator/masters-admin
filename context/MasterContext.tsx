@@ -1,11 +1,18 @@
 import React, { createContext, useContext } from "react"
-import { PAGE_LIMITS } from "constants/common"
+import { PAGE_LIMITS, TRANSLATION_PAIRS_COMMON, TRANSLATION_PAIRS_MASTERS } from "constants/common"
 
 interface MasterContextProviderProps extends React.PropsWithChildren, Partial<MasterContextType> {}
 
 const MasterContext = createContext<MasterContextType | null>(null)
 
 const MasterContextProvider = ({
+  t = (key: string) =>
+    ((
+      {
+        ...TRANSLATION_PAIRS_MASTERS,
+        ...TRANSLATION_PAIRS_COMMON,
+      } as any
+    )[key]),
   // Form
   formState = "",
   closeForm = () => {},
@@ -41,6 +48,7 @@ const MasterContextProvider = ({
   return (
     <MasterContext.Provider
       value={{
+        t,
         // Form
         closeForm,
         formState,

@@ -1,7 +1,7 @@
 import React, { useRef } from "react"
 import ToggleBtn from "widgets/toggle"
 import { Drawer, DeleteModal } from "components/Common"
-import { DEFAULT_LIMIT, PAGE_LIMITS, DEFAULT_PERMISSIONS, TRANSLATION_PAIRS } from "constants/common"
+import { DEFAULT_LIMIT, PAGE_LIMITS, DEFAULT_PERMISSIONS, TRANSLATION_PAIRS_SUBMASTERS } from "constants/common"
 
 import SubMasterTable from "../SubMasterTable"
 import SubMasterPagination from "../SubMasterPagination"
@@ -96,7 +96,7 @@ const SubMaster = ({
     <div>
       <SubMasterContextProvider
         // Translation
-        t={typeof t === "function" ? t : (key: string) => ((TRANSLATION_PAIRS as any)[key] as string) || ""}
+        t={typeof t === "function" ? t : (key: string) => ((TRANSLATION_PAIRS_SUBMASTERS as any)[key] as string) || ""}
         // Form
         loading={loading}
         formState={formState}

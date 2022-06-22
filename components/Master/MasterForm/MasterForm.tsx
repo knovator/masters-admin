@@ -10,45 +10,45 @@ interface MasterFormProps {
 }
 
 const MasterForm = forwardRef<HTMLFormElement | null, MasterFormProps>(({ schema }, ref) => {
-  const { onDataSubmit, updateData, formState, canAdd, canUpdate } = useMasterState()
+  const { onDataSubmit, updateData, formState, canAdd, canUpdate, t } = useMasterState()
   const defaultSchema: SchemaType[] = [
     {
-      label: "Name*",
+      label: `${t("name")}*`,
       accessor: "name",
       type: "text",
-      placeholder: "Enter Name",
+      placeholder: t("enterName"),
       onInput: handleCapitalize,
       validations: {
-        required: "Name is Required",
+        required: t("requiredName"),
       },
     },
     {
-      label: "Code*",
+      label: `${t("code")}*`,
       accessor: "code",
       type: "text",
       onInput: handleCode,
       editable: false,
-      placeholder: "Enter Code",
+      placeholder: t("enterCode"),
       validations: {
-        required: "Code is Required",
+        required: t("requiredCode"),
       },
     },
     {
-      label: "Web Display",
+      label: t("webDisplay"),
       accessor: "webDsply",
       type: "text",
       onInput: handleCapitalize,
-      placeholder: "Enter Web Display",
+      placeholder: t("enterWebDisplay"),
     },
     {
-      label: "Description",
+      label: t("description"),
       accessor: "desc",
       type: "textarea",
       onInput: handleCapitalize,
-      placeholder: "Enter Description",
+      placeholder: t("enterDiscription"),
     },
     {
-      label: "Active",
+      label: t("active"),
       accessor: "isActive",
       type: "checkbox",
       defaultValue: true,

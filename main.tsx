@@ -46,7 +46,9 @@ function Main() {
         }}
       >
         <Master.Search />
-        <Master.Lister />
+        <Master.AddButton />
+        <Master.Table />
+        {/* <Master.Lister /> */}
         <Master.Pagination />
         {/* <Master.FormWrapper>
             {({ formState, open, onClose }) => {

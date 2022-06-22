@@ -2,7 +2,7 @@ import { Pagination } from "components/Common"
 import { useMasterState } from "context/MasterContext"
 
 const MasterPagination = () => {
-  const { limits, currentPage, pageSize, setCurrentPage, setPageSize, totalPages, totalRecords, canList } =
+  const { limits, currentPage, pageSize, setCurrentPage, setPageSize, totalPages, totalRecords, canList, t } =
     useMasterState()
 
   if (!canList) return null
@@ -15,6 +15,7 @@ const MasterPagination = () => {
       setPageSize={setPageSize}
       totalRecords={totalRecords}
       limits={limits}
+      pageLable={t("page")}
     />
   )
 }

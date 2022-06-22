@@ -51,6 +51,7 @@ interface PaginationProps {
   setPageSize: (size: number) => void
   totalRecords: number
   limits: number[]
+  pageLable?: string
 }
 
 type SortConfigType = [string, 1 | -1]
@@ -69,6 +70,7 @@ interface ProviderContextType {
   onLogout: () => void
 }
 interface MasterContextType {
+  t: (key: string) => string
   // Form
   formState: FormActionTypes | undefined
   closeForm: () => void

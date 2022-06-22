@@ -3,7 +3,7 @@ import { useMasterState } from "context/MasterContext"
 import { useRef, useState } from "react"
 
 const MasterSearch = () => {
-  const { getMastersList } = useMasterState()
+  const { getMastersList, t } = useMasterState()
   const callerRef = useRef<NodeJS.Timeout | null>(null)
   const [search, setSearch] = useState<string>("")
 
@@ -17,7 +17,12 @@ const MasterSearch = () => {
   }
 
   return (
-    <Input type="search" value={search} onChange={(e) => onChangeSearch(e.target.value)} placeholder="Search Masters" />
+    <Input
+      type="search"
+      value={search}
+      onChange={(e) => onChangeSearch(e.target.value)}
+      placeholder={t("searchMaster")}
+    />
   )
 }
 

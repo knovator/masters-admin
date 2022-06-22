@@ -3,7 +3,13 @@ import useMaster from "hook/useMaster"
 import ToggleBtn from "widgets/toggle"
 import { Drawer, DeleteModal } from "components/Common"
 import MasterContextProvider from "context/MasterContext"
-import { DEFAULT_LIMIT, PAGE_LIMITS, DEFAULT_PERMISSIONS } from "constants/common"
+import {
+  DEFAULT_LIMIT,
+  PAGE_LIMITS,
+  DEFAULT_PERMISSIONS,
+  TRANSLATION_PAIRS_MASTERS,
+  TRANSLATION_PAIRS_COMMON,
+} from "constants/common"
 
 import AddButton from "../AddButton"
 import MasterForm from "../MasterForm"
@@ -22,26 +28,9 @@ interface MasterProps extends React.PropsWithChildren {
   loader?: JSX.Element
   explicitForm?: boolean
   permissions?: PermissionsObj
+  t?: (key: string) => string
   preConfirmDelete?: (data: { row: any }) => Promise<boolean>
 }
-
-const columns = [
-  {
-    Header: "Name",
-    accessor: "name",
-  },
-  {
-    Header: "Code",
-    accessor: "code",
-  },
-  {
-    Header: "Active",
-    accessor: "isActive",
-    Cell({ row, onUpdate }: any) {
-      return <ToggleBtn isChecked={row.isActive} onChange={onUpdate} />
-    },
-  },
-]
 
 const Master = ({
   sortable = true,
@@ -52,9 +41,38 @@ const Master = ({
   children,
   preConfirmDelete,
   loader,
+  t,
   permissions = DEFAULT_PERMISSIONS,
 }: MasterProps) => {
+  const derivedT = (key: string) => {
+    if (typeof t === "function") return t(key)
+    return (
+      (
+        {
+          ...TRANSLATION_PAIRS_MASTERS,
+          ...TRANSLATION_PAIRS_COMMON,
+        } as any
+      )[key] || ""
+    )
+  }
   const formRef = useRef<HTMLFormElement | null>(null)
+  const columns = [
+    {
+      Header: derivedT("name"),
+      accessor: "name",
+    },
+    {
+      Header: derivedT("code"),
+      accessor: "code",
+    },
+    {
+      Header: derivedT("active"),
+      accessor: "isActive",
+      Cell({ row, onUpdate }: any) {
+        return <ToggleBtn isChecked={row.isActive} onChange={onUpdate} />
+      },
+    },
+  ]
   const {
     list,
     loading,
@@ -85,6 +103,7 @@ const Master = ({
   return (
     <div>
       <MasterContextProvider
+        t={derivedT}
         // Form
         loading={loading}
         formState={formState}
@@ -130,7 +149,7 @@ const Master = ({
           <Drawer
             open={formState === "ADD" || formState === "UPDATE"}
             onClose={onCloseForm}
-            title={formState === "ADD" ? "Add Master" : formState === "UPDATE" ? "Edit Master" : ""}
+            title={formState === "ADD" ? derivedT("addMaster") : formState === "UPDATE" ? derivedT("updateMaster") : ""}
             footerContent={<MasterFormActions formRef={formRef} />}
           >
             <MasterForm ref={formRef} />

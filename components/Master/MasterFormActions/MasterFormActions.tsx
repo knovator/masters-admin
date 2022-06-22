@@ -4,12 +4,10 @@ import { MutableRefObject } from "react"
 
 interface MasterFormActionProps {
   formRef: MutableRefObject<HTMLFormElement | null>
-  addLabel?: string
-  editLabel?: string
 }
 
-const MasterFormActions = ({ formRef, addLabel = "Add Master", editLabel = "Edit Master" }: MasterFormActionProps) => {
-  const { formState, closeForm, loading, canAdd, canUpdate } = useMasterState()
+const MasterFormActions = ({ formRef }: MasterFormActionProps) => {
+  const { formState, closeForm, loading, canAdd, canUpdate, t } = useMasterState()
   const onSubmitClick = (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (!formRef.current) e?.preventDefault()
     else formRef.current?.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }))
@@ -19,9 +17,10 @@ const MasterFormActions = ({ formRef, addLabel = "Add Master", editLabel = "Edit
   return (
     <FormActions
       loading={loading}
-      primaryLabel={formState === "ADD" ? addLabel : editLabel}
+      primaryLabel={formState === "ADD" ? t("addMaster") : t("updateMaster")}
       onPrimaryButtonClick={onSubmitClick}
       onSecondaryButtonClick={closeForm}
+      secondaryLabel={t("common:cancel")}
     />
   )
 }
