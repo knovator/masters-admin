@@ -5,7 +5,7 @@ const SORT_DESCENDING = -1
 const PAGE_LIMITS = [10, 20, 30, 40, 50]
 const DECIMAL_REDIX = 10
 const DEFAULT_CURRENT_PAGE = 1
-const EXCLUDE_SORT_COLUMNS = ["actions"]
+const EXCLUDE_SORT_COLUMNS = ["actions", "sequence"]
 const INTERNAL_ERROR_CODE = "INTERNAL_ERROR"
 
 enum CALLBACK_CODES {
@@ -14,6 +14,7 @@ enum CALLBACK_CODES {
   "CREATE" = "CREATE",
   "UPDATE" = "UPDATE",
   "DELETE" = "DELETE",
+  "IMAGE_UPLOAD" = "IMAGE_UPLOAD",
   "SEQUENCE_UPDATE" = "SEQUENCE_UPDATE",
 }
 
@@ -24,6 +25,12 @@ const DEFAULT_PERMISSIONS = {
   partialUpdate: true,
   sequencing: false,
   update: true,
+}
+
+const TRANSLATION_PAIRS = {
+  uploadFile: "Upload a file",
+  dragDrop: "or drag and drop",
+  allowedFormat: "PNG, JPG, SVG up to 2 MB",
 }
 
 export {
@@ -38,4 +45,5 @@ export {
   SORT_ASCENDING,
   SORT_DESCENDING,
   DEFAULT_PERMISSIONS,
+  TRANSLATION_PAIRS,
 }

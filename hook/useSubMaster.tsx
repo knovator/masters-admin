@@ -3,6 +3,7 @@ import { CALLBACK_CODES, INTERNAL_ERROR_CODE } from "constants/common"
 import { useProviderState } from "context/ProviderContext"
 import usePagination from "hook/usePagination"
 import request, { getApiType } from "api"
+import { build_path } from "utils/util"
 
 interface UseMasterProps {
   defaultLimit: number
@@ -225,7 +226,33 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
       onError(CALLBACK_CODES.SEQUENCE_UPDATE, INTERNAL_ERROR_CODE, (error as Error).message)
     }
   }
-
+  const onImageUpload = async (file: File): Promise<{ fileUrl: string; fileId: string }> => {
+    try {
+      const payload = new FormData()
+      payload?.append("folder", "images")
+      payload?.append("file", file, file.name)
+      let api = getApiType({ routes, action: "IMAGE_UPLOAD", module: "masters" })
+      let response = await request({
+        data: payload,
+        baseUrl,
+        token,
+        method: api.method,
+        url: api.url,
+        config: {
+          contentType: "multipart/form-data",
+        },
+        onError: handleError(CALLBACK_CODES.IMAGE_UPLOAD),
+      })
+      if (response.code === "SUCCESS") {
+        return {
+          fileId: response?.data[0]?._id,
+          fileUrl: build_path(baseUrl, response?.data[0]?.uri),
+        }
+      } else throw new Error(response.message)
+    } catch (error) {
+      throw new Error("File upload error")
+    }
+  }
   useEffect(() => {
     if (masterCode) getSubMastersList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -258,6 +285,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
     onCloseForm,
     onDataSubmit,
     onCofirmDeleteMaster,
+    onImageUpload,
   }
 }
 

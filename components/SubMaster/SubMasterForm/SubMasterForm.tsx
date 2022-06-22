@@ -2,7 +2,7 @@ import React, { forwardRef, MutableRefObject } from "react"
 import { capitalizeFirstLetter, changeToCode } from "utils/util"
 import { useSubMasterState } from "context/SubMasterContext"
 
-import { Form } from "components/Common"
+import { Form, ImageUpload } from "components/Common"
 
 interface SubMasterFormProps {
   schema?: SchemaType[]
@@ -10,7 +10,7 @@ interface SubMasterFormProps {
 }
 
 const SubMasterForm = forwardRef<HTMLFormElement | null, SubMasterFormProps>(({ schema }, ref) => {
-  const { onDataSubmit, updateData, formState, canAdd, canUpdate } = useSubMasterState()
+  const { onDataSubmit, updateData, formState, canAdd, canUpdate, onImageUpload, t } = useSubMasterState()
   const defaultSchema: SchemaType[] = [
     {
       label: "Name*",
@@ -46,6 +46,32 @@ const SubMasterForm = forwardRef<HTMLFormElement | null, SubMasterFormProps>(({ 
       type: "textarea",
       onInput: handleCapitalize,
       placeholder: "Enter Description",
+    },
+    {
+      label: "Cover Image",
+      accessor: "img",
+      Input: ({ field, error, setError }) => (
+        <ImageUpload
+          imgId={field.value}
+          maxSize={10_485_760}
+          onError={setError}
+          error={error}
+          setImgId={field.onChange}
+          text={
+            <>
+              <div className="kms_img-text-wrapper">
+                <label htmlFor="file-upload" className="kms_img-text-label">
+                  <span>{t("uploadFile")}</span>
+                </label>
+                <p className="kms_img-text-1">{t("dragDrop")}</p>
+              </div>
+              <p className="kms_img-text-2">{t("allowedFormat")}</p>
+            </>
+          }
+          onImageUpload={onImageUpload}
+          className="kms_img-upload-wrapper-3"
+        />
+      ),
     },
     {
       label: "Active",

@@ -100,6 +100,7 @@ interface MasterContextType {
   getMastersList: (search?: string) => Promise<void>
 }
 interface SubMasterContextType {
+  t: (key: string) => string
   // Form
   formState: FormActionTypes | undefined
   closeForm: () => void
@@ -109,6 +110,7 @@ interface SubMasterContextType {
   loading: boolean
   canAdd: boolean
   canUpdate: boolean
+  onImageUpload: (file: File) => Promise<{ fileUrl: string; fileId: string }>
   // Pagination
   currentPage: number
   setCurrentPage: (page: number) => void
@@ -161,8 +163,9 @@ type Routes_Input = {
 
 // Form
 interface InputRendererProps {
-  field: any
+  field: import("react-hook-form").ControllerRenderProps
   error?: string
+  setError: (msg: string) => void
 }
 
 interface SchemaType {

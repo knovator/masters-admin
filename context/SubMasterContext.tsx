@@ -6,6 +6,7 @@ interface MasterContextProviderProps extends React.PropsWithChildren, Partial<Su
 const SubMasterContext = createContext<SubMasterContextType | null>(null)
 
 const SubMasterContextProvider = ({
+  t = () => "",
   // Form
   formState = "",
   closeForm = () => {},
@@ -15,6 +16,7 @@ const SubMasterContextProvider = ({
   updateData = null,
   canAdd = false,
   canUpdate = false,
+  onImageUpload = () => Promise.resolve({ fileId: "", fileUrl: "" }),
   // Pagination
   currentPage = 1,
   limits = PAGE_LIMITS,
@@ -42,6 +44,7 @@ const SubMasterContextProvider = ({
   return (
     <SubMasterContext.Provider
       value={{
+        t,
         // Form
         closeForm,
         formState,
@@ -51,6 +54,7 @@ const SubMasterContextProvider = ({
         updateData,
         canAdd,
         canUpdate,
+        onImageUpload,
         // Pagination
         currentPage,
         limits,

@@ -1,7 +1,7 @@
 import React, { useRef } from "react"
 import ToggleBtn from "widgets/toggle"
 import { Drawer, DeleteModal } from "components/Common"
-import { DEFAULT_LIMIT, PAGE_LIMITS, DEFAULT_PERMISSIONS } from "constants/common"
+import { DEFAULT_LIMIT, PAGE_LIMITS, DEFAULT_PERMISSIONS, TRANSLATION_PAIRS } from "constants/common"
 
 import SubMasterTable from "../SubMasterTable"
 import SubMasterPagination from "../SubMasterPagination"
@@ -22,6 +22,7 @@ interface SubMasterProps extends React.PropsWithChildren {
   routes?: Routes_Input
   loader?: JSX.Element
   explicitForm?: boolean
+  t?: (key: string) => string
   permissions?: PermissionsObj
   preConfirmDelete?: (data: { row: any }) => Promise<boolean>
 }
@@ -58,6 +59,7 @@ const SubMaster = ({
   children,
   permissions = DEFAULT_PERMISSIONS,
   explicitForm,
+  t,
 }: SubMasterProps) => {
   const { masterCode } = useProviderState()
   const formRef = useRef<HTMLFormElement>(null)
@@ -82,6 +84,7 @@ const SubMaster = ({
     onDataSubmit,
     onChangeSequence,
     onCofirmDeleteMaster,
+    onImageUpload,
   } = useSubMaster({
     defaultLimit: Array.isArray(limits) && limits.length > 0 ? limits[0] : DEFAULT_LIMIT,
     routes,
@@ -92,6 +95,8 @@ const SubMaster = ({
   return (
     <div>
       <SubMasterContextProvider
+        // Translation
+        t={typeof t === "function" ? t : (key: string) => ((TRANSLATION_PAIRS as any)[key] as string) || ""}
         // Form
         loading={loading}
         formState={formState}
@@ -101,6 +106,7 @@ const SubMaster = ({
         updateData={itemData}
         canAdd={permissions?.add && !!masterCode}
         canUpdate={permissions?.update}
+        onImageUpload={onImageUpload}
         // Pagination
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
