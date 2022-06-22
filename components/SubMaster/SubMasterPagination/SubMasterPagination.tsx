@@ -2,7 +2,7 @@ import { Pagination } from "components/Common"
 import { useSubMasterState } from "context/SubMasterContext"
 
 const SubMasterPagination = () => {
-  const { limits, currentPage, pageSize, setCurrentPage, setPageSize, totalPages, totalRecords, canList } =
+  const { limits, currentPage, pageSize, setCurrentPage, setPageSize, totalPages, totalRecords, canList, t } =
     useSubMasterState()
 
   if (!canList) return null
@@ -15,6 +15,9 @@ const SubMasterPagination = () => {
       setPageSize={setPageSize}
       totalRecords={totalRecords}
       limits={limits}
+      pageLabel={t("page")}
+      nextLabel={t("next")}
+      previousLabel={t("previous")}
     />
   )
 }

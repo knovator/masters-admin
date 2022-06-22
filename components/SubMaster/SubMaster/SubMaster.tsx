@@ -1,7 +1,13 @@
 import React, { useRef } from "react"
 import ToggleBtn from "widgets/toggle"
 import { Drawer, DeleteModal } from "components/Common"
-import { DEFAULT_LIMIT, PAGE_LIMITS, DEFAULT_PERMISSIONS, TRANSLATION_PAIRS_SUBMASTERS } from "constants/common"
+import {
+  DEFAULT_LIMIT,
+  PAGE_LIMITS,
+  DEFAULT_PERMISSIONS,
+  TRANSLATION_PAIRS_SUBMASTERS,
+  TRANSLATION_PAIRS_COMMON,
+} from "constants/common"
 
 import SubMasterTable from "../SubMasterTable"
 import SubMasterPagination from "../SubMasterPagination"
@@ -14,6 +20,7 @@ import SubMasterFormActions from "../SubMasterFormActions"
 import useSubMaster from "hook/useSubMaster"
 import SubMasterContextProvider from "context/SubMasterContext"
 import { useProviderState } from "context/ProviderContext"
+import { createTranslation } from "utils/util"
 
 interface SubMasterProps extends React.PropsWithChildren {
   sortable?: boolean
@@ -22,32 +29,10 @@ interface SubMasterProps extends React.PropsWithChildren {
   routes?: Routes_Input
   loader?: JSX.Element
   explicitForm?: boolean
-  t?: (key: string) => string
+  t?: TFunc
   permissions?: PermissionsObj
   preConfirmDelete?: (data: { row: any }) => Promise<boolean>
 }
-
-const columns = [
-  {
-    Header: "Sequence",
-    accessor: "seq",
-  },
-  {
-    Header: "Name",
-    accessor: "name",
-  },
-  {
-    Header: "Code",
-    accessor: "code",
-  },
-  {
-    Header: "Active",
-    accessor: "isActive",
-    Cell({ row, onUpdate }: any) {
-      return <ToggleBtn isChecked={row.isActive} onChange={onUpdate} />
-    },
-  },
-]
 
 const SubMaster = ({
   sortable = true,
@@ -61,6 +46,28 @@ const SubMaster = ({
   explicitForm,
   t,
 }: SubMasterProps) => {
+  const derivedT = createTranslation(t, { ...TRANSLATION_PAIRS_SUBMASTERS, ...TRANSLATION_PAIRS_COMMON })
+  const columns = [
+    {
+      Header: derivedT("sequence"),
+      accessor: "seq",
+    },
+    {
+      Header: derivedT("name"),
+      accessor: "name",
+    },
+    {
+      Header: derivedT("code"),
+      accessor: "code",
+    },
+    {
+      Header: derivedT("active"),
+      accessor: "isActive",
+      Cell({ row, onUpdate }: any) {
+        return <ToggleBtn isChecked={row.isActive} onChange={onUpdate} />
+      },
+    },
+  ]
   const { masterCode } = useProviderState()
   const formRef = useRef<HTMLFormElement>(null)
   const {
@@ -96,7 +103,7 @@ const SubMaster = ({
     <div>
       <SubMasterContextProvider
         // Translation
-        t={typeof t === "function" ? t : (key: string) => ((TRANSLATION_PAIRS_SUBMASTERS as any)[key] as string) || ""}
+        t={derivedT}
         // Form
         loading={loading}
         formState={formState}
@@ -134,7 +141,7 @@ const SubMaster = ({
         ) : (
           <>
             <SubMasterSearch />
-            <AddButton label="Add Sub Master" />
+            <AddButton />
             <SubMasterTable />
             <SubMasterPagination />
           </>
@@ -144,10 +151,8 @@ const SubMaster = ({
           <Drawer
             open={formState === "ADD" || formState === "UPDATE"}
             onClose={onCloseForm}
-            title={formState === "ADD" ? "Add Sub Master" : "Edit Sub Master"}
-            footerContent={
-              <SubMasterFormActions addLabel="Add Sub Master" editLabel="Edit Sub Master" formRef={formRef} />
-            }
+            title={formState === "ADD" ? derivedT("addSubMaster") : derivedT("updateSubMaster")}
+            footerContent={<SubMasterFormActions formRef={formRef} />}
           >
             <SubMasterForm ref={formRef} />
           </Drawer>

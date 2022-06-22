@@ -19,6 +19,7 @@ import MasterFormWrapper from "../MasterFormWrapper"
 import MasterPagination from "../MasterPagination"
 import MasterSearch from "../MasterSearch"
 import MasterTable from "../MasterTable"
+import { createTranslation } from "utils/util"
 
 interface MasterProps extends React.PropsWithChildren {
   sortable?: boolean
@@ -41,20 +42,10 @@ const Master = ({
   children,
   preConfirmDelete,
   loader,
-  t,
+  t = undefined,
   permissions = DEFAULT_PERMISSIONS,
 }: MasterProps) => {
-  const derivedT = (key: string) => {
-    if (typeof t === "function") return t(key)
-    return (
-      (
-        {
-          ...TRANSLATION_PAIRS_MASTERS,
-          ...TRANSLATION_PAIRS_COMMON,
-        } as any
-      )[key] || ""
-    )
-  }
+  const derivedT = createTranslation(t, { ...TRANSLATION_PAIRS_MASTERS, ...TRANSLATION_PAIRS_COMMON })
   const formRef = useRef<HTMLFormElement | null>(null)
   const columns = [
     {

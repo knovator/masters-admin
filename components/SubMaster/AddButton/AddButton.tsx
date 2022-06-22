@@ -1,14 +1,12 @@
 import { Button } from "components/Common"
 import { useSubMasterState } from "context/SubMasterContext"
 
-interface AddButtonProps {
-  label?: string
-}
+interface AddButtonProps {}
 
-const AddButton = ({ label = "Add Sub Master" }: AddButtonProps) => {
-  const { onChangeFormState, canAdd } = useSubMasterState()
+const AddButton = ({}: AddButtonProps) => {
+  const { onChangeFormState, canAdd, t } = useSubMasterState()
   if (!canAdd) return null
-  return <Button label={label} onClick={() => onChangeFormState("ADD")} />
+  return <Button label={t("addSubMaster")} onClick={() => onChangeFormState("ADD")} />
 }
 
 export default AddButton

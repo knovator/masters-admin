@@ -4,16 +4,10 @@ import { MutableRefObject } from "react"
 
 interface SubMasterFormActionProps {
   formRef: MutableRefObject<HTMLFormElement | null>
-  addLabel?: string
-  editLabel?: string
 }
 
-const SubMasterFormActions = ({
-  formRef,
-  addLabel = "Add Sub Master",
-  editLabel = "Edit Sub Master",
-}: SubMasterFormActionProps) => {
-  const { formState, closeForm, loading, canAdd, canUpdate } = useSubMasterState()
+const SubMasterFormActions = ({ formRef }: SubMasterFormActionProps) => {
+  const { formState, closeForm, loading, canAdd, canUpdate, t } = useSubMasterState()
   const onSubmitClick = (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (!formRef.current) e?.preventDefault()
     else formRef.current?.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }))
@@ -23,7 +17,7 @@ const SubMasterFormActions = ({
   return (
     <FormActions
       loading={loading}
-      primaryLabel={formState === "ADD" ? addLabel : editLabel}
+      primaryLabel={formState === "ADD" ? t("addSubMaster") : t("updateSubMaster")}
       onPrimaryButtonClick={onSubmitClick}
       onSecondaryButtonClick={closeForm}
     />

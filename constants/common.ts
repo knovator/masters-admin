@@ -31,6 +31,22 @@ const TRANSLATION_PAIRS_SUBMASTERS = {
   uploadFile: "Upload a file",
   dragDrop: "or drag and drop",
   allowedFormat: "PNG, JPG, SVG up to 2 MB",
+  sequence: "Sequence", // Table
+  name: "Name", // Table, Form
+  enterName: "Enter Name", // Name Placeholder
+  requiredName: "Name is Required", // Name field Required Message
+  code: "Code", // Table, Form Field Label
+  enterCode: "Enter Code", // Code Placeholder
+  requiredCode: "Code is Required", // Code required message
+  webDisplay: "Web Display", // Form, Web Display Field
+  enterWebDisplay: "Enter Web Display", // Web Display Placeholder
+  active: "Active", // Table
+  description: "Discription", // Form,
+  enterDescription: "Enter Discription", // Field placeholder
+  cover: "Cover Image",
+  searchSubMasters: "Search Sub Masters", // Search Placeholder
+  addSubMaster: "Add Sub Master", // Add Button, Sidebar Title
+  updateSubMaster: "Edit Sub Master", // Edit Button, Sidebar Title
 }
 
 const TRANSLATION_PAIRS_MASTERS = {
@@ -59,6 +75,8 @@ const TRANSLATION_PAIRS_COMMON = {
   "common:actions": "Actions",
   "common:cancel": "Cancel",
   page: "Page",
+  next: "Next",
+  previous: "Previous",
   indicatesRequired: "Indicates fields are required",
 }
 

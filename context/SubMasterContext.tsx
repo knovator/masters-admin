@@ -1,12 +1,18 @@
 import React, { createContext, useContext } from "react"
-import { PAGE_LIMITS } from "constants/common"
+import { PAGE_LIMITS, TRANSLATION_PAIRS_COMMON, TRANSLATION_PAIRS_SUBMASTERS } from "constants/common"
 
 interface MasterContextProviderProps extends React.PropsWithChildren, Partial<SubMasterContextType> {}
 
 const SubMasterContext = createContext<SubMasterContextType | null>(null)
 
 const SubMasterContextProvider = ({
-  t = () => "",
+  t = (key: string) =>
+    ((
+      {
+        ...TRANSLATION_PAIRS_COMMON,
+        ...TRANSLATION_PAIRS_SUBMASTERS,
+      } as any
+    )[key]),
   // Form
   formState = "",
   closeForm = () => {},

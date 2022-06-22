@@ -56,7 +56,7 @@ const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, load
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className={`kms_table-container`} style={{ height: "calc(100vh - 252px)" }} data-testid="table">
+      <div className={`kms_table-container`} data-testid="table">
         <div className={`kms_table-height`}>
           {loading && loader ? (
             <div className="kms_table-height">{loader}</div>

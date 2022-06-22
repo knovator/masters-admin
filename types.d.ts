@@ -51,7 +51,9 @@ interface PaginationProps {
   setPageSize: (size: number) => void
   totalRecords: number
   limits: number[]
-  pageLable?: string
+  pageLabel?: string
+  nextLabel?: string
+  previousLabel?: string
 }
 
 type SortConfigType = [string, 1 | -1]
@@ -193,3 +195,5 @@ interface PermissionsObj {
   partialUpdate: boolean
   destroy: boolean
 }
+
+type TFunc = (key: string) => string

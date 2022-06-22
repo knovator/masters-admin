@@ -45,11 +45,11 @@ function Main() {
           update: true,
         }}
       >
-        <Master.Search />
+        {/* <Master.Search />
         <Master.AddButton />
         <Master.Table />
-        {/* <Master.Lister /> */}
-        <Master.Pagination />
+        <Master.Pagination /> */}
+        <Master.Lister />
         {/* <Master.FormWrapper>
             {({ formState, open, onClose }) => {
               if (!open) return null

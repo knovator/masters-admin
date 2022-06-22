@@ -15,7 +15,7 @@ const MasterPagination = () => {
       setPageSize={setPageSize}
       totalRecords={totalRecords}
       limits={limits}
-      pageLable={t("page")}
+      pageLabel={t("page")}
     />
   )
 }

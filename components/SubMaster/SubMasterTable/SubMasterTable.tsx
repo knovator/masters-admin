@@ -26,6 +26,7 @@ const SubMasterTable = ({ columns, actions }: MasterTableProps) => {
     canUpdate,
     canPartialUpdate,
     onChangeSequence,
+    t,
   } = useSubMasterState()
   const [tableColumns, setTableColumns] = useState<ColumnsSchema>([])
 
@@ -64,7 +65,7 @@ const SubMasterTable = ({ columns, actions }: MasterTableProps) => {
     // Appending Table Actions, if actions not specified or actions object is provided
     if (typeof actions === "undefined" || !!actions) {
       let modification: ColumnSchemaType = {
-        Header: "Actions",
+        Header: t("common:actions"),
         accessor: "actions",
         Cell({ row }) {
           return (

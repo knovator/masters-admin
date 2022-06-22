@@ -3,7 +3,7 @@ import { useSubMasterState } from "context/SubMasterContext"
 import { useRef, useState } from "react"
 
 const SubMasterSearch = () => {
-  const { getSubMastersList } = useSubMasterState()
+  const { getSubMastersList, t } = useSubMasterState()
   const callerRef = useRef<NodeJS.Timeout | null>(null)
   const [search, setSearch] = useState<string>("")
 
@@ -21,7 +21,7 @@ const SubMasterSearch = () => {
       type="search"
       value={search}
       onChange={(e) => onChangeSearch(e.target.value)}
-      placeholder="Search Sub Masters"
+      placeholder={t("searchSubMasters")}
     />
   )
 }
