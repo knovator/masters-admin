@@ -14,8 +14,10 @@
         // "emitDeclarationOnly": true
     },
     "include": [
-        "src"
+        "src",
+        "global.d.ts"
     ],
+
     // "typeRoots": [
     //     "./typings",
     //     "./node_modules/@types/"
