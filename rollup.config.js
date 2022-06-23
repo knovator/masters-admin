@@ -1,3 +1,4 @@
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import commonjs from '@rollup/plugin-commonjs';
@@ -50,6 +51,7 @@ const config = {
       tsconfig: './tsconfig.json',
     }),
     terser(),
+    peerDepsExternal(),
   ],
 };
 
