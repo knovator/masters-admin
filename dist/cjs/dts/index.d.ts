@@ -1,3 +1,4 @@
-/// <reference types="react" />
-declare const Main: () => JSX.Element;
-export default Main;
+import "./style.css";
+import Provider from "./context/ProviderContext";
+import { Master, SubMaster } from "./components";
+export { Master, SubMaster, Provider };

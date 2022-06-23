@@ -1,10 +1,4 @@
-import React from 'react'
-import { Button } from './components'
-
-const Main = () => {
-    return (
-        <Button />
-    )
-}
-
-export default Main;
+import "./style.css"
+import Provider from "./context/ProviderContext"
+import { Master, SubMaster } from "./components"
+export { Master, SubMaster, Provider }
