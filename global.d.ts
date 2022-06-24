@@ -69,7 +69,7 @@ interface ProviderContextType {
     paginationGetter: (response: any) => any
     onError: (callback_code: import("./src/constants/common").CALLBACK_CODES, code: string, message: string) => void
     onSuccess: (callback_code: import("./src/constants/common").CALLBACK_CODES, code: string, message: string) => void
-    onLogout?: () => void
+    onLogout: () => void
 }
 interface MasterContextType {
   t: (key: string) => string;
