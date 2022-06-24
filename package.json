@@ -9,7 +9,10 @@
     "files": [
         "dist",
         "package.json",
-        "README.md"
+        "README.md",
+        "masters.md",
+        "submasters.md",
+        "data-formats.md"
     ],
     "keywords": [
         "masters",
@@ -30,7 +33,10 @@
         "build": "npm run prebuild && rollup -c",
         "prettier": "prettier --write \"src/**/*.{ts,tsx,css}\""
     },
-    "repository": "https://git.knovator.in/knovators/masters-pkg",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:knovator/masters-admin.git"
+    },
     "author": "Bhavik Chavda <bhavikvchavda@gmail.com> (https://knovator.com/)",
     "license": "MIT",
     "private": false,
