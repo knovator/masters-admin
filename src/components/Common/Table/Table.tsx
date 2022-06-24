@@ -1,6 +1,5 @@
 import React, { useCallback } from "react"
 import { useTable } from "react-table"
-import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd"
 import { EXCLUDE_SORT_COLUMNS, SORT_ASCENDING, SORT_DESCENDING } from "../../../constants/common"
 
 const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, loader, loading, onMove }: TableProps) => {
@@ -39,15 +38,6 @@ const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, load
         },
         [setSortConfig, sortConfig],
     )
-    const handleDragEnd = (results: DropResult) => {
-        if (!results.destination) return
-        const temporaryData = [...data]
-        const [selectedRow] = temporaryData.splice(results.source.index, 1)
-        // const [row] = data.splice(results.destination.index, 1)
-        const seq = results.destination.index + 1
-        // temporaryData.splice(results.destination.index, 0, selectedRow)
-        if (typeof onMove === "function") onMove(selectedRow.id || selectedRow._id, seq)
-    }
     const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } = useTable({
         // @ts-ignore
         columns,
@@ -55,78 +45,47 @@ const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, load
     })
 
     return (
-        <DragDropContext onDragEnd={handleDragEnd}>
-            <div className={`kms_table-container`} data-testid="table">
-                <div className={`kms_table-height`}>
-                    {loading && loader ? (
-                        <div className="kms_table-height">{loader}</div>
-                    ) : (
-                        <table className="kms_table" {...getTableProps()}>
-                            <thead className="kms_thead">
-                                {headerGroups.map((headerGroup, i) => (
-                                    <tr {...headerGroup.getHeaderGroupProps()} key={i}>
-                                        {headerGroup.headers.map((column, j) => (
-                                            <th
-                                                {...column.getHeaderProps()}
-                                                key={j}
-                                                onClick={() => onClickSort(column.id)}
-                                                className="cursor-pointer hover:bg-opacity-50"
-                                            >
-                                                {column.render("Header")}
-                                                {sortConfigRenderer(column.id)}
-                                            </th>
+        <div className={`kms_table-container`} data-testid="table">
+            <div className={`kms_table-height`}>
+                {loading && loader ? (
+                    <div className="kms_table-height">{loader}</div>
+                ) : (
+                    <table className="kms_table" {...getTableProps()}>
+                        <thead className="kms_thead">
+                            {headerGroups.map((headerGroup, i) => (
+                                <tr {...headerGroup.getHeaderGroupProps()} key={i}>
+                                    {headerGroup.headers.map((column, j) => (
+                                        <th
+                                            {...column.getHeaderProps()}
+                                            key={j}
+                                            onClick={() => onClickSort(column.id)}
+                                            className="cursor-pointer hover:bg-opacity-50"
+                                        >
+                                            {column.render("Header")}
+                                            {sortConfigRenderer(column.id)}
+                                        </th>
+                                    ))}
+                                </tr>
+                            ))}
+                        </thead>
+                        <tbody className="kms_tbody" {...getTableBodyProps()}>
+                            {rows.map((row, i) => {
+                                prepareRow(row)
+                                return (
+                                    <tr {...row.getRowProps()} key={i}>
+                                        {row.cells.map((cell, j) => (
+                                            <td {...cell.getCellProps()} key={j}>
+                                                {cell.render("Cell")}
+                                            </td>
                                         ))}
                                     </tr>
-                                ))}
-                            </thead>
-                            <Droppable droppableId="tbody">
-                                {(provided) => (
-                                    <tbody
-                                        className="kms_tbody"
-                                        ref={provided.innerRef}
-                                        {...getTableBodyProps()}
-                                        {...provided.droppableProps}
-                                    >
-                                        {rows.map((row, i) => {
-                                            prepareRow(row)
-                                            return (
-                                                // @ts-ignore
-                                                <Draggable
-                                                    draggableId={row.original.id || row.original._id || row.id}
-                                                    index={i}
-                                                    key={row.original.id || row.original._id}
-                                                >
-                                                    {(provided) => (
-                                                        <tr
-                                                            ref={provided.innerRef}
-                                                            {...provided.draggableProps}
-                                                            {...row.getRowProps()}
-                                                            key={i}
-                                                        >
-                                                            {row.cells.map((cell, j) => (
-                                                                <td
-                                                                    {...(cell.column.id === "sequence"
-                                                                        ? provided.dragHandleProps
-                                                                        : {})}
-                                                                    {...cell.getCellProps()}
-                                                                    key={j}
-                                                                >
-                                                                    {cell.render("Cell")}
-                                                                </td>
-                                                            ))}
-                                                        </tr>
-                                                    )}
-                                                </Draggable>
-                                            )
-                                        })}
-                                    </tbody>
-                                )}
-                            </Droppable>
-                        </table>
-                    )}
-                </div>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                )}
             </div>
-        </DragDropContext>
+        </div>
     )
 }
 

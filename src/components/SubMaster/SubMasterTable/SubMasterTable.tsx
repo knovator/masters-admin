@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react"
 import { useSubMasterState } from "../../../context/SubMasterContext"
-import Table from "../../../components/Common/Table"
+import { DNDTable } from "../../../components/Common"
 import DeleteIcon from "../../../icons/deleteIcon"
 import UpdateIcon from "../../../icons/updateIcon"
 import MoveIcon from "../../../icons/moveIcon"
@@ -140,7 +140,7 @@ const SubMasterTable = ({ columns, actions }: MasterTableProps) => {
 
     if (Array.isArray(data) && data.length > 0 && canList) {
         return (
-            <Table
+            <DNDTable
                 columns={tableColumns}
                 data={data}
                 sortable={sortable}
