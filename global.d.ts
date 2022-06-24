@@ -61,23 +61,15 @@ type SortConfigType = [string, 1 | -1];
 
 // Context
 interface ProviderContextType {
-  baseUrl: string;
-  token: string;
-  masterCode: string;
-  setMasterCode: (code: string) => void;
-  dataGetter: (response: any) => any[];
-  paginationGetter: (response: any) => any;
-  onError: (
-    callback_code: import("./src/constants/common").CALLBACK_CODES,
-    code: string,
-    message: string
-  ) => void;
-  onSuccess: (
-    callback_code: import("./src/constants/common").CALLBACK_CODES,
-    code: string,
-    message: string
-  ) => void;
-  onLogout: () => void;
+    baseUrl: string
+    token: string
+    masterCode: string
+    setMasterCode: (code: string) => void
+    dataGetter: (response: any) => any[]
+    paginationGetter: (response: any) => any
+    onError: (callback_code: import("./src/constants/common").CALLBACK_CODES, code: string, message: string) => void
+    onSuccess: (callback_code: import("./src/constants/common").CALLBACK_CODES, code: string, message: string) => void
+    onLogout?: () => void
 }
 interface MasterContextType {
   t: (key: string) => string;

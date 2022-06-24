@@ -1,5 +1,5 @@
 {
-    "name": "@knovator/masters",
+    "name": "@knovator/masters-admin",
     "version": "1.0.0",
     "description": "Package for integrating Masters, Submasters functionality in React projects",
     "main": "dist/cjs/index.js",
@@ -77,9 +77,9 @@
         "typescript": "^4.7.4"
     },
     "peerDependencies": {
-        "@knovator/api": "^0.0.9",
-        "react": "^17.0.1",
-        "react-dom": "^17.0.1",
+        "@knovator/api": ">=0.0.9",
+        "react": ">=17.0.1",
+        "react-dom": ">=17.0.1",
         "react-hook-form": "^7.32.2",
         "react-table": "^7.8.0"
     }
