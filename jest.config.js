@@ -6,6 +6,7 @@ module.exports = {
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
+  testEnvironment: 'jsdom',
   testMatch: ['**/*.test.(ts|tsx)'],
   moduleNameMapper: {
     // Mocks out all these file formats when tests are run
