@@ -1,0 +1,92 @@
+{
+    "name": "@knovator/masters-admin",
+    "version": "1.0.0",
+    "description": "Package for integrating Masters, Submasters functionality in React projects",
+    "main": "dist/cjs/index.js",
+    "module": "dist/esm/index.js",
+    "types": "dist/index.d.ts",
+    "browser": "dist/index.umd.js",
+    "files": [
+        "dist",
+        "package.json",
+        "README.md",
+        "masters.md",
+        "submasters.md",
+        "data-formats.md"
+    ],
+    "keywords": [
+        "masters",
+        "submasters",
+        "knovator",
+        "chavda-bhavik"
+    ],
+    "exports": {
+        ".": {
+            "import": "./dist/cjs/index.js",
+            "require": "./dist/cjs/index.js"
+        }
+    },
+    "scripts": {
+        "test": "jest",
+        "prebuild": "rm -rf dist",
+        "dev": "rollup -c -w",
+        "build": "npm run prebuild && rollup -c",
+        "prettier": "prettier --write \"src/**/*.{ts,tsx,css}\""
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:knovator/masters-admin.git"
+    },
+    "author": "Bhavik Chavda <bhavikvchavda@gmail.com> (https://knovator.com/)",
+    "license": "MIT",
+    "private": false,
+    "devDependencies": {
+        "@knovator/api": "^0.0.9",
+        "@rollup/plugin-commonjs": "^22.0.0",
+        "@rollup/plugin-json": "^4.1.0",
+        "@rollup/plugin-node-resolve": "^13.3.0",
+        "@rollup/plugin-typescript": "^8.3.3",
+        "@testing-library/jest-dom": "^5.16.4",
+        "@testing-library/react": "12.1.2",
+        "@types/jest": "26.0.14",
+        "@types/react": "^18.0.14",
+        "@types/react-beautiful-dnd": "^13.1.2",
+        "@types/react-dropzone": "^5.1.0",
+        "@types/react-table": "^7.7.12",
+        "@types/react-transition-group": "^4.4.5",
+        "autoprefixer": "^10.4.7",
+        "classnames": "^2.3.1",
+        "eslint": "^8.18.0",
+        "eslint-config-airbnb": "^19.0.4",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-jsx-a11y": "^6.5.1",
+        "eslint-plugin-react": "^7.30.0",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "jest": "^28.1.1",
+        "jest-environment-jsdom": "^28.1.1",
+        "msw": "^0.42.3",
+        "postcss": "^8.4.14",
+        "react": "^17.0.1",
+        "react-beautiful-dnd": "^13.1.0",
+        "react-dom": "^17.0.1",
+        "react-dropzone": "^14.2.1",
+        "react-hook-form": "^7.32.2",
+        "react-table": "^7.8.0",
+        "react-transition-group": "^4.4.2",
+        "rollup": "^2.75.7",
+        "rollup-plugin-peer-deps-external": "^2.2.4",
+        "rollup-plugin-postcss": "^4.0.2",
+        "rollup-plugin-terser": "^7.0.2",
+        "tailwindcss": "^3.1.4",
+        "ts-jest": "^28.0.5",
+        "tslib": "^2.4.0",
+        "typescript": "^4.7.4"
+    },
+    "peerDependencies": {
+        "@knovator/api": ">=0.0.9",
+        "react": ">=17.0.1",
+        "react-dom": ">=17.0.1",
+        "react-hook-form": "^7.32.2",
+        "react-table": "^7.8.0"
+    }
+}
