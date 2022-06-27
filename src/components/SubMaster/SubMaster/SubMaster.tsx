@@ -13,6 +13,7 @@ import {
     TRANSLATION_PAIRS_SUBMASTERS,
     TRANSLATION_PAIRS_COMMON,
 } from "../../../constants/common"
+import { PermissionsObj, Routes_Input, SortConfigType, TFunc } from "@knovator/masters-admin"
 
 import AddButton from "../AddButton"
 import SubMasterForm from "../SubMasterForm"

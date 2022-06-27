@@ -1,3 +1,4 @@
+import { SubMasterContextType } from "@knovator/masters-admin"
 import React, { createContext, useContext } from "react"
 import { PAGE_LIMITS, TRANSLATION_PAIRS_COMMON, TRANSLATION_PAIRS_SUBMASTERS } from "../constants/common"
 

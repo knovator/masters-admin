@@ -1,5 +1,6 @@
 import React, { forwardRef, MutableRefObject } from "react"
 
+import { SchemaType } from "@knovator/masters-admin"
 import { Form, ImageUpload } from "../../../components/Common"
 import { useSubMasterState } from "../../../context/SubMasterContext"
 import { capitalizeFirstLetter, changeToCode } from "../../../utils/util"

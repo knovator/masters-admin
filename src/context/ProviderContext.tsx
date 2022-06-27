@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react"
+import { ProviderContextType } from "@knovator/masters-admin"
 import { CALLBACK_CODES } from "../constants/common"
 
 interface ProviderContextProviderProps

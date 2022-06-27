@@ -1,5 +1,6 @@
 import React from "react"
 import { MutableRefObject } from "react"
+import { SchemaType } from "@knovator/masters-admin"
 import { act, fireEvent, render } from "@testing-library/react"
 import { capitalizeFirstLetter, changeToCode } from "../../../utils/util"
 import Form from "./Form"

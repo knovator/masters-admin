@@ -1,4 +1,5 @@
 import React, { createContext, useContext } from "react"
+import { MasterContextType } from "@knovator/masters-admin"
 import { PAGE_LIMITS, TRANSLATION_PAIRS_COMMON, TRANSLATION_PAIRS_MASTERS } from "../constants/common"
 
 interface MasterContextProviderProps extends React.PropsWithChildren, Partial<MasterContextType> {}

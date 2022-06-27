@@ -1,3 +1,5 @@
+import { API_INPUT_TYPE } from "@knovator/masters-admin"
+
 const apiList = {
     // Image Upload API
     IMAGE_UPLOAD: () => ({
