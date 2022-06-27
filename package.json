@@ -5,7 +5,6 @@
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
     "types": "./global.d.ts",
-    "browser": "dist/index.umd.js",
     "files": [
         "dist",
         "package.json",

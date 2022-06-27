@@ -1,6 +1,7 @@
 import React from "react"
 import { MutableRefObject } from "react"
 import { render } from "@testing-library/react"
+import { SchemaType } from "@knovator/masters-admin"
 import SubMasterContextProvider from "../../../context/SubMasterContext"
 
 import SubMasteForm from "."

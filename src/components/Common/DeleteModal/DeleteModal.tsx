@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import Button from "../Button"
 import Input from "../Input"
 import Modal from "../Modal"
+import { FormActionTypes } from "@knovator/masters-admin"
 import { TRANSLATION_PAIRS_COMMON } from "../../../constants/common"
 
 interface DeleteModalProps {

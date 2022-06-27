@@ -1,13 +1,14 @@
 declare module "@knovator/api";
 declare module "@knovator/masters-admin" {
     // Table & Pagination
+    type TableSchemaCellArgs = { row: any; onUpdate: (data: any) => void }
     type ColumnCellType = { row: any; onUpdate: (data: any) => void }
     type ColumnSchemaType = {
         Header: String | React.ReactElement | (() => any)
         accessor: string
         id?: string
         sortable?: boolean
-        Cell?: (data: { row: any; onUpdate: (data: any) => void }) => any
+        Cell?: (data: TableSchemaCellArgs) => any
     }
     type ColumnsSchema = ColumnSchemaType[]
 

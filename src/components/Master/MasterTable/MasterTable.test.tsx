@@ -1,4 +1,5 @@
 import React from "react"
+import { ColumnsSchema } from "@knovator/masters-admin"
 import { fireEvent, render } from "@testing-library/react"
 import MasterContextProvider from "../../../context/MasterContext"
 import MasterTable from "./MasterTable"

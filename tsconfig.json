@@ -7,9 +7,9 @@
         "strict": true,
         "esModuleInterop": true,
         // enabling declaration (.d.ts) emit
-        "declaration": true,
+        // "declaration": true,
         //  optional - in general it's a good practice to decouple declaration files from your actual transpiled JavaScript files
-        "declarationDir": "./dts",
+        // "declarationDir": "./dts",
         // optional if you're using babel to transpile TS -> JS
         // "emitDeclarationOnly": true
     },

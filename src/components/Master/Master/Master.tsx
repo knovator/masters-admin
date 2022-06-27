@@ -2,6 +2,7 @@ import React, { useRef } from "react"
 
 import ToggleBtn from "../../../widgets/toggle"
 import useMaster from "../../../hook/useMaster"
+import { MasterProps } from "@knovator/masters-admin"
 import { createTranslation } from "../../../utils/util"
 import { Drawer, DeleteModal } from "../../../components/Common"
 import MasterContextProvider from "../../../context/MasterContext"

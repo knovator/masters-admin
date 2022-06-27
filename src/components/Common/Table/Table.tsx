@@ -1,8 +1,9 @@
 import React, { useCallback } from "react"
 import { useTable } from "react-table"
+import { TableProps } from "@knovator/masters-admin"
 import { EXCLUDE_SORT_COLUMNS, SORT_ASCENDING, SORT_DESCENDING } from "../../../constants/common"
 
-const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, loader, loading, onMove }: TableProps) => {
+const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, loader, loading }: TableProps) => {
     const getSortConfigClassName = useCallback(
         (accessor: string, up = true) => {
             if (!sortConfig || accessor !== sortConfig[0]) return "kms_sort-inactive"
