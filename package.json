@@ -4,7 +4,7 @@
     "description": "Package for integrating Masters, Submasters functionality in React projects",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
-    "types": "dist/index.d.ts",
+    "types": "./global.d.ts",
     "browser": "dist/index.umd.js",
     "files": [
         "dist",
@@ -12,7 +12,8 @@
         "README.md",
         "masters.md",
         "submasters.md",
-        "data-formats.md"
+        "data-formats.md",
+        "global.d.ts"
     ],
     "keywords": [
         "masters",
@@ -37,7 +38,7 @@
         "type": "git",
         "url": "git@github.com:knovator/masters-admin.git"
     },
-    "author": "Bhavik Chavda <bhavikvchavda@gmail.com> (https://knovator.com/)",
+    "author": "knovator (https://knovator.com/)",
     "license": "MIT",
     "private": false,
     "devDependencies": {
