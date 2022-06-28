@@ -30,8 +30,11 @@
         "test": "jest",
         "prebuild": "rm -rf dist",
         "dev": "rollup -c -w",
-        "build": "npm run prebuild && rollup -c",
-        "prettier": "prettier --write \"src/**/*.{ts,tsx,css}\""
+        "build": "yarn prebuild && rollup -c",
+        "prettier": "prettier --write \"src/**/*.{ts,tsx,css}\"",
+        "prepublish": "yarn build",
+        "publish": "npm publish",
+        "postpublish": "git push --tags"
     },
     "repository": {
         "type": "git",
