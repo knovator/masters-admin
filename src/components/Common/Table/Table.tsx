@@ -1,6 +1,5 @@
 import React, { useCallback } from "react"
 import { useTable } from "react-table"
-import { TableProps } from "@knovator/masters-admin"
 import { EXCLUDE_SORT_COLUMNS, SORT_ASCENDING, SORT_DESCENDING } from "../../../constants/common"
 
 const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, loader, loading }: TableProps) => {

@@ -1,6 +1,5 @@
 import React from "react"
 import { fireEvent, render } from "@testing-library/react"
-import { SortConfigType, TableSchemaCellArgs } from "@knovator/masters-admin"
 import Table from "./Table"
 
 describe("Testing Table Component", () => {

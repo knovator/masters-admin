@@ -1,5 +1,3 @@
-import { TFunc } from "@knovator/masters-admin"
-
 export const debounce = (callback: (param?: any) => void, wait = 1000) => {
     let timeout: NodeJS.Timeout
 

@@ -1,7 +1,6 @@
 import React from "react"
 import { fireEvent, render } from "@testing-library/react"
 import SubMasterContextProvider from "../../../context/SubMasterContext"
-import { ColumnsSchema } from "@knovator/masters-admin"
 import SubMasterTable from "./SubMasterTable"
 
 let columnsSchema: ColumnsSchema = [

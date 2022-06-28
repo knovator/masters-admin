@@ -1,19 +1,4 @@
 import React, { createContext, useContext, useState } from "react"
-import { ProviderContextType } from "@knovator/masters-admin"
-import { CALLBACK_CODES } from "../constants/common"
-
-interface ProviderContextProviderProps
-    extends React.PropsWithChildren,
-        Omit<
-            ProviderContextType,
-            "onError" | "onSuccess" | "masterCode" | "onLogout" | "setMasterCode" | "dataGetter" | "paginationGetter"
-        > {
-    onError?: (callback_code: CALLBACK_CODES, code: string, message: string) => void
-    onSuccess?: (callback_code: CALLBACK_CODES, code: string, message: string) => void
-    onLogout?: () => void
-    dataGetter?: (response: any) => any[]
-    paginationGetter?: (response: any) => any
-}
 
 const ProviderContext = createContext<ProviderContextType | null>(null)
 
@@ -52,7 +37,7 @@ const Provider = ({
 
 export function useProviderState() {
     const context = useContext(ProviderContext)
-    if (!context) throw new Error("Master Context must be used within MasterContext.Provider")
+    if (!context) throw new Error("Provider Context must be used within ProviderContext.Provider")
 
     return context
 }

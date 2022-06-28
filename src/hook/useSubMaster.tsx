@@ -4,7 +4,6 @@ import { useProviderState } from "../context/ProviderContext"
 import usePagination from "./usePagination"
 import request, { getApiType } from "../api"
 import { build_path } from "../utils/util"
-import { Routes_Input, SortConfigType, FormActionTypes } from "@knovator/masters-admin"
 
 interface UseMasterProps {
     defaultLimit: number
@@ -60,6 +59,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
                             limit: filter.limit,
                             page: currentPage,
                             pagination: true,
+                            populate: ["img"],
                         },
                     },
                 })
@@ -122,6 +122,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
     const onDataSubmit = async (data: any) => {
         setLoading(true)
         let finalData = { ...data }
+        console.log("data submit", finalData)
         if (formState === "ADD") finalData.parentCode = masterCode
         let code = formState === "ADD" ? CALLBACK_CODES.CREATE : CALLBACK_CODES.UPDATE
         try {

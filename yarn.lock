@@ -595,10 +595,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@knovator/api@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@knovator/api/-/api-0.0.9.tgz#6ec59b59031ea85e705c241d12ef75d85928d6b9"
-  integrity sha512-Kc9+HrHCDfmq5G9FHTPEj6niDKcV+6guIxWRjL9HMXGbKw6nfbAxjS8EYn8toX7owTQMcPIBNEAnWq89vsqnJg==
+"@knovator/api@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@knovator/api/-/api-0.0.10.tgz#a0d02e5f1f2f6533202a9042dbe60c0193b71509"
+  integrity sha512-Y74JXlLmwrLEf505FUJSZSk8zyGr8BdXDNMllj41NJQy1EchmdUf6nJstcMuB++WQlrkgz8vctvIrwBnbU1F4g==
   dependencies:
     axios "^0.21.1"
     preact "^10.5.14"

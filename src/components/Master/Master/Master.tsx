@@ -2,7 +2,6 @@ import React, { useRef } from "react"
 
 import ToggleBtn from "../../../widgets/toggle"
 import useMaster from "../../../hook/useMaster"
-import { MasterProps } from "@knovator/masters-admin"
 import { createTranslation } from "../../../utils/util"
 import { Drawer, DeleteModal } from "../../../components/Common"
 import MasterContextProvider from "../../../context/MasterContext"
@@ -154,25 +153,13 @@ const Master = ({
     )
 }
 
-export default Object.assign<
-    typeof Master,
-    {
-        Table: typeof MasterTable
-        Pagination: typeof MasterPagination
-        Search: typeof MasterSearch
-        AddButton: typeof AddButton
-        Form: typeof MasterForm
-        Lister: typeof Lister
-        FormActions: typeof MasterFormActions
-        FormWrapper: typeof MasterFormWrapper
-    }
->(Master, {
-    Table: MasterTable,
-    Pagination: MasterPagination,
-    Search: MasterSearch,
-    AddButton,
-    Lister,
-    Form: MasterForm,
-    FormActions: MasterFormActions,
-    FormWrapper: MasterFormWrapper,
-})
+Master.Table = MasterTable
+Master.Pagination = MasterPagination
+Master.Search = MasterSearch
+Master.AddButton = AddButton
+Master.Form = MasterForm
+Master.Lister = Lister
+Master.FormActions = MasterFormActions
+Master.FormWrapper = MasterFormWrapper
+
+export default Master

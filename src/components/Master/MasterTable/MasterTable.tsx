@@ -3,14 +3,8 @@ import { useMasterState } from "../../../context/MasterContext"
 import Table from "../../../components/Common/Table"
 import DeleteIcon from "../../../icons/deleteIcon"
 import UpdateIcon from "../../../icons/updateIcon"
-import { ColumnsSchema, TableActionTypes, ColumnSchemaType } from "@knovator/masters-admin"
 
-interface MasterTableProps {
-    columns?: ColumnsSchema
-    actions?: false | TableActionTypes
-}
-
-const MasterTable = ({ columns, actions }: MasterTableProps) => {
+const MasterTable = ({ columns, actions }: TableWrapperProps) => {
     const {
         onUpdate,
         sortable,

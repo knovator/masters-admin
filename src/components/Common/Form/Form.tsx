@@ -1,6 +1,5 @@
 import React, { forwardRef, MutableRefObject, useEffect } from "react"
 import { Controller, useForm } from "react-hook-form"
-import { SchemaType } from "@knovator/masters-admin"
 
 import { TRANSLATION_PAIRS_COMMON } from "../../../constants/common"
 import { isEmpty } from "../../../utils/util"

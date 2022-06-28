@@ -13,7 +13,6 @@ import {
     TRANSLATION_PAIRS_SUBMASTERS,
     TRANSLATION_PAIRS_COMMON,
 } from "../../../constants/common"
-import { PermissionsObj, Routes_Input, SortConfigType, TFunc } from "@knovator/masters-admin"
 
 import AddButton from "../AddButton"
 import SubMasterForm from "../SubMasterForm"
@@ -22,18 +21,6 @@ import SubMasterSearch from "../SubMasterSearch"
 import SubMasterPagination from "../SubMasterPagination"
 import SubMasterFormWrapper from "../SubMasterFormWrapper"
 import SubMasterFormActions from "../SubMasterFormActions"
-
-interface SubMasterProps extends React.PropsWithChildren {
-    sortable?: boolean
-    defaultSort?: SortConfigType
-    limits?: number[]
-    routes?: Routes_Input
-    loader?: JSX.Element
-    explicitForm?: boolean
-    t?: TFunc
-    permissions?: PermissionsObj
-    preConfirmDelete?: (data: { row: any }) => Promise<boolean>
-}
 
 const SubMaster = ({
     sortable = true,
@@ -170,23 +157,12 @@ const SubMaster = ({
     )
 }
 
-export default Object.assign<
-    typeof SubMaster,
-    {
-        Table: typeof SubMasterTable
-        Search: typeof SubMasterSearch
-        Pagination: typeof SubMasterPagination
-        AddButton: typeof AddButton
-        Form: typeof SubMasterForm
-        Actions: typeof SubMasterFormActions
-        FormWrapper: typeof SubMasterFormWrapper
-    }
->(SubMaster, {
-    Table: SubMasterTable,
-    Search: SubMasterSearch,
-    Pagination: SubMasterPagination,
-    AddButton,
-    Form: SubMasterForm,
-    Actions: SubMasterFormActions,
-    FormWrapper: SubMasterFormWrapper,
-})
+SubMaster.Table = SubMasterTable
+SubMaster.Pagination = SubMasterPagination
+SubMaster.Search = SubMasterSearch
+SubMaster.AddButton = AddButton
+SubMaster.Form = SubMasterForm
+SubMaster.FormActions = SubMasterFormActions
+SubMaster.FormWrapper = SubMasterFormWrapper
+
+export default SubMaster
