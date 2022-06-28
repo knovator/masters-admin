@@ -1,14 +1,6 @@
-import { FormActionTypes } from "@knovator/masters-admin"
 import { useMasterState } from "../../../context/MasterContext"
 
-interface MasterFormWrapperProps {
-    children: (data: {
-        formState: FormActionTypes | undefined
-        onClose: () => void
-        open: boolean
-    }) => JSX.Element | null
-}
-const MasterFormWrapper = ({ children }: MasterFormWrapperProps) => {
+const MasterFormWrapper = ({ children }: FormWrapperProps) => {
     const { formState, closeForm } = useMasterState()
 
     return typeof children === "function"

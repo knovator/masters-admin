@@ -4,14 +4,8 @@ import { DNDTable } from "../../../components/Common"
 import DeleteIcon from "../../../icons/deleteIcon"
 import UpdateIcon from "../../../icons/updateIcon"
 import MoveIcon from "../../../icons/moveIcon"
-import { ColumnsSchema, TableActionTypes, ColumnSchemaType } from "@knovator/masters-admin"
 
-interface MasterTableProps {
-    columns?: ColumnsSchema
-    actions?: false | TableActionTypes
-}
-
-const SubMasterTable = ({ columns, actions }: MasterTableProps) => {
+const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
     const {
         onUpdate,
         sortable,

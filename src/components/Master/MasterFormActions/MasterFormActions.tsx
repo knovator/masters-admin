@@ -1,12 +1,8 @@
-import React, { MutableRefObject } from "react"
+import React from "react"
 import { FormActions } from "../../../components/Common"
 import { useMasterState } from "../../../context/MasterContext"
 
-interface MasterFormActionProps {
-    formRef: MutableRefObject<HTMLFormElement | null>
-}
-
-const MasterFormActions = ({ formRef }: MasterFormActionProps) => {
+const MasterFormActions = ({ formRef }: FormActionWrapperProps) => {
     const { formState, closeForm, loading, canAdd, canUpdate, t } = useMasterState()
     const onSubmitClick = (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (!formRef.current) e?.preventDefault()
