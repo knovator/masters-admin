@@ -1,16 +1,10 @@
-import React, { forwardRef, MutableRefObject } from "react"
+import React, { forwardRef } from "react"
 import { capitalizeFirstLetter, changeToCode } from "../../../utils/util"
 import { useMasterState } from "../../../context/MasterContext"
-import { SchemaType } from "@knovator/masters-admin"
 
 import { Form } from "../../../components/Common"
 
-interface MasterFormProps {
-    schema?: SchemaType[]
-    ref: MutableRefObject<HTMLFormElement | null>
-}
-
-const MasterForm = forwardRef<HTMLFormElement | null, MasterFormProps>(({ schema }, ref) => {
+const MasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ schema }, ref) => {
     const { onDataSubmit, updateData, formState, canAdd, canUpdate, t } = useMasterState()
     const defaultSchema: SchemaType[] = [
         {

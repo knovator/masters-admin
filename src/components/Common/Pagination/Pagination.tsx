@@ -1,6 +1,5 @@
 import React from "react"
 import Button from "../Button"
-import { PaginationProps } from "@knovator/masters-admin"
 
 const Pagination = ({
     totalPages,

@@ -1,16 +1,12 @@
-import React, { forwardRef, MutableRefObject } from "react"
+import React, { forwardRef } from "react"
 
-import { SchemaType } from "@knovator/masters-admin"
 import { Form, ImageUpload } from "../../../components/Common"
 import { useSubMasterState } from "../../../context/SubMasterContext"
 import { capitalizeFirstLetter, changeToCode } from "../../../utils/util"
+import { useProviderState } from "../../../context/ProviderContext"
 
-interface SubMasterFormProps {
-    schema?: SchemaType[]
-    ref: MutableRefObject<HTMLFormElement | null>
-}
-
-const SubMasterForm = forwardRef<HTMLFormElement | null, SubMasterFormProps>(({ schema }, ref) => {
+const SubMasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ schema }, ref) => {
+    const { baseUrl } = useProviderState()
     const { onDataSubmit, updateData, formState, canAdd, canUpdate, onImageUpload, t } = useSubMasterState()
     const defaultSchema: SchemaType[] = [
         {
@@ -57,7 +53,11 @@ const SubMasterForm = forwardRef<HTMLFormElement | null, SubMasterFormProps>(({ 
                     maxSize={10_485_760}
                     onError={setError}
                     error={error}
-                    setImgId={field.onChange}
+                    setImgId={(value) => {
+                        console.log(value)
+                        field.onChange(value)
+                    }}
+                    baseUrl={baseUrl}
                     text={
                         <>
                             <div className="kms_img-text-wrapper">

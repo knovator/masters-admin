@@ -1,6 +1,5 @@
 import React, { useCallback } from "react"
 import { useTable } from "react-table"
-import { TableProps } from "@knovator/masters-admin"
 import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd"
 import { EXCLUDE_SORT_COLUMNS, SORT_ASCENDING, SORT_DESCENDING } from "../../../constants/common"
 

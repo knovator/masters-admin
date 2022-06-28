@@ -1,17 +1,25 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useDropzone } from "react-dropzone"
 import SmallCancel from "../../../icons/smallCancel"
-import { isEmpty, isString } from "../../../utils/util"
+import { build_path, isEmpty, isString } from "../../../utils/util"
+
+interface ImageObjectProps {
+    _id: string
+    uri: string
+    nm: string
+    type: string
+}
 
 interface ImageUploadProps {
     className?: string
     text: string | JSX.Element
     maxSize: number
-    imgId?: string
-    setImgId: (value?: string) => void
+    imgId?: string | ImageObjectProps
+    setImgId: (value?: string | null) => void
     clearError?: () => void
     onError: (msg: string) => void
     onImageUpload: (file: File) => Promise<{ fileUrl: string; fileId: string }>
+    baseUrl: string
     error?: string
 }
 
@@ -24,8 +32,9 @@ const ImageUpload = ({
     error,
     imgId = "",
     onImageUpload,
+    baseUrl,
 }: ImageUploadProps) => {
-    const [img, setImg] = useState(imgId)
+    const [img, setImg] = useState<string | undefined>(undefined)
     const { getRootProps, getInputProps } = useDropzone({
         // accept: {
         //   "image/*": [".jpeg,.jpg,.png"],
@@ -55,18 +64,26 @@ const ImageUpload = ({
 
     const onRemoveFile = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
-        setImgId()
+        setImgId(null)
         setImg("")
     }
 
-    const showImage = (fileUrl: string) => (
-        <div className="kms_img-wrapper">
-            <img src={`${fileUrl}`} alt="" className="kms_img-wrapper-img" />
-            <button onClick={onRemoveFile} className="kms_img-wrapper-del">
-                <SmallCancel />
-            </button>
-        </div>
-    )
+    useEffect(() => {
+        if (imgId && typeof imgId === "object") {
+            setImg(build_path(baseUrl, imgId.uri))
+        }
+    }, [imgId])
+
+    const showImage = (fileUrl: string) => {
+        return (
+            <div className="kms_img-wrapper">
+                <img src={`${fileUrl}`} alt="" className="kms_img-wrapper-img" />
+                <button onClick={onRemoveFile} className="kms_img-wrapper-del">
+                    <SmallCancel />
+                </button>
+            </div>
+        )
+    }
 
     return (
         <>

@@ -3,9 +3,6 @@ import classNames from "classnames"
 import { useMasterState } from "../../../context/MasterContext"
 import { useProviderState } from "../../../context/ProviderContext"
 
-interface ListerProps {
-    render?: ({ row, onClick, masterCode }: { row: any; onClick: () => void; masterCode: string }) => JSX.Element
-}
 const Lister = ({ render }: ListerProps) => {
     const { masterCode, setMasterCode } = useProviderState()
     const { data, loading, loader, canList } = useMasterState()
