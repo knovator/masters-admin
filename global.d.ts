@@ -1,4 +1,4 @@
-declare module "@knovator/api";
+declare module "@knovator/api"
 
 declare module "@knovator/masters-admin" {
     const Provider: (props: ProviderContextProviderProps) => JSX.Element
