@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Button from "../Button"
 import Input from "../Input"
 import Modal from "../Modal"
@@ -27,6 +27,9 @@ const DeleteModal = ({
     confirm = TRANSLATION_PAIRS_COMMON.confirm,
 }: DeleteModalProps) => {
     const [userInput, setUserInput] = useState<string>("")
+    useEffect(() => {
+        setUserInput("")
+    }, [formState])
     return (
         <Modal open={formState === "DELETE"} onClose={onClose} title="Confirmation Required">
             <div className="py-2 px-4 rounded-lg flex items-center gap-3 text-black text-sm bg-red-200">
