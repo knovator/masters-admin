@@ -5,7 +5,7 @@ import AddButton from "."
 
 describe("Testing Addbutton component", () => {
     it("Should be empty when add permission is not provided", () => {
-        const { container } = render(
+        const { getByRole } = render(
             <MasterContextProvider
                 formState={undefined}
                 onDataSubmit={() => {}}
@@ -17,7 +17,8 @@ describe("Testing Addbutton component", () => {
                 <AddButton />
             </MasterContextProvider>,
         )
-        expect(container.firstChild).toBeFalsy()
+        let addButton = getByRole("button", { name: "Add Master" })
+        expect(addButton).toHaveAttribute("disabled")
     })
     it("Should call onChangeFormState when button clicked", () => {
         let formState: FormActionTypes = ""

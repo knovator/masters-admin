@@ -31,10 +31,7 @@
         "prebuild": "rm -rf dist",
         "dev": "rollup -c -w",
         "build": "yarn prebuild && rollup -c",
-        "prettier": "prettier --write \"src/**/*.{ts,tsx,css}\"",
-        "prepublish": "yarn build",
-        "publish": "npm publish",
-        "postpublish": "git push --tags"
+        "prettier": "prettier --write \"src/**/*.{ts,tsx,css}\""
     },
     "repository": {
         "type": "git",

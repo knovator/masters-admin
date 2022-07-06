@@ -12,7 +12,7 @@ const Provider = ({
     onSuccess = () => {},
     onLogout = () => {},
 }: ProviderContextProviderProps) => {
-    const [masterCode, setMasterCode] = useState<string>("")
+    const [selectedMaster, setSelectedMaster] = useState()
     let ctxDataGetter = typeof dataGetter === "function" ? dataGetter : (response: any) => response?.data?.docs
     let ctxPaginatonGetter =
         typeof paginationGetter === "function" ? paginationGetter : (response: any) => response?.data
@@ -25,9 +25,9 @@ const Provider = ({
                 paginationGetter: ctxPaginatonGetter,
                 onError,
                 onSuccess,
-                masterCode,
-                setMasterCode,
                 onLogout,
+                selectedMaster,
+                setSelectedMaster,
             }}
         >
             {children}

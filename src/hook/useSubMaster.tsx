@@ -22,7 +22,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
 
     const sortConfigRef = useRef<SortConfigType>(defaultSort)
 
-    const { baseUrl, token, dataGetter, paginationGetter, onError, onSuccess, onLogout, masterCode } =
+    const { baseUrl, token, dataGetter, paginationGetter, onError, onSuccess, onLogout, selectedMaster } =
         useProviderState()
     const { setPageSize, pageSize, currentPage, setCurrentPage, filter } = usePagination({ defaultLimit })
 
@@ -33,7 +33,6 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
         }
         onError(code, "error", data?.message)
     }
-
     const getSubMastersList = useCallback(
         async (search?: string) => {
             try {
@@ -49,7 +48,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
                     data: {
                         search,
                         query: {
-                            parentCode: masterCode,
+                            parentCode: selectedMaster?.code,
                         },
                         options: {
                             sort: {
@@ -81,7 +80,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
             routes,
             baseUrl,
             token,
-            masterCode,
+            selectedMaster,
             filter.offset,
             filter.limit,
             currentPage,
@@ -122,8 +121,10 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
     const onDataSubmit = async (data: any) => {
         setLoading(true)
         let finalData = { ...data }
-        console.log("data submit", finalData)
-        if (formState === "ADD") finalData.parentCode = masterCode
+        if (formState === "ADD") {
+            finalData.parentCode = selectedMaster?.code
+            finalData.parentId = selectedMaster?.id
+        }
         let code = formState === "ADD" ? CALLBACK_CODES.CREATE : CALLBACK_CODES.UPDATE
         try {
             let api = getApiType({
@@ -257,9 +258,9 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
         }
     }
     useEffect(() => {
-        if (masterCode) getSubMastersList()
+        if (selectedMaster) getSubMastersList()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pageSize, currentPage, masterCode])
+    }, [pageSize, currentPage, selectedMaster])
 
     return {
         list,

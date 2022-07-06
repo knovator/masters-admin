@@ -102,15 +102,14 @@ const DNDTable = ({
                                                 // @ts-ignore
                                                 <Draggable
                                                     draggableId={row.original.id || row.original._id || row.id}
-                                                    index={i}
                                                     key={row.original.id || row.original._id}
+                                                    index={i}
                                                 >
                                                     {(provided) => (
                                                         <tr
                                                             ref={provided.innerRef}
                                                             {...provided.draggableProps}
                                                             {...row.getRowProps()}
-                                                            key={i}
                                                         >
                                                             {row.cells.map((cell, j) => (
                                                                 <td

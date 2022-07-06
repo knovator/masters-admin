@@ -4,8 +4,7 @@ import { useMasterState } from "../../../context/MasterContext"
 
 const AddButton = () => {
     const { onChangeFormState, canAdd, t } = useMasterState()
-    if (!canAdd) return null
-    return <Button label={t("addMaster")} onClick={() => onChangeFormState("ADD")} />
+    return <Button label={t("addMaster")} onClick={() => onChangeFormState("ADD")} disabled={!canAdd} />
 }
 
 export default AddButton

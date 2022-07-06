@@ -4,21 +4,21 @@ import { useMasterState } from "../../../context/MasterContext"
 import { useProviderState } from "../../../context/ProviderContext"
 
 const Lister = ({ render }: ListerProps) => {
-    const { masterCode, setMasterCode } = useProviderState()
+    const { setSelectedMaster, selectedMaster } = useProviderState()
     const { data, loading, loader, canList } = useMasterState()
     const onItemRender = useCallback(
         (item: any) => {
             if (typeof render === "function")
-                return render({ row: item, onClick: () => setMasterCode(item?.code), masterCode })
+                return render({ row: item, onClick: () => setSelectedMaster(item), masterCode: selectedMaster?.code })
             return (
                 // eslint-disable-next-line jsx-a11y/interactive-supports-focus
                 <div
-                    onClick={() => setMasterCode(item?.code)}
+                    onClick={() => setSelectedMaster(item)}
                     className={classNames("kms_list-item group", {
-                        selected: item.code === masterCode,
+                        selected: item.code === selectedMaster?.code,
                     })}
                     role="button"
-                    onKeyDown={() => setMasterCode(item?.code)}
+                    onKeyDown={() => setSelectedMaster(item)}
                     key={item.id}
                 >
                     <div className="kms_list-item-highlight">{item?.name?.charAt(0)}</div>
@@ -29,7 +29,7 @@ const Lister = ({ render }: ListerProps) => {
                 </div>
             )
         },
-        [masterCode, render, setMasterCode],
+        [selectedMaster, render, setSelectedMaster],
     )
 
     if (!canList) return null
