@@ -56,7 +56,7 @@ const SubMaster = ({
             },
         },
     ]
-    const { masterCode } = useProviderState()
+    const { selectedMaster } = useProviderState()
     const formRef = useRef<HTMLFormElement>(null)
     const {
         list,
@@ -99,7 +99,7 @@ const SubMaster = ({
                 closeForm={onCloseForm}
                 onDataSubmit={onDataSubmit}
                 updateData={itemData}
-                canAdd={permissions?.add && !!masterCode}
+                canAdd={permissions?.add && !!selectedMaster}
                 canUpdate={permissions?.update}
                 onImageUpload={onImageUpload}
                 // Pagination

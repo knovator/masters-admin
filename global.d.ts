@@ -61,7 +61,13 @@ interface ProviderContextProviderProps
     extends React.PropsWithChildren,
         Omit<
             ProviderContextType,
-            "onError" | "onSuccess" | "masterCode" | "onLogout" | "setMasterCode" | "dataGetter" | "paginationGetter"
+            | "onError"
+            | "onSuccess"
+            | "selectedMaster"
+            | "onLogout"
+            | "setSelectedMaster"
+            | "dataGetter"
+            | "paginationGetter"
         > {
     onError?: (callback_code: import("./src/constants/common").CALLBACK_CODES, code: string, message: string) => void
     onSuccess?: (callback_code: import("./src/constants/common").CALLBACK_CODES, code: string, message: string) => void
@@ -139,8 +145,8 @@ type SortConfigType = [string, 1 | -1]
 interface ProviderContextType {
     baseUrl: string
     token: string
-    masterCode: string
-    setMasterCode: (code: string) => void
+    selectedMaster: any
+    setSelectedMaster: (data: any) => void
     dataGetter: (response: any) => any[]
     paginationGetter: (response: any) => any
     onError: (callback_code: import("./src/constants/common").CALLBACK_CODES, code: string, message: string) => void

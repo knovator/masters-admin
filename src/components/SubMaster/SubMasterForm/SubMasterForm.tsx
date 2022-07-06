@@ -54,7 +54,6 @@ const SubMasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ 
                     onError={setError}
                     error={error}
                     setImgId={(value) => {
-                        console.log(value)
                         field.onChange(value)
                     }}
                     baseUrl={baseUrl}
