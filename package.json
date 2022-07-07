@@ -9,11 +9,12 @@
         "dist",
         "package.json",
         "README.md",
-        "masters.md",
-        "submasters.md",
-        "data-formats.md",
         "global.d.ts"
     ],
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:knovator/masters-admin.git"
+    },
     "keywords": [
         "masters",
         "submasters",
@@ -32,10 +33,6 @@
         "dev": "rollup -c -w",
         "build": "yarn prebuild && rollup -c",
         "prettier": "prettier --write \"src/**/*.{ts,tsx,css}\""
-    },
-    "repository": {
-        "type": "git",
-        "url": "git@github.com:knovator/masters-admin.git"
     },
     "author": "knovator (https://knovator.com/)",
     "license": "MIT",

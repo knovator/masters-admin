@@ -12,7 +12,7 @@ export interface CheckboxProps {
 const Checkbox = ({ onChange, rest, label, error, className, disabled }: CheckboxProps) => {
     return (
         <div className="kms_input-wrapper">
-            <label className="kms_input-label">{label}</label>
+            {label && <label className="kms_input-label">{label}</label>}
             <input
                 data-testid={`input-checkbox-${label}`}
                 className={classNames("kms_input-checkbox", className)}

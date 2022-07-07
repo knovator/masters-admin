@@ -69,6 +69,7 @@ interface ProviderContextProviderProps
             | "dataGetter"
             | "paginationGetter"
         > {
+    getToken?: () => Promise<string>
     onError?: (callback_code: import("./src/constants/common").CALLBACK_CODES, code: string, message: string) => void
     onSuccess?: (callback_code: import("./src/constants/common").CALLBACK_CODES, code: string, message: string) => void
     onLogout?: () => void
@@ -144,7 +145,7 @@ type SortConfigType = [string, 1 | -1]
 // Context
 interface ProviderContextType {
     baseUrl: string
-    token: string
+    token: string | (() => Promise<string>)
     selectedMaster: any
     setSelectedMaster: (data: any) => void
     dataGetter: (response: any) => any[]
@@ -228,7 +229,7 @@ type ACTION_TYPES = "IMAGE_UPLOAD" | "CREATE" | "LIST" | "DELETE" | "UPDATE" | "
 interface BaseAPIProps {
     config?: any
     baseUrl: string
-    token: string
+    token: string | (() => Promise<string>)
     data?: any
     url: string
     method: string
