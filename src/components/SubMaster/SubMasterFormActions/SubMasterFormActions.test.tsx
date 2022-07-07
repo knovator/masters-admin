@@ -1,6 +1,7 @@
 import React from "react"
 import { fireEvent, render } from "@testing-library/react"
 import SubMasterContextProvider from "../../../context/SubMasterContext"
+import ProviderContextProvider from "../../../context/ProviderContext"
 import SubMasterFormActions from "."
 
 describe("Testing SubMasterFormActions component", () => {
@@ -11,18 +12,20 @@ describe("Testing SubMasterFormActions component", () => {
 
         const ref = { current: { dispatchEvent: () => (submitClicked = true) } } as any
         const { getByRole } = render(
-            <SubMasterContextProvider
-                closeForm={onClose}
-                formState={"ADD"}
-                onDataSubmit={() => {}}
-                onChangeFormState={() => {}}
-                updateData={undefined}
-                loading={false}
-                canAdd={true}
-                canUpdate={true}
-            >
-                <SubMasterFormActions formRef={ref} />
-            </SubMasterContextProvider>,
+            <ProviderContextProvider baseUrl="https://testapi.com" token={"abcd"}>
+                <SubMasterContextProvider
+                    closeForm={onClose}
+                    formState={"ADD"}
+                    onDataSubmit={() => {}}
+                    onChangeFormState={() => {}}
+                    updateData={undefined}
+                    loading={false}
+                    canAdd={true}
+                    canUpdate={true}
+                >
+                    <SubMasterFormActions formRef={ref} />
+                </SubMasterContextProvider>
+            </ProviderContextProvider>,
         )
         let submitButton = getByRole("button", { name: "Add Sub Master" })
         let cancelButton = getByRole("button", { name: "Cancel" })
