@@ -18,10 +18,14 @@ const commonApi = async ({
 
     onError = handleError,
 }: BaseAPIProps) => {
+    let apiToken = token
+    if (typeof token === "function") {
+        apiToken = await token()
+    }
     setAPIConfig({
         baseUrl,
         tokenPrefix: "jwt",
-        getToken: token,
+        getToken: apiToken,
         onError,
     })
     return fetchUrl({
