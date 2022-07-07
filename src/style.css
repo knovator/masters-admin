@@ -94,7 +94,7 @@
         @apply inline-block mb-2 text-sm font-semibold text-black;
     }
     .kms_input-wrapper {
-        @apply text-left w-full;
+        @apply text-left;
     }
     .kms_input-error {
         @apply mt-1 text-sm text-red-500;
