@@ -15,7 +15,7 @@ export interface SelectProps {
 const Select = ({ onChange, value, rest, label, error, options = [], className, disabled }: SelectProps) => {
     return (
         <div className="kms_input-wrapper">
-            <label className="kms_input-label">{label}</label>
+            {label && <label className="kms_input-label">{label}</label>}
             <select
                 data-testid={`input-select-${label}`}
                 value={value}

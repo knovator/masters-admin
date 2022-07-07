@@ -28,7 +28,7 @@ const Input = ({
 }: InputProps) => {
     return (
         <div className="kms_input-wrapper">
-            <label className="kms_input-label">{label}</label>
+            {label && <label className="kms_input-label">{label}</label>}
             <input
                 data-testid={`input-${type}-${label}`}
                 className={classNames("kms_input", className)}
