@@ -34,7 +34,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
         onError(code, "error", data?.message)
     }
     const getSubMastersList = useCallback(
-        async (search?: string) => {
+        async (search?: string, showNotification = true) => {
             try {
                 let sortConfig = sortConfigRef.current
                 setLoading(true)
@@ -63,17 +63,20 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
                     },
                 })
                 if (response?.code === "SUCCESS") {
-                    onSuccess(CALLBACK_CODES.GET_ALL, response.code, response.message)
+                    if(showNotification)
+                        onSuccess(CALLBACK_CODES.GET_ALL, response.code, response.message)
                     setLoading(false)
                     setTotalPages(paginationGetter(response).totalPages)
                     setTotalRecords(paginationGetter(response).totalDocs)
                     return setList(dataGetter(response))
                 }
                 setLoading(false)
-                onError(CALLBACK_CODES.GET_ALL, response.code, response.message)
+                if(showNotification)
+                    onError(CALLBACK_CODES.GET_ALL, response.code, response.message)
             } catch (error) {
                 setLoading(false)
-                onError(CALLBACK_CODES.GET_ALL, INTERNAL_ERROR_CODE, (error as Error).message)
+                if(showNotification)
+                    onError(CALLBACK_CODES.GET_ALL, INTERNAL_ERROR_CODE, (error as Error).message)
             }
         },
         [
@@ -92,7 +95,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
     )
     const onChangeSortConfig = (data: SortConfigType) => {
         sortConfigRef.current = data
-        getSubMastersList()
+        getSubMastersList('', false)
     }
     const partialUpdate = useCallback(
         async (id: string, data: any) => {
@@ -108,7 +111,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
                 })
                 if (response?.code === "SUCCESS") {
                     onSuccess(CALLBACK_CODES.UPDATE, response.code, response.message)
-                    getSubMastersList()
+                    getSubMastersList('', false)
                 } else {
                     onError(CALLBACK_CODES.UPDATE, response.code, response.message)
                 }
@@ -144,7 +147,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
             if (response?.code === "SUCCESS") {
                 setLoading(false)
                 onSuccess(code, response?.code, response?.message)
-                getSubMastersList()
+                getSubMastersList('', false)
                 onCloseForm()
             } else {
                 setLoading(false)
@@ -190,7 +193,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
                 if (response?.code === "SUCCESS") {
                     setLoading(false)
                     onSuccess(CALLBACK_CODES.DELETE, response?.code, response?.message)
-                    getSubMastersList()
+                    getSubMastersList('', false)
                     onCloseForm()
                     return
                 }
@@ -222,7 +225,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
             if (response?.code === "SUCCESS") {
                 onSuccess(CALLBACK_CODES.SEQUENCE_UPDATE, response.code, response.message)
                 sortConfigRef.current = ["seq", 1]
-                getSubMastersList()
+                getSubMastersList('', false)
             } else {
                 onError(CALLBACK_CODES.SEQUENCE_UPDATE, response.code, response.message)
             }
@@ -230,7 +233,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
             onError(CALLBACK_CODES.SEQUENCE_UPDATE, INTERNAL_ERROR_CODE, (error as Error).message)
         }
     }
-    const onImageUpload = async (file: File): Promise<{ fileUrl: string; fileId: string }> => {
+    const onImageUpload = async (file: File): Promise<{ fileUrl: string; fileId: string } | void> => {
         try {
             const payload = new FormData()
             payload?.append("folder", "images")
@@ -248,13 +251,34 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
                 onError: handleError(CALLBACK_CODES.IMAGE_UPLOAD),
             })
             if (response.code === "SUCCESS") {
+                let responseData = response?.data[0] || response?.data;
                 return {
-                    fileId: response?.data[0]?._id,
-                    fileUrl: build_path(baseUrl, response?.data[0]?.uri),
+                    fileId: responseData?._id || responseData?.id,
+                    fileUrl: build_path(baseUrl, responseData?.uri),
                 }
-            } else throw new Error(response.message)
+            } else 
+                onError(CALLBACK_CODES.IMAGE_REMOVE, response.code, response.message)
         } catch (error) {
-            throw new Error("File upload error")
+            onError(CALLBACK_CODES.IMAGE_REMOVE, INTERNAL_ERROR_CODE, (error as Error).message)
+        }
+    }
+    const onImageRemove = async (id: string): Promise<void> => {
+        try {
+            let api = getApiType({ routes, action: "IMAGE_REMOVE", module: "masters", id })
+            let response = await request({
+                baseUrl,
+                token,
+                method: api.method,
+                url: api.url,
+                onError: handleError(CALLBACK_CODES.IMAGE_REMOVE),
+            })
+            if (response?.code === "SUCCESS") {
+                onSuccess(CALLBACK_CODES.IMAGE_REMOVE, response.code, response.message)
+            } else {
+                onError(CALLBACK_CODES.IMAGE_REMOVE, response.code, response.message)
+            }
+        } catch (error) {
+            onError(CALLBACK_CODES.IMAGE_REMOVE, INTERNAL_ERROR_CODE, (error as Error).message)
         }
     }
     useEffect(() => {
@@ -290,6 +314,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
         onDataSubmit,
         onCofirmDeleteMaster,
         onImageUpload,
+        onImageRemove
     }
 }
 

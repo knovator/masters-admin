@@ -7,7 +7,7 @@ import { useProviderState } from "../../../context/ProviderContext"
 
 const SubMasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ schema }, ref) => {
     const { baseUrl } = useProviderState()
-    const { onDataSubmit, updateData, formState, canAdd, canUpdate, onImageUpload, t } = useSubMasterState()
+    const { onDataSubmit, updateData, formState, canAdd, canUpdate, onImageUpload, t, onImageRemove } = useSubMasterState()
     const defaultSchema: SchemaType[] = [
         {
             label: `${t("name")}*`,
@@ -69,6 +69,7 @@ const SubMasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ 
                         </>
                     }
                     onImageUpload={onImageUpload}
+                    onImageRemove={onImageRemove}
                     className="kms_img-upload-wrapper-3"
                 />
             ),

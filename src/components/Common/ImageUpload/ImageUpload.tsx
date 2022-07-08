@@ -18,7 +18,8 @@ interface ImageUploadProps {
     setImgId: (value?: string | null) => void
     clearError?: () => void
     onError: (msg: string) => void
-    onImageUpload: (file: File) => Promise<{ fileUrl: string; fileId: string }>
+    onImageUpload: (file: File) => Promise<{ fileUrl: string; fileId: string } | void>
+    onImageRemove?: (id: string) => Promise<void>
     baseUrl: string
     error?: string
 }
@@ -32,6 +33,7 @@ const ImageUpload = ({
     error,
     imgId = "",
     onImageUpload,
+    onImageRemove,
     baseUrl,
 }: ImageUploadProps) => {
     const [img, setImg] = useState<string | undefined>(undefined)
@@ -50,8 +52,10 @@ const ImageUpload = ({
                     let files = acceptedFiles.filter((file) => regex.test(file.name))
                     if (files[0]) {
                         let response = await onImageUpload(files[0])
-                        setImg(response.fileUrl)
-                        setImgId(response.fileId)
+                        if(response) {
+                            setImg(response.fileUrl)
+                            setImgId(response.fileId)
+                        }
                     } else throw new Error("File type must be .png, .jpg, .jpeg, .gif, or .svg")
                 } else if (rejectedFiles?.[0]?.errors?.[0]?.message === "File is larger than 10485760 bytes") {
                     throw new Error("File is larger than 10mb")
@@ -62,10 +66,17 @@ const ImageUpload = ({
         },
     })
 
-    const onRemoveFile = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const onRemoveFile = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
-        setImgId(null)
-        setImg("")
+        try {
+            if(onImageRemove && imgId)
+                await onImageRemove(typeof imgId === "string" ? imgId : imgId._id);
+            
+            setImgId(null)
+            setImg("")
+        } catch (error) {
+            onError((error as Error).message)
+        }
     }
 
     useEffect(() => {
