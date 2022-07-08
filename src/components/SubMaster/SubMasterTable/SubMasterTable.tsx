@@ -133,7 +133,7 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
         verifyAndUpdateColumns()
     }, [columns, defaultColumns, verifyAndUpdateColumns])
 
-    if (Array.isArray(data) && data.length > 0 && canList) {
+    if (Array.isArray(data) && canList) {
         return (
             <DNDTable
                 columns={tableColumns}
