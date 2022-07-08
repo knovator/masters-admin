@@ -80,6 +80,7 @@ const SubMaster = ({
         onChangeSequence,
         onCofirmDeleteMaster,
         onImageUpload,
+        onImageRemove
     } = useSubMaster({
         defaultLimit: Array.isArray(limits) && limits.length > 0 ? limits[0] : DEFAULT_LIMIT,
         routes,
@@ -102,6 +103,7 @@ const SubMaster = ({
                 canAdd={permissions?.add && !!selectedMaster}
                 canUpdate={permissions?.update}
                 onImageUpload={onImageUpload}
+                onImageRemove={onImageRemove}
                 // Pagination
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
