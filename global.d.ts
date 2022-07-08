@@ -69,7 +69,6 @@ interface ProviderContextProviderProps
             | "dataGetter"
             | "paginationGetter"
         > {
-    getToken?: () => Promise<string>
     onError?: (callback_code: import("./src/constants/common").CALLBACK_CODES, code: string, message: string) => void
     onSuccess?: (callback_code: import("./src/constants/common").CALLBACK_CODES, code: string, message: string) => void
     onLogout?: () => void
@@ -197,7 +196,8 @@ interface SubMasterContextType {
     loading: boolean
     canAdd: boolean
     canUpdate: boolean
-    onImageUpload: (file: File) => Promise<{ fileUrl: string; fileId: string }>
+    onImageUpload: (file: File) => Promise<{ fileUrl: string; fileId: string } | void>
+    onImageRemove: (id: string) => Promise<void>
     // Pagination
     currentPage: number
     setCurrentPage: (page: number) => void
@@ -224,7 +224,7 @@ type onDelete = ({ data, confirmDelete }: { data: any; confirmDelete: () => void
 // \ End of Context
 
 // API
-type ACTION_TYPES = "IMAGE_UPLOAD" | "CREATE" | "LIST" | "DELETE" | "UPDATE" | "SEQUENCE"
+type ACTION_TYPES = "IMAGE_UPLOAD" | "IMAGE_REMOVE" | "CREATE" | "LIST" | "DELETE" | "UPDATE" | "SEQUENCE"
 
 interface BaseAPIProps {
     config?: any

@@ -4,6 +4,10 @@ const apiList = {
         url: "files/upload",
         method: "post",
     }),
+    IMAGE_REMOVE: ({ id }: API_INPUT_TYPE) => ({
+        url: `files/${id}/delete`,
+        method: 'DELETE'
+    }),
     LIST: ({ module }: API_INPUT_TYPE) => ({
         url: `admin/${module}/list`,
         method: "POST",
@@ -23,7 +27,7 @@ const apiList = {
     SEQUENCE: ({ module, id }: API_INPUT_TYPE) => ({
         url: `admin/${module}/partial-update/sequence/${id}`,
         method: "PATCH",
-    }),
+    })
 }
 
 export default apiList

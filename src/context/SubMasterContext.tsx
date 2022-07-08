@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from "react"
 import { PAGE_LIMITS, TRANSLATION_PAIRS_COMMON, TRANSLATION_PAIRS_SUBMASTERS } from "../constants/common"
 
-interface MasterContextProviderProps extends React.PropsWithChildren, Partial<SubMasterContextType> {}
+interface SubMasterContextProviderProps extends React.PropsWithChildren, Partial<SubMasterContextType> {}
 
 const SubMasterContext = createContext<SubMasterContextType | null>(null)
 
@@ -23,6 +23,7 @@ const SubMasterContextProvider = ({
     canAdd = false,
     canUpdate = false,
     onImageUpload = () => Promise.resolve({ fileId: "", fileUrl: "" }),
+    onImageRemove = () => Promise.resolve(),
     // Pagination
     currentPage = 1,
     limits = PAGE_LIMITS,
@@ -46,7 +47,7 @@ const SubMasterContextProvider = ({
     onChangeSequence = () => Promise.resolve(),
     // other
     children,
-}: MasterContextProviderProps) => {
+}: SubMasterContextProviderProps) => {
     return (
         <SubMasterContext.Provider
             value={{
@@ -61,6 +62,7 @@ const SubMasterContextProvider = ({
                 canAdd,
                 canUpdate,
                 onImageUpload,
+                onImageRemove,
                 // Pagination
                 currentPage,
                 limits,

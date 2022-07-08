@@ -230,7 +230,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
             onError(CALLBACK_CODES.SEQUENCE_UPDATE, INTERNAL_ERROR_CODE, (error as Error).message)
         }
     }
-    const onImageUpload = async (file: File): Promise<{ fileUrl: string; fileId: string }> => {
+    const onImageUpload = async (file: File): Promise<{ fileUrl: string; fileId: string } | void> => {
         try {
             const payload = new FormData()
             payload?.append("folder", "images")
@@ -252,9 +252,29 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
                     fileId: response?.data[0]?._id,
                     fileUrl: build_path(baseUrl, response?.data[0]?.uri),
                 }
-            } else throw new Error(response.message)
+            } else 
+                onError(CALLBACK_CODES.IMAGE_REMOVE, response.code, response.message)
         } catch (error) {
-            throw new Error("File upload error")
+            onError(CALLBACK_CODES.IMAGE_REMOVE, INTERNAL_ERROR_CODE, (error as Error).message)
+        }
+    }
+    const onImageRemove = async (id: string): Promise<void> => {
+        try {
+            let api = getApiType({ routes, action: "IMAGE_REMOVE", module: "masters", id })
+            let response = await request({
+                baseUrl,
+                token,
+                method: api.method,
+                url: api.url,
+                onError: handleError(CALLBACK_CODES.IMAGE_REMOVE),
+            })
+            if (response?.code === "SUCCESS") {
+                onSuccess(CALLBACK_CODES.IMAGE_REMOVE, response.code, response.message)
+            } else {
+                onError(CALLBACK_CODES.IMAGE_REMOVE, response.code, response.message)
+            }
+        } catch (error) {
+            onError(CALLBACK_CODES.IMAGE_REMOVE, INTERNAL_ERROR_CODE, (error as Error).message)
         }
     }
     useEffect(() => {
@@ -290,6 +310,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
         onDataSubmit,
         onCofirmDeleteMaster,
         onImageUpload,
+        onImageRemove
     }
 }
 
