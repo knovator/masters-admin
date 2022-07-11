@@ -1,11 +1,18 @@
-import React, { useCallback } from "react"
+import React, { useCallback, useEffect } from "react"
 import classNames from "classnames"
 import { useMasterState } from "../../../context/MasterContext"
 import { useProviderState } from "../../../context/ProviderContext"
 
-const Lister = ({ render }: ListerProps) => {
+const Lister = ({ render, selectFirst }: ListerProps) => {
     const { setSelectedMaster, selectedMaster } = useProviderState()
     const { data, loading, loader, canList } = useMasterState()
+
+    useEffect(() => {
+        if(selectFirst && Array.isArray(data) && data.length > 0) {
+            setSelectedMaster(data[0]);
+        }
+    }, [data])
+
     const onItemRender = useCallback(
         (item: any) => {
             if (typeof render === "function")
