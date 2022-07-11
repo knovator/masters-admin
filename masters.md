@@ -70,6 +70,7 @@ function App() {
     - `row` => Current record
     - `onClick` => Function to call when current item is selected/clicked
     - `masterCode` => string indicates record code currently selected
+- `selectFirst` => boolean prop indicats to show submasters data for first master record
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Master.FormWrapper

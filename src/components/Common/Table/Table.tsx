@@ -69,18 +69,23 @@ const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, load
                             ))}
                         </thead>
                         <tbody className="kms_tbody" {...getTableBodyProps()}>
-                            {rows.map((row, i) => {
-                                prepareRow(row)
-                                return (
-                                    <tr {...row.getRowProps()} key={i}>
-                                        {row.cells.map((cell, j) => (
-                                            <td {...cell.getCellProps()} key={j}>
-                                                {cell.render("Cell")}
-                                            </td>
-                                        ))}
-                                    </tr>
-                                )
-                            })}
+                            {rows.length > 0
+                                ? rows.map((row, i) => {
+                                    prepareRow(row)
+                                    return (
+                                        <tr {...row.getRowProps()} key={i}>
+                                            {row.cells.map((cell, j) => (
+                                                <td {...cell.getCellProps()} key={j}>
+                                                    {cell.render("Cell")}
+                                                </td>
+                                            ))}
+                                        </tr>
+                                    )
+                                }) 
+                                : (<tr>
+                                    <td colSpan={columns?.length || 0}>No data found</td>
+                                </tr>)
+                            }
                         </tbody>
                     </table>
                 )}

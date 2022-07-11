@@ -96,37 +96,42 @@ const DNDTable = ({
                                         {...getTableBodyProps()}
                                         {...provided.droppableProps}
                                     >
-                                        {rows.map((row, i) => {
-                                            prepareRow(row)
-                                            return (
-                                                // @ts-ignore
-                                                <Draggable
-                                                    draggableId={row.original.id || row.original._id || row.id}
-                                                    key={row.original.id || row.original._id}
-                                                    index={i}
-                                                >
-                                                    {(provided) => (
-                                                        <tr
-                                                            ref={provided.innerRef}
-                                                            {...provided.draggableProps}
-                                                            {...row.getRowProps()}
-                                                        >
-                                                            {row.cells.map((cell, j) => (
-                                                                <td
-                                                                    {...(cell.column.id === "sequence"
-                                                                        ? provided.dragHandleProps
-                                                                        : {})}
-                                                                    {...cell.getCellProps()}
-                                                                    key={j}
-                                                                >
-                                                                    {cell.render("Cell")}
-                                                                </td>
-                                                            ))}
-                                                        </tr>
-                                                    )}
-                                                </Draggable>
-                                            )
-                                        })}
+                                        {rows.length > 0
+                                            ? rows.map((row, i) => {
+                                                prepareRow(row)
+                                                return (
+                                                    // @ts-ignore
+                                                    <Draggable
+                                                        draggableId={row.original.id || row.original._id || row.id}
+                                                        key={row.original.id || row.original._id}
+                                                        index={i}
+                                                    >
+                                                        {(provided) => (
+                                                            <tr
+                                                                ref={provided.innerRef}
+                                                                {...provided.draggableProps}
+                                                                {...row.getRowProps()}
+                                                            >
+                                                                {row.cells.map((cell, j) => (
+                                                                    <td
+                                                                        {...(cell.column.id === "sequence"
+                                                                            ? provided.dragHandleProps
+                                                                            : {})}
+                                                                        {...cell.getCellProps()}
+                                                                        key={j}
+                                                                    >
+                                                                        {cell.render("Cell")}
+                                                                    </td>
+                                                                ))}
+                                                            </tr>
+                                                        )}
+                                                    </Draggable>
+                                                )
+                                            })
+                                            : (<tr>
+                                                <td colSpan={columns?.length || 0}>No data found</td>
+                                            </tr>)
+                                        }
                                     </tbody>
                                 )}
                             </Droppable>

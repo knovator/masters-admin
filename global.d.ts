@@ -50,6 +50,7 @@ interface FormActionWrapperProps {
 }
 
 interface ListerProps {
+    selectFirst?: boolean;
     render?: ({ row, onClick, masterCode }: { row: any; onClick: () => void; masterCode: string }) => JSX.Element
 }
 
