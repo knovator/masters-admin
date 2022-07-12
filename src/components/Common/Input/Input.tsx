@@ -1,19 +1,6 @@
 import React from "react"
 import classNames from "classnames"
 
-export interface InputProps {
-    value?: string | number
-    placeholder?: string
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-    onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void
-    type?: "number" | "text" | "search" | "checkbox"
-    rest?: any
-    label?: string
-    error?: string
-    className?: string
-    disabled?: boolean
-}
-
 const Input = ({
     onChange,
     onInput,

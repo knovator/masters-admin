@@ -3,27 +3,6 @@ import { useDropzone } from "react-dropzone"
 import SmallCancel from "../../../icons/smallCancel"
 import { build_path, isEmpty, isString } from "../../../utils/util"
 
-interface ImageObjectProps {
-    _id: string
-    uri: string
-    nm: string
-    type: string
-}
-
-interface ImageUploadProps {
-    className?: string
-    text: string | JSX.Element
-    maxSize: number
-    imgId?: string | ImageObjectProps
-    setImgId: (value?: string | null) => void
-    clearError?: () => void
-    onError: (msg: string) => void
-    onImageUpload: (file: File) => Promise<{ fileUrl: string; fileId: string } | void>
-    onImageRemove?: (id: string) => Promise<void>
-    baseUrl: string
-    error?: string
-}
-
 const ImageUpload = ({
     className,
     text,
