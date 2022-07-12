@@ -34,7 +34,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
         onError(code, "error", data?.message)
     }
     const getSubMastersList = useCallback(
-        async (search?: string, showNotification = true) => {
+        async (search?: string) => {
             try {
                 let sortConfig = sortConfigRef.current
                 setLoading(true)
@@ -63,20 +63,14 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
                     },
                 })
                 if (response?.code === "SUCCESS") {
-                    if(showNotification)
-                        onSuccess(CALLBACK_CODES.GET_ALL, response.code, response.message)
                     setLoading(false)
                     setTotalPages(paginationGetter(response).totalPages)
                     setTotalRecords(paginationGetter(response).totalDocs)
                     return setList(dataGetter(response))
                 }
                 setLoading(false)
-                if(showNotification)
-                    onError(CALLBACK_CODES.GET_ALL, response.code, response.message)
             } catch (error) {
                 setLoading(false)
-                if(showNotification)
-                    onError(CALLBACK_CODES.GET_ALL, INTERNAL_ERROR_CODE, (error as Error).message)
             }
         },
         [
@@ -95,7 +89,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
     )
     const onChangeSortConfig = (data: SortConfigType) => {
         sortConfigRef.current = data
-        getSubMastersList('', false)
+        getSubMastersList()
     }
     const partialUpdate = useCallback(
         async (id: string, data: any) => {
@@ -111,7 +105,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
                 })
                 if (response?.code === "SUCCESS") {
                     onSuccess(CALLBACK_CODES.UPDATE, response.code, response.message)
-                    getSubMastersList('', false)
+                    getSubMastersList()
                 } else {
                     onError(CALLBACK_CODES.UPDATE, response.code, response.message)
                 }
@@ -147,7 +141,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
             if (response?.code === "SUCCESS") {
                 setLoading(false)
                 onSuccess(code, response?.code, response?.message)
-                getSubMastersList('', false)
+                getSubMastersList()
                 onCloseForm()
             } else {
                 setLoading(false)
@@ -193,7 +187,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
                 if (response?.code === "SUCCESS") {
                     setLoading(false)
                     onSuccess(CALLBACK_CODES.DELETE, response?.code, response?.message)
-                    getSubMastersList('', false)
+                    getSubMastersList()
                     onCloseForm()
                     return
                 }
@@ -225,7 +219,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
             if (response?.code === "SUCCESS") {
                 onSuccess(CALLBACK_CODES.SEQUENCE_UPDATE, response.code, response.message)
                 sortConfigRef.current = ["seq", 1]
-                getSubMastersList('', false)
+                getSubMastersList()
             } else {
                 onError(CALLBACK_CODES.SEQUENCE_UPDATE, response.code, response.message)
             }
