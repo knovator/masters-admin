@@ -32,7 +32,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
         onError(code, "error", data?.message)
     }
     const getMastersList = useCallback(
-        async (search?: string, showNotification = true) => {
+        async (search?: string) => {
             try {
                 let sortConfig = sortConfigRef.current
                 setLoading(true)
@@ -57,18 +57,14 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
                     },
                 })
                 if (response?.code === "SUCCESS") {
-                    if(showNotification) 
-                        onSuccess(CALLBACK_CODES.GET_ALL, response.code, response.message)
                     setLoading(false)
                     setTotalPages(paginationGetter(response).totalPages)
                     setTotalRecords(paginationGetter(response).totalDocs)
                     return setList(dataGetter(response))
                 }
                 setLoading(false)
-                if(showNotification) onError(CALLBACK_CODES.GET_ALL, response.code, response.message)
             } catch (error) {
                 setLoading(false)
-                if(showNotification) onError(CALLBACK_CODES.GET_ALL, INTERNAL_ERROR_CODE, (error as Error).message)
             }
         },
         [
@@ -86,7 +82,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
     )
     const onChangeSortConfig = (data: SortConfigType) => {
         sortConfigRef.current = data
-        getMastersList('', false)
+        getMastersList()
     }
     const partialUpdate = useCallback(
         async (id: string, data: any) => {
@@ -102,7 +98,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
                 })
                 if (response?.code === "SUCCESS") {
                     onSuccess(CALLBACK_CODES.UPDATE, response.code, response.message)
-                    getMastersList('', false)
+                    getMastersList()
                 } else {
                     onError(CALLBACK_CODES.UPDATE, response.code, response.message)
                 }
@@ -133,7 +129,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
             if (response?.code === "SUCCESS") {
                 setLoading(false)
                 onSuccess(code, response?.code, response?.message)
-                getMastersList('', false)
+                getMastersList()
                 onCloseForm()
             } else {
                 setLoading(false)
@@ -179,7 +175,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
                 if (response?.code === "SUCCESS") {
                     setLoading(false)
                     onSuccess(CALLBACK_CODES.DELETE, response?.code, response?.message)
-                    getMastersList('', false)
+                    getMastersList()
                     onCloseForm()
                     return
                 }

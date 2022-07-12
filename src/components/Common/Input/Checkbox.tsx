@@ -1,14 +1,6 @@
 import React from "react"
 import classNames from "classnames"
 
-export interface CheckboxProps {
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-    rest?: any
-    label?: string
-    error?: string
-    className?: string
-    disabled?: boolean
-}
 const Checkbox = ({ onChange, rest, label, error, className, disabled }: CheckboxProps) => {
     return (
         <div className="kms_input-wrapper">

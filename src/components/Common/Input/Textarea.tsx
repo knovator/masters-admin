@@ -1,17 +1,6 @@
 import React from "react"
 import classNames from "classnames"
 
-export interface TextareaProps {
-    value?: string | number
-    placeholder?: string
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-    onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void
-    rest?: any
-    label?: string
-    error?: string
-    disabled?: boolean
-    className?: string
-}
 const Textarea = ({
     onChange,
     onInput,
