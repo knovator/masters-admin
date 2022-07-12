@@ -150,6 +150,26 @@ Please check in [masters.md](masters.md)
 ### SubMaster
 Plase check in [submasters.md](submasters.md)
 
+### ImageUpload
+- Provide `Image Upload` component to use in Forms
+
+**Props**
+- `className` (*optional*) => string
+- `text` => `string` | `JSX.Element` to show inside component
+- `maxSize` => `number` Max size for image to upload
+- `imgId` => `string` | `ImageObjectProps`
+  - Image Url or `ImageObjectProps` mentioned in [data-formats](data-formats.md)
+- `setImgId` => `(value?: string | null) => void`
+- `clearError` (*optional*) => `() => void`
+- `onError` => `(msg: string) => void`
+- `onImageUpload` => `(file: File) => Promise<{ fileUrl: string; fileId: string } | void>`
+  - Gets called when user uploads file, it should return `fileUrl` and `fileId`
+- `onImageRemove` (*optional*) => `(id: string) => Promise<void>`
+  - Gets called when user removes the image
+- `baseUrl` => string
+  - Gets used when showing image
+- `error` (*optional*) => string
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

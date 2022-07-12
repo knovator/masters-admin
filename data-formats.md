@@ -86,3 +86,9 @@
 - `error` => string indicating error in input
 - `setError` => `(msg: string) => void`
     - To set error manually in input
+
+### `ImageObjectProps
+- `_id` => string
+- `uri` => string representing URL relative to backend api
+- `nm` => string
+- `type` => string
