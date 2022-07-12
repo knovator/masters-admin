@@ -23,6 +23,13 @@ declare module "@knovator/masters-admin" {
         FormActions: (props: FormActionWrapperProps) => JSX.Element
         FormWrapper: (props: FormWrapperProps) => JSX.Element
     }
+    const ImageUpload: (props: ImageUploadProps) => JSX.Element
+    const Input: {
+        (props: InputProps): JSX.Element
+        Textarea: (props: TextareaProps) => JSX.Element
+        Select: (props: SelectProps) => JSX.Element
+        Checkbox: (props: CheckboxProps) => JSX.Element
+    }
 }
 
 interface SubMasterProps extends React.PropsWithChildren {
@@ -282,6 +289,67 @@ interface MasterProps extends React.PropsWithChildren {
     permissions?: PermissionsObj
     t?: (key: string) => string
     preConfirmDelete?: (data: { row: any }) => Promise<boolean>
+}
+interface ImageObjectProps {
+    _id: string
+    uri: string
+    nm: string
+    type: string
+}
+
+interface ImageUploadProps {
+    className?: string
+    text: string | JSX.Element
+    maxSize: number
+    imgId?: string | ImageObjectProps
+    setImgId: (value?: string | null) => void
+    clearError?: () => void
+    onError: (msg: string) => void
+    onImageUpload: (file: File) => Promise<{ fileUrl: string; fileId: string } | void>
+    onImageRemove?: (id: string) => Promise<void>
+    baseUrl: string
+    error?: string
+}
+interface InputProps {
+    value?: string | number
+    placeholder?: string
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+    onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void
+    type?: "number" | "text" | "search" | "checkbox"
+    rest?: any
+    label?: string
+    error?: string
+    className?: string
+    disabled?: boolean
+}
+interface CheckboxProps {
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+    rest?: any
+    label?: string
+    error?: string
+    className?: string
+    disabled?: boolean
+}
+interface SelectProps {
+    value?: string | number
+    onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void
+    rest?: any
+    label?: string
+    error?: string
+    options?: { value: string; label: string }[]
+    className?: string
+    disabled?: boolean
+}
+interface TextareaProps {
+    value?: string | number
+    placeholder?: string
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+    onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void
+    rest?: any
+    label?: string
+    error?: string
+    disabled?: boolean
+    className?: string
 }
 // \ End of Components
 
