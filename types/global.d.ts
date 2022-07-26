@@ -77,8 +77,8 @@ interface ProviderContextProviderProps
             | "dataGetter"
             | "paginationGetter"
         > {
-    onError?: (callback_code: import("./src/constants/common").CALLBACK_CODES, code: string, message: string) => void
-    onSuccess?: (callback_code: import("./src/constants/common").CALLBACK_CODES, code: string, message: string) => void
+    onError?: (callback_code: import("../src/constants/common").CALLBACK_CODES, code: string, message: string) => void
+    onSuccess?: (callback_code: import("../src/constants/common").CALLBACK_CODES, code: string, message: string) => void
     onLogout?: () => void
     dataGetter?: (response: any) => any[]
     paginationGetter?: (response: any) => any
@@ -157,8 +157,8 @@ interface ProviderContextType {
     setSelectedMaster: (data: any) => void
     dataGetter: (response: any) => any[]
     paginationGetter: (response: any) => any
-    onError: (callback_code: import("./src/constants/common").CALLBACK_CODES, code: string, message: string) => void
-    onSuccess: (callback_code: import("./src/constants/common").CALLBACK_CODES, code: string, message: string) => void
+    onError: (callback_code: import("../src/constants/common").CALLBACK_CODES, code: string, message: string) => void
+    onSuccess: (callback_code: import("../src/constants/common").CALLBACK_CODES, code: string, message: string) => void
     onLogout: () => void
 }
 interface MasterContextType {

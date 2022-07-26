@@ -113,6 +113,7 @@ describe("Testing MasterTable Component", () => {
         await waitFor(() => {
             expect(screen.getByTestId("table")).toBeTruthy()
         })
+        await new Promise((r) => setTimeout(r, 100))
         // Test switches and actions count
         let switches = container.getElementsByClassName("kms_switch")
         expect(switches.length).toBe(docs.length)
@@ -140,6 +141,7 @@ describe("Testing MasterTable Component", () => {
         await waitFor(() => {
             expect(screen.getByTestId("table")).toBeTruthy()
         })
+        await new Promise((r) => setTimeout(r, 100))
         let toggleSwitch: HTMLInputElement | null = container.querySelector(".kms_switch input")
         expect(toggleSwitch!.checked).toBeTruthy()
         fireEvent.click(toggleSwitch!)
@@ -161,6 +163,7 @@ describe("Testing MasterTable Component", () => {
         await waitFor(() => {
             expect(screen.getByTestId("table")).toBeTruthy()
         })
+        await new Promise((r) => setTimeout(r, 100))
 
         // By default first Record Name should be existed in DOM
         expect(screen.queryByText("John")).toBeTruthy()
@@ -229,6 +232,7 @@ describe("Testing MasterTable Component", () => {
         await waitFor(() => {
             expect(screen.getByTestId("table")).toBeTruthy()
         })
+        await new Promise((r) => setTimeout(r, 100))
         // check first row contains data returned by custom API
         expect(container.querySelector("td")?.innerHTML).toBe("Milan")
     })
@@ -247,6 +251,7 @@ describe("Testing MasterTable Component", () => {
         await waitFor(() => {
             expect(screen.getByTestId("table")).toBeTruthy()
         })
+        await new Promise((r) => setTimeout(r, 100))
         // Check all data are in tbody
         expect(container.querySelectorAll(".kms_tbody > tr").length).toBe(docs.length)
 
