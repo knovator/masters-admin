@@ -53,12 +53,6 @@ const DNDTable = ({
     const handleDragEnd = (results: DropResult) => {
         if (!results.destination || !onMove) return
         onMove(results.source.index, results.destination.index)
-        // const temporaryData = [...data]
-        // const [selectedRow] = temporaryData.splice(results.source.index, 1)
-        // const [row] = data.splice(results.destination.index, 1)
-        // const seq = results.destination.index + 1
-        // temporaryData.splice(results.destination.index, 0, selectedRow)
-        // if (typeof onMove === "function") onMove(selectedRow.id || selectedRow._id, seq)
     }
     const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } = useTable({
         // @ts-ignore

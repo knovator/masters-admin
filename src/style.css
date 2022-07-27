@@ -20,7 +20,7 @@
         @apply w-full text-sm;
     }
     .kms_thead {
-        @apply bg-slate-200;
+        @apply bg-slate-200 z-10;
     }
     .kms_thead th {
         @apply px-4 py-3 text-left;
@@ -219,7 +219,7 @@
 
     /* Modal */
     .kms_modal-wrapper-1 {
-        @apply fixed inset-0 z-10 overflow-y-auto;
+        @apply fixed inset-0 z-20 overflow-y-auto;
     }
     .kms_modal-wrapper-2 {
         @apply flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0 relative;
@@ -249,6 +249,27 @@
         @apply p-4;
     }
     /* \ End of Modal */
+
+    /* Delete Modal */
+    .kms_delete-header {
+        @apply py-2 px-4 rounded-lg flex items-center gap-3 text-black text-sm bg-red-200;
+    }
+    .kms_delete-content {
+        @apply mt-3 text-black text-sm;
+    }
+    .kms_delete-note {
+        @apply mt-3;
+    }
+    .kms_delete-actions {
+        @apply mt-3 flex flex-row gap-3;
+    }
+    .kms_delete-input {
+        @apply w-full flex-grow;
+    }
+    .kms_delete-buttons {
+        @apply col-span-3;
+    }
+    /* \ End of Delete Modal */
 
     /* Animations */
     .kms_drawer-enter {
