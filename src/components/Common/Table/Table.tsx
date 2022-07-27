@@ -59,7 +59,7 @@ const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, load
                                             {...column.getHeaderProps()}
                                             key={j}
                                             onClick={() => onClickSort(column.id)}
-                                            className="cursor-pointer hover:bg-opacity-50"
+                                            className="cursor-pointer"
                                         >
                                             {column.render("Header")}
                                             {sortConfigRenderer(column.id)}
@@ -69,8 +69,8 @@ const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, load
                             ))}
                         </thead>
                         <tbody className="kms_tbody" {...getTableBodyProps()}>
-                            {rows.length > 0
-                                ? rows.map((row, i) => {
+                            {rows.length > 0 ? (
+                                rows.map((row, i) => {
                                     prepareRow(row)
                                     return (
                                         <tr {...row.getRowProps()} key={i}>
@@ -81,11 +81,12 @@ const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, load
                                             ))}
                                         </tr>
                                     )
-                                }) 
-                                : (<tr>
+                                })
+                            ) : (
+                                <tr>
                                     <td colSpan={columns?.length || 0}>No data found</td>
-                                </tr>)
-                            }
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                 )}

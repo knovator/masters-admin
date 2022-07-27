@@ -309,7 +309,10 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
         getSubMastersList("", status)
     }
     useEffect(() => {
-        if (selectedMaster) getSubMastersList()
+        if (selectedMaster) {
+            setSequencing(false)
+            getSubMastersList()
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pageSize, currentPage, selectedMaster])
 
