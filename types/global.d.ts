@@ -110,7 +110,8 @@ interface TableProps {
     sortable?: boolean
     sortConfig?: SortConfigType
     setSortConfig?: (data: SortConfigType) => void
-    onMove?: (id: string, seq: number) => void
+    onMove?: (sourceIndex: number, destinationIndex: number) => void
+    dragEnable?: boolean
 }
 
 interface TableActionTypes {
@@ -226,7 +227,10 @@ interface SubMasterContextType {
     canDelete?: boolean
     canPartialUpdate?: boolean
     getSubMastersList: (search?: string) => Promise<void>
-    onChangeSequence: (id: string, seq: number) => Promise<void>
+    onChangeSequence: (sourceIndex: number, destinationIndex: number) => Promise<void>
+    sequencing: boolean
+    setSequencing: (status: boolean) => void
+    onConfirmSequence: () => void
 }
 type onDelete = ({ data, confirmDelete }: { data: any; confirmDelete: () => void }) => any
 // \ End of Context

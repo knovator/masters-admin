@@ -6,7 +6,7 @@ const apiList = {
     }),
     IMAGE_REMOVE: ({ id }: API_INPUT_TYPE) => ({
         url: `files/${id}/delete`,
-        method: 'DELETE'
+        method: "DELETE",
     }),
     LIST: ({ module }: API_INPUT_TYPE) => ({
         url: `admin/${module}/list`,
@@ -24,10 +24,10 @@ const apiList = {
         url: `admin/${module}/soft-delete`,
         method: "PUT",
     }),
-    SEQUENCE: ({ module, id }: API_INPUT_TYPE) => ({
-        url: `admin/${module}/partial-update/sequence/${id}`,
+    SEQUENCE: ({ module }: API_INPUT_TYPE) => ({
+        url: `admin/${module}/partial-update/sequence`,
         method: "PATCH",
-    })
+    }),
 }
 
 export default apiList

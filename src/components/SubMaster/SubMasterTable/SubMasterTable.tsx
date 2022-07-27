@@ -2,8 +2,11 @@ import React, { useCallback, useEffect, useState } from "react"
 import { useSubMasterState } from "../../../context/SubMasterContext"
 import { DNDTable } from "../../../components/Common"
 import DeleteIcon from "../../../icons/deleteIcon"
-import UpdateIcon from "../../../icons/updateIcon"
+import UpdateIcon, { UpdateSVG } from "../../../icons/updateIcon"
+import { CheckSVG } from "../../../icons/checkIcon"
+import { XSVG } from "../../../icons/xIcon"
 import MoveIcon from "../../../icons/moveIcon"
+import classNames from "classnames"
 
 const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
     const {
@@ -22,6 +25,9 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
         canPartialUpdate,
         onChangeSequence,
         t,
+        sequencing,
+        setSequencing,
+        onConfirmSequence,
     } = useSubMasterState()
     const [tableColumns, setTableColumns] = useState<ColumnsSchema>([])
 
@@ -35,15 +41,18 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
         },
         [canPartialUpdate, onUpdate],
     )
-
-    const updateSequence = useCallback(
-        (id: string, seq: number) => {
-            onChangeSequence(id, seq)
-        },
-        [onUpdate, setSortConfig],
-    )
+    const onUpdateSequenceClick = () => {
+        setSequencing(true)
+    }
+    const onCancelClick = () => {
+        setSequencing(false)
+    }
+    const updateSequence = useCallback((sourceIndex: number, destinationIndex: number) => {
+        onChangeSequence(sourceIndex, destinationIndex)
+    }, [])
 
     const verifyAndUpdateColumns = useCallback(() => {
+        let len = Array.isArray(data) ? data.length : 0
         let modifiedColumns = [...(columns ? columns : defaultColumns)]
 
         // Handling Table Actions
@@ -105,13 +114,47 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
             modifiedColumns.push({
                 id: "sequence",
                 accessor: "sequence",
-                Header: () => {
-                    return <div />
-                },
+                Header: () => (
+                    <div className="text-center">
+                        {sequencing ? (
+                            <>
+                                <button
+                                    className="kms_btn kms_btn-sm kms_text-success kms_sequence-action"
+                                    title="Save"
+                                    onClick={onConfirmSequence}
+                                >
+                                    <CheckSVG />
+                                </button>
+                                <button
+                                    className="kms_btn kms_btn-sm kms_text-cancel kms_sequence-action"
+                                    onClick={onCancelClick}
+                                    title="Cancel"
+                                >
+                                    <XSVG />
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <button
+                                    className="kms_btn kms_btn-sm kms_text-info kms_sequence-action"
+                                    title="Update Sequence"
+                                    onClick={onUpdateSequenceClick}
+                                    disabled={!(len > 0)}
+                                >
+                                    <UpdateSVG />
+                                </button>
+                            </>
+                        )}
+                    </div>
+                ),
                 Cell: () => (
-                    <div className="cursor-pointer">
-                        {" "}
-                        <MoveIcon />
+                    <div
+                        className={classNames("text-center cursor-pointer", {
+                            "cursor-move": sequencing,
+                            "cursor-not-allowed": !sequencing,
+                        })}
+                    >
+                        <MoveIcon className="inline-block" />
                     </div>
                 ),
             })
@@ -127,6 +170,7 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
         onChangeFormState,
         sortable,
         updateClosure,
+        data,
     ])
 
     useEffect(() => {
@@ -144,6 +188,7 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
                 loader={loader}
                 loading={loading}
                 onMove={updateSequence}
+                dragEnable={sequencing}
             />
         )
     }

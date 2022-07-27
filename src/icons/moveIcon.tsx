@@ -1,8 +1,16 @@
 import React from "react"
+import classNames from "classnames"
 
-const MoveIcon = () => {
+const MoveIcon = (properties: any) => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="8" viewBox="0 0 13 8" className="kms_actions-move">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="13"
+            height="8"
+            viewBox="0 0 13 8"
+            {...properties}
+            className={classNames("kms_actions-move", properties?.className || "")}
+        >
             <g id="move" transform="translate(-216.801 -202.823)">
                 <circle
                     id="Ellipse_689"

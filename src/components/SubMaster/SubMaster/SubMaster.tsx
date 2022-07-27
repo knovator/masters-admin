@@ -60,27 +60,32 @@ const SubMaster = ({
     const formRef = useRef<HTMLFormElement>(null)
     const {
         list,
+        getSubMastersList,
         loading,
         partialUpdate,
-        totalPages,
-        totalRecords,
-        currentPage,
-        setCurrentPage,
+        onChangeSequence,
+        sequencing,
+        setSequencing,
+        onConfirmSequence,
+        // Pagination
         pageSize,
+        totalPages,
+        currentPage,
+        totalRecords,
+        setCurrentPage,
         setPageSize,
+        // Sorting
         sortConfig,
         setSortConfig,
-        getSubMastersList,
         // Form
         formState,
         itemData,
         onChangeFormState,
         onCloseForm,
         onDataSubmit,
-        onChangeSequence,
         onCofirmDeleteMaster,
         onImageUpload,
-        onImageRemove
+        onImageRemove,
     } = useSubMaster({
         defaultLimit: Array.isArray(limits) && limits.length > 0 ? limits[0] : DEFAULT_LIMIT,
         routes,
@@ -114,6 +119,8 @@ const SubMaster = ({
                 limits={limits ? limits : PAGE_LIMITS}
                 canList={permissions?.list}
                 // Table
+                sequencing={sequencing}
+                setSequencing={setSequencing}
                 onUpdate={partialUpdate}
                 data={list}
                 sortable={sortable}
@@ -125,6 +132,7 @@ const SubMaster = ({
                 getSubMastersList={getSubMastersList}
                 canPartialUpdate={permissions?.partialUpdate}
                 onChangeSequence={onChangeSequence}
+                onConfirmSequence={onConfirmSequence}
             >
                 {children ? (
                     children
