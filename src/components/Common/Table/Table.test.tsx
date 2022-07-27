@@ -13,7 +13,7 @@ describe("Testing Table Component", () => {
         expect(thead).toBeDefined()
         expect(tbody).toBeDefined()
         expect(thead?.innerHTML).toBeFalsy()
-        expect(tbody?.innerHTML).toBeFalsy()
+        expect(tbody?.innerHTML).toBe(`<tr><td colspan="0">No data found</td></tr>`)
     })
     it("should show rows when passed column names and data", () => {
         const { container } = render(

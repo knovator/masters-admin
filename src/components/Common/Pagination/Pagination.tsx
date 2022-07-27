@@ -36,7 +36,6 @@ const Pagination = ({
             </div>
             <div className="kms_pagination-actions">
                 <Button
-                    size="sm"
                     label={previousLabel}
                     onClick={() => setCurrentPage(currentPage - 1)}
                     disabled={currentPage - 1 === 0}
@@ -69,7 +68,6 @@ const Pagination = ({
                     </select>
                 ) : null}
                 <Button
-                    size="sm"
                     label={nextLabel}
                     onClick={() => setCurrentPage(currentPage + 1)}
                     disabled={currentPage === totalPages}

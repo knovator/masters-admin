@@ -8,7 +8,9 @@
         @apply flex items-center gap-3;
     }
     .kms_actions-update,
-    .kms_actions-delete {
+    .kms_actions-delete,
+    .kms_actions-check,
+    .kms_actions-x {
         @apply cursor-pointer;
     }
     .kms_table-container {
@@ -18,7 +20,7 @@
         @apply w-full text-sm;
     }
     .kms_thead {
-        @apply bg-slate-200;
+        @apply bg-slate-200 z-10;
     }
     .kms_thead th {
         @apply px-4 py-3 text-left;
@@ -43,7 +45,7 @@
 
     /* Pagination */
     .kms_pagination {
-        @apply flex justify-between items-center px-4 py-3;
+        @apply flex flex-col justify-center md:flex-row md:justify-between items-center px-4 py-3;
     }
     .kms_pagination-actions {
         @apply flex items-center justify-center gap-2;
@@ -62,6 +64,15 @@
     }
     .kms_btn-primary {
         @apply bg-blue-600 text-white hover:bg-blue-500 ring-blue-400;
+    }
+    .kms_btn-info {
+        @apply bg-cyan-600 text-white hover:bg-cyan-500 ring-cyan-400;
+    }
+    .kms_btn-success {
+        @apply bg-green-600 text-white hover:bg-green-500 ring-green-400;
+    }
+    .kms_btn-cancel {
+        @apply bg-gray-600 text-white hover:bg-gray-500 ring-gray-400;
     }
     .kms_btn-primary:disabled {
         @apply bg-blue-500;
@@ -208,7 +219,7 @@
 
     /* Modal */
     .kms_modal-wrapper-1 {
-        @apply fixed inset-0 z-10 overflow-y-auto;
+        @apply fixed inset-0 z-20 overflow-y-auto;
     }
     .kms_modal-wrapper-2 {
         @apply flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0 relative;
@@ -238,6 +249,27 @@
         @apply p-4;
     }
     /* \ End of Modal */
+
+    /* Delete Modal */
+    .kms_delete-header {
+        @apply py-2 px-4 rounded-lg flex items-center gap-3 text-black text-sm bg-red-200;
+    }
+    .kms_delete-content {
+        @apply mt-3 text-black text-sm;
+    }
+    .kms_delete-note {
+        @apply mt-3;
+    }
+    .kms_delete-actions {
+        @apply mt-3 flex flex-row gap-3;
+    }
+    .kms_delete-input {
+        @apply w-full flex-grow;
+    }
+    .kms_delete-buttons {
+        @apply col-span-3;
+    }
+    /* \ End of Delete Modal */
 
     /* Animations */
     .kms_drawer-enter {
@@ -327,4 +359,25 @@
         @apply p-3 border border-white mt-6 rounded-lg cursor-pointer;
     }
     /* \End of Image Upload */
+
+    /* Utility */
+    .kms_text-primary {
+        @apply text-blue-600;
+    }
+    .kms_text-info {
+        @apply text-blue-500;
+    }
+    .kms_text-success {
+        @apply text-green-600;
+    }
+    .kms_text-cancel {
+        @apply text-red-600;
+    }
+    .kms_sequence-action {
+        @apply py-0 px-2;
+    }
+    .kms_sequence-action:disabled {
+        @apply text-slate-400 cursor-not-allowed;
+    }
+    /* \End of Utility */
 }

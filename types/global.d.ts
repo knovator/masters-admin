@@ -77,8 +77,8 @@ interface ProviderContextProviderProps
             | "dataGetter"
             | "paginationGetter"
         > {
-    onError?: (callback_code: import("./src/constants/common").CALLBACK_CODES, code: string, message: string) => void
-    onSuccess?: (callback_code: import("./src/constants/common").CALLBACK_CODES, code: string, message: string) => void
+    onError?: (callback_code: import("../src/constants/common").CALLBACK_CODES, code: string, message: string) => void
+    onSuccess?: (callback_code: import("../src/constants/common").CALLBACK_CODES, code: string, message: string) => void
     onLogout?: () => void
     dataGetter?: (response: any) => any[]
     paginationGetter?: (response: any) => any
@@ -110,7 +110,8 @@ interface TableProps {
     sortable?: boolean
     sortConfig?: SortConfigType
     setSortConfig?: (data: SortConfigType) => void
-    onMove?: (id: string, seq: number) => void
+    onMove?: (sourceIndex: number, destinationIndex: number) => void
+    dragEnable?: boolean
 }
 
 interface TableActionTypes {
@@ -157,8 +158,8 @@ interface ProviderContextType {
     setSelectedMaster: (data: any) => void
     dataGetter: (response: any) => any[]
     paginationGetter: (response: any) => any
-    onError: (callback_code: import("./src/constants/common").CALLBACK_CODES, code: string, message: string) => void
-    onSuccess: (callback_code: import("./src/constants/common").CALLBACK_CODES, code: string, message: string) => void
+    onError: (callback_code: import("../src/constants/common").CALLBACK_CODES, code: string, message: string) => void
+    onSuccess: (callback_code: import("../src/constants/common").CALLBACK_CODES, code: string, message: string) => void
     onLogout: () => void
 }
 interface MasterContextType {
@@ -226,7 +227,10 @@ interface SubMasterContextType {
     canDelete?: boolean
     canPartialUpdate?: boolean
     getSubMastersList: (search?: string) => Promise<void>
-    onChangeSequence: (id: string, seq: number) => Promise<void>
+    onChangeSequence: (sourceIndex: number, destinationIndex: number) => Promise<void>
+    sequencing: boolean
+    setSequencing: (status: boolean) => void
+    onConfirmSequence: () => void
 }
 type onDelete = ({ data, confirmDelete }: { data: any; confirmDelete: () => void }) => any
 // \ End of Context
