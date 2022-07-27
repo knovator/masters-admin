@@ -38,17 +38,17 @@ const DNDTable = ({
                 </div>
             )
         },
-        [getSortConfigClassName, sortable],
+        [getSortConfigClassName, sortable, dragEnable],
     )
     const onClickSort = useCallback(
         (id: string) => {
-            if (setSortConfig && !EXCLUDE_SORT_COLUMNS.includes(String(id).toLocaleLowerCase())) {
+            if (setSortConfig && !EXCLUDE_SORT_COLUMNS.includes(String(id).toLocaleLowerCase()) && !dragEnable) {
                 if (sortConfig && id === sortConfig[0])
                     setSortConfig([id, sortConfig[1] === SORT_ASCENDING ? SORT_DESCENDING : SORT_ASCENDING])
                 else setSortConfig([id, SORT_ASCENDING])
             }
         },
-        [setSortConfig, sortConfig],
+        [setSortConfig, sortConfig, dragEnable],
     )
     const handleDragEnd = (results: DropResult) => {
         if (!results.destination || !onMove) return
@@ -76,7 +76,7 @@ const DNDTable = ({
                                                 {...column.getHeaderProps()}
                                                 key={j}
                                                 onClick={() => onClickSort(column.id)}
-                                                className="cursor-pointer hover:bg-opacity-50"
+                                                className="cursor-pointer"
                                             >
                                                 {column.render("Header")}
                                                 {sortConfigRenderer(column.id)}

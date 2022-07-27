@@ -20,10 +20,10 @@
         @apply w-full text-sm;
     }
     .kms_thead {
-        @apply bg-slate-200 z-10;
+        @apply bg-slate-200;
     }
     .kms_thead th {
-        @apply px-4 py-3 text-left;
+        @apply px-4 py-3 text-left z-10;
     }
     .kms_tbody td {
         @apply px-4 py-3;
