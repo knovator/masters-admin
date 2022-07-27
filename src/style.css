@@ -45,7 +45,7 @@
 
     /* Pagination */
     .kms_pagination {
-        @apply flex justify-between items-center px-4 py-3;
+        @apply flex flex-col justify-center md:flex-row md:justify-between items-center px-4 py-3;
     }
     .kms_pagination-actions {
         @apply flex items-center justify-center gap-2;
