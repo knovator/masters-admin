@@ -12,11 +12,12 @@ interface UseMasterProps {
     preConfirmDelete?: (data: { row: any }) => Promise<boolean>
 }
 
-const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmDelete }: UseMasterProps) => {
+const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmDelete }: UseMasterProps) => {
     const [list, setList] = useState<any[]>([])
     const [loading, setLoading] = useState(false)
     const [totalPages, setTotalPages] = useState(0)
     const [totalRecords, setTotalRecords] = useState(0)
+    const [sequencing, setSequencing] = useState(false)
     const [itemData, setItemData] = useState<any | null>(null)
     const [formState, setFormState] = useState<FormActionTypes>()
 
@@ -34,7 +35,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
         onError(code, "error", data?.message)
     }
     const getSubMastersList = useCallback(
-        async (search?: string) => {
+        async (search?: string, all: boolean = false) => {
             try {
                 let sortConfig = sortConfigRef.current
                 setLoading(true)
@@ -60,6 +61,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
                             pagination: true,
                             populate: ["img"],
                         },
+                        all,
                     },
                 })
                 if (response?.code === "SUCCESS") {
@@ -205,11 +207,34 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
         setItemData(data || null)
         setFormState(state)
     }
-    const onChangeSequence = async (id: string, seq: number) => {
+    const onChangeSequence = async (sourceIndex: number, destinationIndex: number) => {
         try {
-            let api = getApiType({ routes, action: "SEQUENCE", module: "masters", id })
+            setList((listData) => {
+                let temporaryData = [...listData]
+                const [selectedRow] = temporaryData.splice(sourceIndex, 1)
+                temporaryData.splice(destinationIndex, 0, selectedRow)
+                temporaryData = temporaryData.map((item, index) => {
+                    return {
+                        ...item,
+                        seq: index + 1,
+                    }
+                })
+                return temporaryData
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const onConfirmSequence = async () => {
+        try {
+            let api = getApiType({ routes, action: "SEQUENCE", module: "masters" })
+            let sequences = list.map((item) => ({
+                id: item.id || item._id,
+                seq: item.seq,
+            }))
+            setLoading(true)
             let response = await request({
-                data: { seq },
+                data: { sequences },
                 baseUrl,
                 token,
                 method: api.method,
@@ -219,12 +244,16 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
             if (response?.code === "SUCCESS") {
                 onSuccess(CALLBACK_CODES.SEQUENCE_UPDATE, response.code, response.message)
                 sortConfigRef.current = ["seq", 1]
+                setSequencing(false)
                 getSubMastersList()
+                setLoading(false)
             } else {
                 onError(CALLBACK_CODES.SEQUENCE_UPDATE, response.code, response.message)
+                setLoading(false)
             }
         } catch (error) {
             onError(CALLBACK_CODES.SEQUENCE_UPDATE, INTERNAL_ERROR_CODE, (error as Error).message)
+            setLoading(false)
         }
     }
     const onImageUpload = async (file: File): Promise<{ fileUrl: string; fileId: string } | void> => {
@@ -245,13 +274,12 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
                 onError: handleError(CALLBACK_CODES.IMAGE_UPLOAD),
             })
             if (response.code === "SUCCESS") {
-                let responseData = response?.data[0] || response?.data;
+                let responseData = response?.data[0] || response?.data
                 return {
                     fileId: responseData?._id || responseData?.id,
                     fileUrl: build_path(baseUrl, responseData?.uri),
                 }
-            } else 
-                onError(CALLBACK_CODES.IMAGE_REMOVE, response.code, response.message)
+            } else onError(CALLBACK_CODES.IMAGE_REMOVE, response.code, response.message)
         } catch (error) {
             onError(CALLBACK_CODES.IMAGE_REMOVE, INTERNAL_ERROR_CODE, (error as Error).message)
         }
@@ -275,6 +303,11 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
             onError(CALLBACK_CODES.IMAGE_REMOVE, INTERNAL_ERROR_CODE, (error as Error).message)
         }
     }
+    const onSequenceToggle = (status: boolean): void => {
+        setSequencing(status)
+        sortConfigRef.current = ["seq", 1]
+        getSubMastersList("", status)
+    }
     useEffect(() => {
         if (selectedMaster) getSubMastersList()
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -287,6 +320,9 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
         setLoading,
         partialUpdate,
         onChangeSequence,
+        sequencing,
+        setSequencing: onSequenceToggle,
+        onConfirmSequence,
 
         // Pagination
         pageSize,
@@ -308,8 +344,8 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmD
         onDataSubmit,
         onCofirmDeleteMaster,
         onImageUpload,
-        onImageRemove
+        onImageRemove,
     }
 }
 
-export default useMaster
+export default useSubMaster

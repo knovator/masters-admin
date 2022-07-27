@@ -12,21 +12,23 @@ const DNDTable = ({
     loader,
     loading,
     onMove,
+    dragEnable = false,
 }: TableProps) => {
     const getSortConfigClassName = useCallback(
         (accessor: string, up = true) => {
-            if (!sortConfig || accessor !== sortConfig[0]) return "kms_sort-inactive"
+            if (!sortConfig || accessor !== sortConfig[0] || dragEnable) return "kms_sort-inactive"
             else {
                 if (up && sortConfig[1] === SORT_ASCENDING) return ""
                 else if (!up && sortConfig[1] === SORT_DESCENDING) return ""
                 else return "kms_sort-inactive"
             }
         },
-        [sortConfig],
+        [sortConfig, dragEnable],
     )
     const sortConfigRenderer = useCallback(
         (accessor: string) => {
-            if (!sortable || EXCLUDE_SORT_COLUMNS.includes(String(accessor).toLocaleLowerCase())) return null
+            if (!sortable || EXCLUDE_SORT_COLUMNS.includes(String(accessor).toLocaleLowerCase()) || dragEnable)
+                return null
             return (
                 <div className="kms_sort-wrapper">
                     <span data-testid className={getSortConfigClassName(accessor, true)}>
@@ -49,13 +51,8 @@ const DNDTable = ({
         [setSortConfig, sortConfig],
     )
     const handleDragEnd = (results: DropResult) => {
-        if (!results.destination) return
-        const temporaryData = [...data]
-        const [selectedRow] = temporaryData.splice(results.source.index, 1)
-        // const [row] = data.splice(results.destination.index, 1)
-        const seq = results.destination.index + 1
-        // temporaryData.splice(results.destination.index, 0, selectedRow)
-        if (typeof onMove === "function") onMove(selectedRow.id || selectedRow._id, seq)
+        if (!results.destination || !onMove) return
+        onMove(results.source.index, results.destination.index)
     }
     const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } = useTable({
         // @ts-ignore
@@ -96,8 +93,8 @@ const DNDTable = ({
                                         {...getTableBodyProps()}
                                         {...provided.droppableProps}
                                     >
-                                        {rows.length > 0
-                                            ? rows.map((row, i) => {
+                                        {rows.length > 0 ? (
+                                            rows.map((row, i) => {
                                                 prepareRow(row)
                                                 return (
                                                     // @ts-ignore
@@ -105,6 +102,7 @@ const DNDTable = ({
                                                         draggableId={row.original.id || row.original._id || row.id}
                                                         key={row.original.id || row.original._id}
                                                         index={i}
+                                                        isDragDisabled={!dragEnable}
                                                     >
                                                         {(provided) => (
                                                             <tr
@@ -128,10 +126,11 @@ const DNDTable = ({
                                                     </Draggable>
                                                 )
                                             })
-                                            : (<tr>
+                                        ) : (
+                                            <tr>
                                                 <td colSpan={columns?.length || 0}>No data found</td>
-                                            </tr>)
-                                        }
+                                            </tr>
+                                        )}
                                     </tbody>
                                 )}
                             </Droppable>

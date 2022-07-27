@@ -32,25 +32,25 @@ const DeleteModal = ({
     }, [formState])
     return (
         <Modal open={formState === "DELETE"} onClose={onClose} title="Confirmation Required">
-            <div className="py-2 px-4 rounded-lg flex items-center gap-3 text-black text-sm bg-red-200">
+            <div className="kms_delete-header">
                 <p>
                     {permanentlyDelete} <b>{itemData?.name}</b>
                 </p>
             </div>
-            <div className="mt-3 text-black text-sm">
+            <div className="kms_delete-content">
                 <p>{lossOfData}</p>
-                <p className="mt-3">
+                <p className="kms_delete-note">
                     {pleaseType} <b className="text-black font-bold">{itemData?.name}</b> {toProceedOrCancel}
                 </p>
             </div>
-            <div className="mt-3 flex flex-row gap-3">
+            <div className="kms_delete-actions">
                 <Input
                     placeholder="Type Here"
-                    className="w-full flex-grow"
+                    className="kms_delete-input"
                     value={userInput}
                     onChange={(e) => setUserInput(e.target.value)}
                 />
-                <div className="col-span-3">
+                <div className="kms_delete-buttons">
                     <Button label={confirm} disabled={userInput !== itemData?.name} onClick={onConfirmDelete} />
                 </div>
             </div>

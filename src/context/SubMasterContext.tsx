@@ -45,6 +45,9 @@ const SubMasterContextProvider = ({
     canPartialUpdate = false,
     loader = undefined,
     onChangeSequence = () => Promise.resolve(),
+    sequencing = false,
+    setSequencing = () => {},
+    onConfirmSequence = () => {},
     // other
     children,
 }: SubMasterContextProviderProps) => {
@@ -63,6 +66,8 @@ const SubMasterContextProvider = ({
                 canUpdate,
                 onImageUpload,
                 onImageRemove,
+                sequencing,
+                setSequencing,
                 // Pagination
                 currentPage,
                 limits,
@@ -84,6 +89,7 @@ const SubMasterContextProvider = ({
                 canPartialUpdate,
                 loader,
                 onChangeSequence,
+                onConfirmSequence,
             }}
         >
             {children}
