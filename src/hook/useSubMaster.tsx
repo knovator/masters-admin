@@ -145,14 +145,8 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
                 onSuccess(code, response?.code, response?.message)
                 getSubMastersList()
                 onCloseForm()
-            } else {
-                setLoading(false)
-                onError(code, response?.code, response?.message)
             }
-        } catch (error) {
-            setLoading(false)
-            onError(code, INTERNAL_ERROR_CODE, (error as Error).message)
-        }
+        } catch (error) {}
     }
     const onCloseForm = () => {
         setFormState(undefined)
