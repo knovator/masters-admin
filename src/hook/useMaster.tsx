@@ -131,14 +131,8 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
                 onSuccess(code, response?.code, response?.message)
                 getMastersList()
                 onCloseForm()
-            } else {
-                setLoading(false)
-                onError(code, response?.code, response?.message)
             }
-        } catch (error) {
-            setLoading(false)
-            onError(code, INTERNAL_ERROR_CODE, (error as Error).message)
-        }
+        } catch (error) {}
     }
     const onCloseForm = () => {
         setFormState(undefined)
