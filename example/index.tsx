@@ -13,7 +13,7 @@ const App = () => {
                 <h2>Sub-Master</h2>
                 <Master>
                     <Master.Lister />
-                    <SubMaster>
+                    <SubMaster limits={[1, 2, 3, 4, 5]}>
                         <SubMaster.Search />
                         <SubMaster.AddButton />
                         <SubMaster.Table />

@@ -308,7 +308,18 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
             getSubMastersList()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pageSize, currentPage, selectedMaster])
+    }, [pageSize, currentPage])
+
+    useEffect(() => {
+        if (selectedMaster) {
+            if (currentPage === 1) {
+                setSequencing(false)
+                getSubMastersList()
+            } else {
+                setCurrentPage(1)
+            }
+        }
+    }, [selectedMaster])
 
     return {
         list,
