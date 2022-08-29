@@ -177,7 +177,7 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
                     url: api.url,
                     onError: handleError(CALLBACK_CODES.DELETE),
                     data: {
-                        id: [itemData?.id],
+                        id: itemData?.id,
                     },
                 })
                 if (response?.code === "SUCCESS") {

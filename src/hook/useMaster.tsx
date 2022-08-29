@@ -163,7 +163,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
                     url: api.url,
                     onError: handleError(CALLBACK_CODES.DELETE),
                     data: {
-                        id: [itemData?.id],
+                        id: itemData?.id,
                     },
                 })
                 if (response?.code === "SUCCESS") {
