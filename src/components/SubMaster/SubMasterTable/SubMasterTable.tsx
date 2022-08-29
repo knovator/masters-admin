@@ -35,7 +35,7 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
         (item: any, key: string) => {
             return function (value: string) {
                 if (onUpdate && canPartialUpdate) {
-                    onUpdate(item.id, { [key]: value })
+                    onUpdate(item._id, { [key]: value })
                 }
             }
         },

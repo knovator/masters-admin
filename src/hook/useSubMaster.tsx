@@ -107,7 +107,7 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
                 })
                 if (response?.code === "SUCCESS") {
                     onSuccess(CALLBACK_CODES.UPDATE, response.code, response.message)
-                    getSubMastersList()
+                    setList((oldList) => oldList.map((item) => (item._id === id ? { ...item, ...data } : item)))
                 } else {
                     onError(CALLBACK_CODES.UPDATE, response.code, response.message)
                 }
@@ -146,7 +146,9 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
                 getSubMastersList()
                 onCloseForm()
             }
-        } catch (error) {}
+        } catch (error) {
+            setLoading(false)
+        }
     }
     const onCloseForm = () => {
         setFormState(undefined)
