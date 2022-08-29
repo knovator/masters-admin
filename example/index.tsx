@@ -10,32 +10,16 @@ const App = () => {
                 baseUrl="http://localhost:8080"
                 token="ABCD" // token={getToken()}
             >
-                {/* <h2>Master</h2>
-                <Master
-                    explicitForm
-                    permissions={{ add: false, list: true, update: true, destroy: true }}
-                    limits={[1, 2, 3]}
-                >
-                    <Master.Search />
-                    <Master.AddButton />
-                    <Master.Table />
-                    <Master.Pagination />
-
-                </Master> */}
-                    {/* <Master.FormWrapper>
-						{(data) => (
-							data.open ? <p onClick={data.onClose}>Drawer</p> : null
-						)}
-					</Master.FormWrapper> */}
-
-				<h2>Sub-Master</h2>
-				<Master>
-					<Master.Lister />
-					<SubMaster>
-						<SubMaster.Table />
+                <h2>Sub-Master</h2>
+                <Master>
+                    <Master.Lister />
+                    <SubMaster limits={[1, 2, 3, 4, 5]}>
+                        <SubMaster.Search />
+                        <SubMaster.AddButton />
+                        <SubMaster.Table />
                         <SubMaster.Pagination />
-					</SubMaster>
-				</Master>
+                    </SubMaster>
+                </Master>
             </Provider>
         </div>
     )

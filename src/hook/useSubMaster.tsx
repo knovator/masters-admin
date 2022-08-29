@@ -107,7 +107,7 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
                 })
                 if (response?.code === "SUCCESS") {
                     onSuccess(CALLBACK_CODES.UPDATE, response.code, response.message)
-                    getSubMastersList()
+                    setList((oldList) => oldList.map((item) => (item._id === id ? { ...item, ...data } : item)))
                 } else {
                     onError(CALLBACK_CODES.UPDATE, response.code, response.message)
                 }
@@ -146,7 +146,9 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
                 getSubMastersList()
                 onCloseForm()
             }
-        } catch (error) {}
+        } catch (error) {
+            setLoading(false)
+        }
     }
     const onCloseForm = () => {
         setFormState(undefined)
@@ -177,7 +179,7 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
                     url: api.url,
                     onError: handleError(CALLBACK_CODES.DELETE),
                     data: {
-                        id: [itemData?.id],
+                        id: itemData?.id,
                     },
                 })
                 if (response?.code === "SUCCESS") {
@@ -308,7 +310,18 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
             getSubMastersList()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pageSize, currentPage, selectedMaster])
+    }, [pageSize, currentPage])
+
+    useEffect(() => {
+        if (selectedMaster) {
+            if (currentPage === 1) {
+                setSequencing(false)
+                getSubMastersList()
+            } else {
+                setCurrentPage(1)
+            }
+        }
+    }, [selectedMaster])
 
     return {
         list,

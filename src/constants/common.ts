@@ -49,6 +49,8 @@ const TRANSLATION_PAIRS_SUBMASTERS = {
     searchSubMasters: "Search Sub Masters", // Search Placeholder
     addSubMaster: "Add Sub Master", // Add Button, Sidebar Title
     updateSubMaster: "Edit Sub Master", // Edit Button, Sidebar Title
+    "submaster:noDataText": "No data found! Click on 'Add Sub Master' to add one.", // No Data Text
+    "submaster:selectMaster": "select 'Master' to see respective 'SubMasters'", // Select Master Message
 }
 
 const TRANSLATION_PAIRS_MASTERS = {
@@ -66,6 +68,7 @@ const TRANSLATION_PAIRS_MASTERS = {
     description: "Discription", // Form,
     enterDiscription: "Enter Description", // Description Placeholder
     active: "Active",
+    "master:noDataText": "No data found! Click on 'Add Master' to add one.", // No Data Text
 }
 
 const TRANSLATION_PAIRS_COMMON = {

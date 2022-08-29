@@ -21,7 +21,7 @@ const apiList = {
         method: "PUT",
     }),
     DELETE: ({ module }: API_INPUT_TYPE) => ({
-        url: `admin/${module}/soft-delete`,
+        url: `admin/${module}/delete`,
         method: "PUT",
     }),
     SEQUENCE: ({ module }: API_INPUT_TYPE) => ({
