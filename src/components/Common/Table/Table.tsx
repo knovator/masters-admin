@@ -2,7 +2,16 @@ import React, { useCallback } from "react"
 import { useTable } from "react-table"
 import { EXCLUDE_SORT_COLUMNS, SORT_ASCENDING, SORT_DESCENDING } from "../../../constants/common"
 
-const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, loader, loading }: TableProps) => {
+const Table = ({
+    data,
+    columns,
+    sortConfig,
+    sortable = true,
+    setSortConfig,
+    loader,
+    loading,
+    noDataText = "No data found",
+}: TableProps) => {
     const getSortConfigClassName = useCallback(
         (accessor: string, up = true) => {
             if (!sortConfig || accessor !== sortConfig[0]) return "kms_sort-inactive"
@@ -84,7 +93,7 @@ const Table = ({ data, columns, sortConfig, sortable = true, setSortConfig, load
                                 })
                             ) : (
                                 <tr>
-                                    <td colSpan={columns?.length || 0}>No data found</td>
+                                    <td colSpan={columns?.length || 0}>{noDataText}</td>
                                 </tr>
                             )}
                         </tbody>

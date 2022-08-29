@@ -109,6 +109,7 @@ const MasterTable = ({ columns, actions }: TableWrapperProps) => {
                 setSortConfig={setSortConfig}
                 loader={loader}
                 loading={loading}
+                noDataText={t("master:noDataText")}
             />
         )
     }
