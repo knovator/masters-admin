@@ -1,14 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react"
-import { useSubMasterState } from "../../../context/SubMasterContext"
-import { DNDTable } from "../../../components/Common"
-import DeleteIcon from "../../../icons/deleteIcon"
-import UpdateIcon, { UpdateSVG } from "../../../icons/updateIcon"
-import { CheckSVG } from "../../../icons/checkIcon"
+import classNames from "classnames"
 import { XSVG } from "../../../icons/xIcon"
 import MoveIcon from "../../../icons/moveIcon"
-import classNames from "classnames"
+import DeleteIcon from "../../../icons/deleteIcon"
+import { CheckSVG } from "../../../icons/checkIcon"
+import { DNDTable } from "../../../components/Common"
+import UpdateIcon, { UpdateSVG } from "../../../icons/updateIcon"
+
+import { useProviderState } from "../../../context/ProviderContext"
+import { useSubMasterState } from "../../../context/SubMasterContext"
 
 const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
+    const { selectedMaster } = useProviderState()
     const {
         onUpdate,
         sortable,
@@ -35,7 +38,7 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
         (item: any, key: string) => {
             return function (value: string) {
                 if (onUpdate && canPartialUpdate) {
-                    onUpdate(item.id, { [key]: value })
+                    onUpdate(item._id, { [key]: value })
                 }
             }
         },
@@ -189,6 +192,7 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
                 loading={loading}
                 onMove={updateSequence}
                 dragEnable={sequencing}
+                noDataText={selectedMaster ? t("submaster:noDataText") : t("submaster:selectMaster")}
             />
         )
     }

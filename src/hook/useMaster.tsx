@@ -98,7 +98,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
                 })
                 if (response?.code === "SUCCESS") {
                     onSuccess(CALLBACK_CODES.UPDATE, response.code, response.message)
-                    getMastersList()
+                    setList((oldList) => oldList.map((item) => (item._id === id ? { ...item, ...data } : item)))
                 } else {
                     onError(CALLBACK_CODES.UPDATE, response.code, response.message)
                 }
@@ -132,7 +132,9 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
                 getMastersList()
                 onCloseForm()
             }
-        } catch (error) {}
+        } catch (error) {
+            setLoading(false)
+        }
     }
     const onCloseForm = () => {
         setFormState(undefined)
@@ -163,7 +165,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
                     url: api.url,
                     onError: handleError(CALLBACK_CODES.DELETE),
                     data: {
-                        id: [itemData?.id],
+                        id: itemData?.id,
                     },
                 })
                 if (response?.code === "SUCCESS") {

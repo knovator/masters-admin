@@ -13,6 +13,7 @@ const DNDTable = ({
     loading,
     onMove,
     dragEnable = false,
+    noDataText = "No data found",
 }: TableProps) => {
     const getSortConfigClassName = useCallback(
         (accessor: string, up = true) => {
@@ -128,7 +129,7 @@ const DNDTable = ({
                                             })
                                         ) : (
                                             <tr>
-                                                <td colSpan={columns?.length || 0}>No data found</td>
+                                                <td colSpan={columns?.length || 0}>{noDataText}</td>
                                             </tr>
                                         )}
                                     </tbody>

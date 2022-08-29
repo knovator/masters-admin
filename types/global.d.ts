@@ -112,6 +112,7 @@ interface TableProps {
     setSortConfig?: (data: SortConfigType) => void
     onMove?: (sourceIndex: number, destinationIndex: number) => void
     dragEnable?: boolean
+    noDataText?: string
 }
 
 interface TableActionTypes {

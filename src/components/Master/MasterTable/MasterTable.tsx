@@ -27,7 +27,7 @@ const MasterTable = ({ columns, actions }: TableWrapperProps) => {
         (item: any, key: string) => {
             return function (value: string) {
                 if (onUpdate && canPartialUpdate) {
-                    onUpdate(item.id, { [key]: value })
+                    onUpdate(item._id, { [key]: value })
                 }
             }
         },
@@ -109,6 +109,7 @@ const MasterTable = ({ columns, actions }: TableWrapperProps) => {
                 setSortConfig={setSortConfig}
                 loader={loader}
                 loading={loading}
+                noDataText={t("master:noDataText")}
             />
         )
     }
