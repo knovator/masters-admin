@@ -76,12 +76,14 @@ interface ProviderContextProviderProps
             | "setSelectedMaster"
             | "dataGetter"
             | "paginationGetter"
+            | "switchClass"
         > {
     onError?: (callback_code: import("../src/constants/common").CALLBACK_CODES, code: string, message: string) => void
     onSuccess?: (callback_code: import("../src/constants/common").CALLBACK_CODES, code: string, message: string) => void
     onLogout?: () => void
     dataGetter?: (response: any) => any[]
     paginationGetter?: (response: any) => any
+    switchClass?: string
 }
 
 interface TableWrapperProps {
@@ -156,6 +158,7 @@ interface ProviderContextType {
     baseUrl: string
     token: string | (() => Promise<string>)
     selectedMaster: any
+    switchClass: string
     setSelectedMaster: (data: any) => void
     dataGetter: (response: any) => any[]
     paginationGetter: (response: any) => any
@@ -294,6 +297,7 @@ interface MasterProps extends React.PropsWithChildren {
     permissions?: PermissionsObj
     t?: (key: string) => string
     preConfirmDelete?: (data: { row: any }) => Promise<boolean>
+    switchClass?: string
 }
 interface ImageObjectProps {
     _id: string

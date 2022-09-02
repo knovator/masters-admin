@@ -34,6 +34,7 @@ const SubMaster = ({
     explicitForm,
     t,
 }: SubMasterProps) => {
+    const { switchClass } = useProviderState()
     const derivedT = createTranslation(t, { ...TRANSLATION_PAIRS_SUBMASTERS, ...TRANSLATION_PAIRS_COMMON })
     const columns = [
         {
@@ -52,7 +53,7 @@ const SubMaster = ({
             Header: derivedT("active"),
             accessor: "isActive",
             Cell({ row, onUpdate }: any) {
-                return <ToggleBtn isChecked={row.isActive} onChange={onUpdate} />
+                return <ToggleBtn isChecked={row.isActive} onChange={onUpdate} switchClass={switchClass} />
             },
         },
     ]

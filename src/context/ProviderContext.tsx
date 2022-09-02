@@ -11,6 +11,7 @@ const Provider = ({
     onError = () => {},
     onSuccess = () => {},
     onLogout = () => {},
+    switchClass = "kms_switch",
 }: ProviderContextProviderProps) => {
     const [selectedMaster, setSelectedMaster] = useState()
     let ctxDataGetter = typeof dataGetter === "function" ? dataGetter : (response: any) => response?.data?.docs
@@ -28,6 +29,7 @@ const Provider = ({
                 onLogout,
                 selectedMaster,
                 setSelectedMaster,
+                switchClass,
             }}
         >
             {children}
