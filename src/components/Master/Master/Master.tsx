@@ -21,6 +21,7 @@ import MasterFormActions from "../MasterFormActions"
 import MasterFormWrapper from "../MasterFormWrapper"
 import MasterPagination from "../MasterPagination"
 import MasterSearch from "../MasterSearch"
+import { useProviderState } from "../../../context/ProviderContext"
 
 const Master = ({
     sortable = true,
@@ -34,6 +35,7 @@ const Master = ({
     t = undefined,
     permissions = DEFAULT_PERMISSIONS,
 }: MasterProps) => {
+    const { switchClass } = useProviderState()
     const derivedT = createTranslation(t, { ...TRANSLATION_PAIRS_MASTERS, ...TRANSLATION_PAIRS_COMMON })
     const formRef = useRef<HTMLFormElement | null>(null)
     const columns = [
@@ -49,7 +51,7 @@ const Master = ({
             Header: derivedT("active"),
             accessor: "isActive",
             Cell({ row, onUpdate }: any) {
-                return <ToggleBtn isChecked={row.isActive} onChange={onUpdate} />
+                return <ToggleBtn isChecked={row.isActive} onChange={onUpdate} switchClass={switchClass} />
             },
         },
     ]
