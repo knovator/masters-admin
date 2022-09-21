@@ -129,6 +129,9 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
             if (response?.code === "SUCCESS") {
                 setLoading(false)
                 onSuccess(code, response?.code, response?.message)
+                if (formState === "ADD") {
+                    sortConfigRef.current = ["createdAt", -1]
+                }
                 getMastersList()
                 onCloseForm()
             }

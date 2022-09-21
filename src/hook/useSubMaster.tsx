@@ -143,6 +143,9 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
             if (response?.code === "SUCCESS") {
                 setLoading(false)
                 onSuccess(code, response?.code, response?.message)
+                if (formState === "ADD") {
+                    sortConfigRef.current = ["createdAt", -1]
+                }
                 getSubMastersList()
                 onCloseForm()
             }
