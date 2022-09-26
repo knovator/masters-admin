@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef } from "react"
 import * as constants from "../constants/common"
 
 interface UsePaginationProps {
@@ -6,48 +6,39 @@ interface UsePaginationProps {
 }
 
 const usePagination = ({ defaultLimit }: UsePaginationProps) => {
-    const defaultApiPayload = {
-        search: "",
-        offset: constants.DEFAULT_OFFSET_PAYLOAD,
-        limit: defaultLimit || constants.DEFAULT_LIMIT,
-    }
+    const offsetRef = useRef<number>(constants.DEFAULT_OFFSET_PAYLOAD)
+    const limitRef = useRef<number>(defaultLimit || constants.DEFAULT_LIMIT)
+    const currentPageRef = useRef<number>(constants.DEFAULT_CURRENT_PAGE)
+    const tempLimitRef = useRef<number>(constants.DEFAULT_OFFSET_PAYLOAD)
 
-    const [filter, setFilter] = useState(defaultApiPayload)
-    const [currentPage, setCurrentPage] = useState(constants.DEFAULT_CURRENT_PAGE)
+    const setTempLimit = (value: number) => {
+        tempLimitRef.current = value
+    }
 
     const setPageSize = (value: number) => {
-        setFilter({
-            ...filter,
-            limit: Number.parseInt(String(value), constants.DECIMAL_REDIX),
-            offset: constants.DEFAULT_OFFSET_PAYLOAD,
-        })
-        setCurrentPage(constants.DEFAULT_CURRENT_PAGE)
-    }
-
-    const changeSearch = (value: string) => {
-        setFilter((draft) => {
-            draft.search = value
-            return draft
-        })
+        limitRef.current = Number.parseInt(String(value), constants.DECIMAL_REDIX)
+        offsetRef.current = constants.DEFAULT_OFFSET_PAYLOAD
+        currentPageRef.current = constants.DEFAULT_CURRENT_PAGE
+        console.log(value, limitRef.current)
     }
 
     const changeCurrentPage = (value: number) => {
-        setFilter({
-            ...filter,
-            offset: Math.max(value - 1, 1) * filter.limit,
-        })
-        setCurrentPage(value)
+        offsetRef.current = Math.max(value - 1, 1) * limitRef.current
+        currentPageRef.current = constants.DEFAULT_CURRENT_PAGE
     }
 
     return {
-        pageSize: filter.limit,
+        tempSize: tempLimitRef.current,
+        setTempSize: setTempLimit,
+        pageSize: limitRef.current,
+        offset: offsetRef.current,
+        offsetRef,
+        limitRef,
+        tempLimitRef,
+        currentPageRef,
         setPageSize,
-        currentPage,
-        changeSearch,
-        filter,
+        currentPage: currentPageRef.current,
         setCurrentPage: changeCurrentPage,
-        defaultApiPayload,
-        setFilter,
     }
 }
 
