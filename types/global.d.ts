@@ -148,6 +148,7 @@ interface PaginationProps {
     pageLabel?: string
     nextLabel?: string
     previousLabel?: string
+    disabledPagination?: boolean
 }
 
 type SortConfigType = [string, 1 | -1]

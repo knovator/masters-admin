@@ -22,7 +22,9 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
     const sortConfigRef = useRef<SortConfigType>(defaultSort)
 
     const { baseUrl, token, dataGetter, paginationGetter, onError, onLogout, onSuccess } = useProviderState()
-    const { setPageSize, pageSize, currentPage, setCurrentPage, filter } = usePagination({ defaultLimit })
+    const { currentPage, offsetRef, limitRef, currentPageRef } = usePagination({
+        defaultLimit,
+    })
 
     const handleError = (code: CALLBACK_CODES) => (error: any) => {
         const { data = {} } = error?.response || {}
@@ -49,9 +51,9 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
                             sort: {
                                 [sortConfig[0]]: sortConfig[1],
                             },
-                            offset: filter.offset,
-                            limit: filter.limit,
-                            page: currentPage,
+                            offset: offsetRef.current,
+                            limit: limitRef.current,
+                            page: currentPageRef.current,
                             pagination: true,
                         },
                     },
@@ -69,10 +71,10 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
         },
         [
             baseUrl,
-            currentPage,
+            currentPageRef.current,
             dataGetter,
-            filter.limit,
-            filter.offset,
+            offsetRef.current,
+            limitRef.current,
             onError,
             onSuccess,
             paginationGetter,
@@ -192,11 +194,17 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
         setItemData(data || null)
         setFormState(state)
     }
-
+    const onChangePageSize = (size: number): void => {
+        limitRef.current = size
+        getMastersList()
+    }
+    const onChangeCurrentPage = (page: number): void => {
+        currentPageRef.current = page
+        getMastersList()
+    }
     useEffect(() => {
         getMastersList()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pageSize, currentPage])
+    }, [])
 
     return {
         list,
@@ -206,12 +214,12 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
         partialUpdate,
 
         // Pagination
-        pageSize,
+        pageSize: limitRef.current,
         totalPages,
         currentPage,
         totalRecords,
-        setCurrentPage,
-        setPageSize,
+        setCurrentPage: onChangeCurrentPage,
+        setPageSize: onChangePageSize,
 
         // Sorting
         sortConfig: sortConfigRef.current,
