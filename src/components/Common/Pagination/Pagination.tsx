@@ -12,6 +12,7 @@ const Pagination = ({
     pageLabel = "Page",
     nextLabel = "Next",
     previousLabel = "Previous",
+    disabledPagination,
 }: PaginationProps) => {
     const pageHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
@@ -38,7 +39,7 @@ const Pagination = ({
                 <Button
                     label={previousLabel}
                     onClick={() => setCurrentPage(currentPage - 1)}
-                    disabled={currentPage - 1 === 0}
+                    disabled={currentPage - 1 === 0 || !!disabledPagination}
                 />
                 <div className="kms_pagination-pager">
                     {pageLabel}
@@ -51,6 +52,7 @@ const Pagination = ({
                         onKeyPress={pageHandler}
                         value={currentPage}
                         onChange={pageChange}
+                        disabled={!!disabledPagination}
                     />
                     / {totalPages}
                 </div>
@@ -59,6 +61,7 @@ const Pagination = ({
                         value={pageSize}
                         className="kms_input kms_input-sm"
                         onChange={(e) => setPageSize(Number(e.target.value))}
+                        disabled={!!disabledPagination}
                     >
                         {limits.map((pageSize) => (
                             <option key={pageSize} value={pageSize}>
@@ -70,7 +73,7 @@ const Pagination = ({
                 <Button
                     label={nextLabel}
                     onClick={() => setCurrentPage(currentPage + 1)}
-                    disabled={currentPage === totalPages}
+                    disabled={currentPage === totalPages || !!disabledPagination}
                 />
             </div>
         </div>

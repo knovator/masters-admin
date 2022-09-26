@@ -25,7 +25,9 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
 
     const { baseUrl, token, dataGetter, paginationGetter, onError, onSuccess, onLogout, selectedMaster } =
         useProviderState()
-    const { setPageSize, pageSize, currentPage, setCurrentPage, filter } = usePagination({ defaultLimit })
+    const { pageSize, offsetRef, currentPage, limitRef, currentPageRef, tempLimitRef } = usePagination({
+        defaultLimit,
+    })
 
     const handleError = (code: CALLBACK_CODES) => (error: any) => {
         const { data = {} } = error?.response || {}
@@ -55,9 +57,9 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
                             sort: {
                                 [sortConfig[0]]: sortConfig[1],
                             },
-                            offset: filter.offset,
-                            limit: filter.limit,
-                            page: currentPage,
+                            offset: offsetRef.current,
+                            limit: limitRef.current,
+                            page: currentPageRef.current,
                             pagination: true,
                             populate: ["img"],
                         },
@@ -80,9 +82,9 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
             baseUrl,
             token,
             selectedMaster,
-            filter.offset,
-            filter.limit,
-            currentPage,
+            offsetRef.current,
+            limitRef.current,
+            currentPageRef.current,
             onError,
             onSuccess,
             paginationGetter,
@@ -242,9 +244,7 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
             })
             if (response?.code === "SUCCESS") {
                 onSuccess(CALLBACK_CODES.SEQUENCE_UPDATE, response.code, response.message)
-                sortConfigRef.current = ["seq", 1]
-                setSequencing(false)
-                getSubMastersList()
+                onSequenceToggle(false)
                 setLoading(false)
             } else {
                 onError(CALLBACK_CODES.SEQUENCE_UPDATE, response.code, response.message)
@@ -303,25 +303,34 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
         }
     }
     const onSequenceToggle = (status: boolean): void => {
+        if (status) {
+            tempLimitRef.current = limitRef.current
+            limitRef.current = totalRecords
+        } else {
+            limitRef.current = tempLimitRef.current
+        }
         setSequencing(status)
         sortConfigRef.current = ["seq", 1]
         getSubMastersList("", status)
     }
-    useEffect(() => {
-        if (selectedMaster) {
-            setSequencing(false)
-            getSubMastersList()
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pageSize, currentPage])
+    const onChangePageSize = (size: number): void => {
+        limitRef.current = size
+        setSequencing(false)
+        getSubMastersList()
+    }
+    const onChangeCurrentPage = (page: number): void => {
+        currentPageRef.current = page
+        setSequencing(false)
+        getSubMastersList()
+    }
 
     useEffect(() => {
         if (selectedMaster) {
-            if (currentPage === 1) {
+            if (currentPageRef.current === 1) {
                 setSequencing(false)
                 getSubMastersList()
             } else {
-                setCurrentPage(1)
+                currentPageRef.current = 1
             }
         }
     }, [selectedMaster])
@@ -342,8 +351,8 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
         totalPages,
         currentPage,
         totalRecords,
-        setCurrentPage,
-        setPageSize,
+        setCurrentPage: onChangeCurrentPage,
+        setPageSize: onChangePageSize,
 
         // Sorting
         sortConfig: sortConfigRef.current,
