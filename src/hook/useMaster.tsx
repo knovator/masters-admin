@@ -176,6 +176,9 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
                 if (response?.code === "SUCCESS") {
                     setLoading(false)
                     onSuccess(CALLBACK_CODES.DELETE, response?.code, response?.message)
+                    if (Array.isArray(list) && list.length === 1 && currentPageRef.current > 1) {
+                        currentPageRef.current = currentPageRef.current - 1
+                    }
                     getMastersList()
                     onCloseForm()
                     return
@@ -196,6 +199,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
     }
     const onChangePageSize = (size: number): void => {
         limitRef.current = size
+        currentPageRef.current = 1
         getMastersList()
     }
     const onChangeCurrentPage = (page: number): void => {
