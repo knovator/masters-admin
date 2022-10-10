@@ -190,6 +190,9 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
                 if (response?.code === "SUCCESS") {
                     setLoading(false)
                     onSuccess(CALLBACK_CODES.DELETE, response?.code, response?.message)
+                    if (Array.isArray(list) && list.length === 1 && currentPageRef.current > 1) {
+                        currentPageRef.current = currentPageRef.current - 1
+                    }
                     getSubMastersList()
                     onCloseForm()
                     return
@@ -315,6 +318,7 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
     }
     const onChangePageSize = (size: number): void => {
         limitRef.current = size
+        currentPageRef.current = 1
         setSequencing(false)
         getSubMastersList()
     }
