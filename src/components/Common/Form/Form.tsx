@@ -63,7 +63,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(
                                 error={errors[schema.accessor]?.message}
                                 label={schema.label}
                                 rest={register(schema.accessor, schema.validations || {})}
-                                className="block"
+                                className="kms_block"
                                 disabled={isUpdating && typeof schema.editable !== "undefined" && !schema.editable}
                             />
                         )
@@ -75,7 +75,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(
                                 label={schema.label}
                                 error={errors[schema.accessor]?.message}
                                 rest={register(schema.accessor, schema.validations || {})}
-                                className="w-full"
+                                className="kms_w-full"
                                 disabled={isUpdating && typeof schema.editable !== "undefined" && !schema.editable}
                             />
                         )
@@ -88,7 +88,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(
                                 rest={register(schema.accessor, schema.validations || {})}
                                 onInput={schema.onInput}
                                 disabled={isUpdating && schema.editable}
-                                className="w-full p-2"
+                                className="kms_w-full kms_p-2"
                                 placeholder={schema.placeholder}
                             />
                         )
@@ -103,7 +103,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(
                                 onInput={schema.onInput}
                                 error={errors[schema.accessor]?.message}
                                 type={schema.type}
-                                className="w-full p-2"
+                                className="kms_w-full kms_p-2"
                                 placeholder={schema.placeholder}
                                 disabled={isUpdating && typeof schema.editable !== "undefined" && !schema.editable}
                             />

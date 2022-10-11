@@ -47,6 +47,7 @@ const DeleteModal = ({
                 <Input
                     placeholder="Type Here"
                     className="kms_delete-input"
+                    wrapperClassName="kms_w-full"
                     value={userInput}
                     onChange={(e) => setUserInput(e.target.value)}
                 />

@@ -21,7 +21,7 @@ const Lister = ({ render, selectFirst }: ListerProps) => {
                 // eslint-disable-next-line jsx-a11y/interactive-supports-focus
                 <div
                     onClick={() => setSelectedMaster(item)}
-                    className={classNames("kms_list-item group", {
+                    className={classNames("kms_list-item", {
                         selected: item.code === selectedMaster?.code,
                     })}
                     role="button"
