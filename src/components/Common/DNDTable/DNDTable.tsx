@@ -77,7 +77,7 @@ const DNDTable = ({
                                                 {...column.getHeaderProps()}
                                                 key={j}
                                                 onClick={() => onClickSort(column.id)}
-                                                className="cursor-pointer"
+                                                className="kms_cursor-pointer"
                                             >
                                                 {column.render("Header")}
                                                 {sortConfigRenderer(column.id)}

@@ -60,6 +60,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
                 })
                 if (response?.code === "SUCCESS") {
                     setLoading(false)
+                    if (search) currentPageRef.current = 1
                     setTotalPages(paginationGetter(response).totalPages)
                     setTotalRecords(paginationGetter(response).totalDocs)
                     return setList(dataGetter(response))

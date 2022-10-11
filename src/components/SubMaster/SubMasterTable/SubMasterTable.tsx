@@ -118,7 +118,7 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
                 id: "sequence",
                 accessor: "sequence",
                 Header: () => (
-                    <div className="text-center">
+                    <div className="kms_text-center">
                         {sequencing ? (
                             <>
                                 <button
@@ -152,12 +152,12 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
                 ),
                 Cell: () => (
                     <div
-                        className={classNames("text-center cursor-pointer", {
-                            "cursor-move": sequencing,
-                            "cursor-not-allowed": !sequencing,
+                        className={classNames("kms_sequence-edit", {
+                            "kms_cursor-move": sequencing,
+                            "kms_cursor-not-allowed": !sequencing,
                         })}
                     >
-                        <MoveIcon className="inline-block" />
+                        <MoveIcon className="kms_inline-block" />
                     </div>
                 ),
             })
