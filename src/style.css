@@ -1,3 +1,4 @@
+@tailwind base;
 /* Table */
 .kms_actions {
     @apply flex items-center gap-3;
@@ -170,6 +171,21 @@ background-position: center; */
 }
 /* \ End of Switch */
 
+/* Tooltip */
+.kms_tooltip {
+    @apply relative flex flex-col items-center;
+}
+.kms_tooltip-side {
+    @apply absolute bottom-0 flex-col items-center hidden mb-6 group-hover:flex;
+}
+.kms_tooltip-content {
+    @apply relative z-10 p-2 text-xs leading-none text-white whitespace-nowrap bg-gray-600 shadow-lg rounded-md;
+}
+.kms_tooltip-block {
+    @apply w-3 h-3 -mt-2 rotate-45 bg-gray-600;
+}
+/* \ End of Tooltip */
+
 /* Drawer */
 .kms_drawer-wrapper-1 {
     @apply fixed inset-0 overflow-hidden;
@@ -208,7 +224,7 @@ background-position: center; */
     @apply relative flex-1 px-6 py-6 overflow-auto;
 }
 .kms_drawer-footer {
-    @apply flex items-center justify-end gap-3 px-4 py-4 border-t bg-slate-50 border-slate-400;
+    @apply flex items-center justify-end gap-3 px-4 py-4 border-t border-gray-400 bg-slate-50;
 }
 /* \ End of Drawer */
 
@@ -368,10 +384,43 @@ background-position: center; */
 .kms_text-cancel {
     @apply text-red-600;
 }
+.kms_sequence-edit {
+    @apply text-center cursor-pointer;
+}
 .kms_sequence-action {
     @apply py-0 px-2;
 }
 .kms_sequence-action:disabled {
     @apply text-slate-400 cursor-not-allowed;
+}
+.kms_w-full {
+    @apply w-full;
+}
+.kms_p-2 {
+    @apply p-2;
+}
+.kms_block {
+    @apply block;
+}
+.kms_p-4 {
+    @apply p-4;
+}
+.kms_cursor-move {
+    @apply cursor-move;
+}
+.kms_cursor-not-allowed {
+    @apply cursor-not-allowed;
+}
+.kms_cursor-pointer {
+    @apply cursor-pointer;
+}
+.kms_inline-block {
+    @apply inline-block;
+}
+.kms_text-center {
+    @apply text-center;
+}
+.kms_w-10 {
+    @apply w-10;
 }
 /* \End of Utility */

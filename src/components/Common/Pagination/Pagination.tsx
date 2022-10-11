@@ -44,7 +44,7 @@ const Pagination = ({
                 <div className="kms_pagination-pager">
                     {pageLabel}
                     <input
-                        className="kms_input kms_input-sm w-10"
+                        className="kms_input kms_input-sm kms_w-10"
                         maxLength={3}
                         pattern="([0-9]|[0-9]|[0-9])"
                         type="number"

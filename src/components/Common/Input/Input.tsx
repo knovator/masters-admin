@@ -12,9 +12,10 @@ const Input = ({
     label = "",
     error,
     className,
+    wrapperClassName = "",
 }: InputProps) => {
     return (
-        <div className="kms_input-wrapper">
+        <div className={classNames("kms_input-wrapper", wrapperClassName)}>
             {label && <label className="kms_input-label">{label}</label>}
             <input
                 data-testid={`input-${type}-${label}`}

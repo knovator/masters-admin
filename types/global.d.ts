@@ -330,6 +330,7 @@ interface InputProps {
     label?: string
     error?: string
     className?: string
+    wrapperClassName?: string
     disabled?: boolean
 }
 interface CheckboxProps {

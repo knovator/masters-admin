@@ -44,7 +44,7 @@ const Modal = ({ open, onClose, title, children }: ModalProps) => {
                                         <CloseIcon />
                                     </button>
                                 </div>
-                                <div className="p-4">{children}</div>
+                                <div className="kms_p-4">{children}</div>
                             </div>
                         </div>
                     </div>

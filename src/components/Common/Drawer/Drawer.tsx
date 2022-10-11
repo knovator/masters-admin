@@ -53,16 +53,12 @@ const Drawer = ({ children, open, onClose, title, footerContent }: DrawerProps) 
                                 <div className="kms_drawer-header">
                                     <p className="kms_drawer-header-title">{title}</p>
                                 </div>
-                                <div className="relative flex-1 px-6 py-6 overflow-auto">
+                                <div className="kms_darwer-content">
                                     {/* Replace with your content */}
                                     {children}
                                     {/* /End replace */}
                                 </div>
-                                {footerContent && (
-                                    <div className="flex items-center justify-end gap-3 px-4 py-4 border-t modal-footer bg-slate-50 border-light-gray">
-                                        {footerContent}
-                                    </div>
-                                )}
+                                {footerContent && <div className="kms_drawer-footer">{footerContent}</div>}
                             </div>
                         </div>
                     </div>
