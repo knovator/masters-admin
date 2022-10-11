@@ -68,6 +68,7 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
                 })
                 if (response?.code === "SUCCESS") {
                     setLoading(false)
+                    currentPageRef.current = 1
                     setTotalPages(paginationGetter(response).totalPages)
                     setTotalRecords(paginationGetter(response).totalDocs)
                     return setList(dataGetter(response))
