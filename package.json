@@ -25,7 +25,8 @@
         ".": {
             "import": "./dist/masters-admin.esm.js",
             "require": "./dist/index.js"
-        }
+        },
+        "./dist/": "./dist/"
     },
     "husky": {
         "hooks": {
@@ -34,12 +35,15 @@
     },
     "scripts": {
         "analyze": "size-limit --why",
-        "build": "dts build",
+        "build": "dts build && yarn build:tailwind",
         "lint": "dts lint",
-        "prepare": "dts build",
+        "prepare": "dts build && yarn build:tailwind",
         "size": "size-limit",
-        "start": "dts watch",
-        "test": "dts test --passWithNoTests"
+        "watch": "dts watch",
+        "start": "concurrently 'dts watch' 'yarn watch:tailwind'",
+        "test": "dts test --passWithNoTests",
+        "build:tailwind": "NODE_ENV=production npx tailwindcss -i ./src/style.css -o ./dist/style.css --minify",
+        "watch:tailwind": "NODE_ENV=production npx tailwindcss -i ./src/style.css -o ./dist/style.css --watch"
     },
     "author": "knovator (https://knovator.com/)",
     "license": "MIT",
@@ -71,6 +75,7 @@
         "@types/react-transition-group": "^4.4.5",
         "autoprefixer": "^10.4.7",
         "classnames": "^2.3.1",
+        "concurrently": "^7.4.0",
         "dts-cli": "^1.5.2",
         "husky": "^8.0.1",
         "msw": "^0.42.3",
@@ -81,7 +86,6 @@
         "react-hook-form": "^7.32.2",
         "react-table": "^7.8.0",
         "react-transition-group": "^4.4.2",
-        "rollup-plugin-postcss": "^4.0.2",
         "tailwindcss": "^3.1.4",
         "tslib": "^2.4.0",
         "typescript": "^4.7.4"

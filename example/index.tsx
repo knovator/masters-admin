@@ -1,4 +1,5 @@
 import "react-app-polyfill/ie11"
+import "../dist/style.css"
 import * as React from "react"
 import ReactDOM from "react-dom/client"
 import { Provider, Master, SubMaster } from "../."

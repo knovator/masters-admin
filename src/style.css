@@ -1,383 +1,377 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer components {
-    /* Table */
-    .kms_actions {
-        @apply flex items-center gap-3;
-    }
-    .kms_actions-update,
-    .kms_actions-delete,
-    .kms_actions-check,
-    .kms_actions-x {
-        @apply cursor-pointer;
-    }
-    .kms_table-container {
-        @apply overflow-hidden bg-white border rounded-lg border-gray-200;
-    }
-    .kms_table {
-        @apply w-full text-sm;
-    }
-    .kms_thead {
-        @apply bg-slate-200;
-    }
-    .kms_thead th {
-        @apply px-4 py-3 text-left z-10;
-    }
-    .kms_tbody td {
-        @apply px-4 py-3;
-    }
-    .kms_tbody tr {
-        @apply border-b border-slate-300;
-    }
-    .kms_sort-wrapper {
-        @apply text-xs ml-2 inline-block;
-    }
-    .kms_sort-inactive {
-        @apply opacity-40;
-    }
-    .kms_table-height {
-        @apply justify-center overflow-auto;
-        height: calc(100vh - 252px);
-    }
-    /* \ End of Table */
-
-    /* Pagination */
-    .kms_pagination {
-        @apply flex flex-col justify-center md:flex-row md:justify-between items-center px-4 py-3;
-    }
-    .kms_pagination-actions {
-        @apply flex items-center justify-center gap-2;
-    }
-    .kms_pagination-pager {
-        @apply flex items-center gap-2 text-sm;
-    }
-    /* \ End of Pagination */
-
-    /* Button */
-    .kms_btn {
-        @apply cursor-pointer items-center justify-center gap-2 rounded-md py-2.5 px-6 transition text-sm focus:ring ring-offset-1;
-    }
-    .kms_btn:disabled {
-        @apply cursor-not-allowed;
-    }
-    .kms_btn-primary {
-        @apply bg-blue-600 text-white hover:bg-blue-500 ring-blue-400;
-    }
-    .kms_btn-info {
-        @apply bg-cyan-600 text-white hover:bg-cyan-500 ring-cyan-400;
-    }
-    .kms_btn-success {
-        @apply bg-green-600 text-white hover:bg-green-500 ring-green-400;
-    }
-    .kms_btn-cancel {
-        @apply bg-gray-600 text-white hover:bg-gray-500 ring-gray-400;
-    }
-    .kms_btn-primary:disabled {
-        @apply bg-blue-500;
-    }
-    .kms_btn-secondary {
-        @apply bg-slate-600 text-white hover:bg-slate-500 ring-slate-400;
-    }
-    .kms_btn-secondary:disabled {
-        @apply bg-slate-500;
-    }
-    .kms_btn-sm {
-        @apply px-4 py-1.5;
-    }
-    /* \ End of Button */
-
-    /* Form & Input */
-    .kms_form {
-        @apply grid gap-4;
-    }
-    .kms_input {
-        @apply min-h-[40px] rounded-lg border border-slate-400 p-2 outline-none bg-transparent appearance-none focus:outline-none focus:ring-blue-500 focus:ring-2 transition;
-    }
-    .kms_input:disabled {
-        @apply bg-slate-300 cursor-not-allowed;
-    }
-    .kms_input-sm {
-        @apply h-8;
-    }
-    .kms_input-label {
-        @apply inline-block mb-2 text-sm font-semibold text-black;
-    }
-    .kms_input-wrapper {
-        @apply text-left;
-    }
-    .kms_input-error {
-        @apply mt-1 text-sm text-red-500;
-    }
-    .kms_input-checkbox {
-    }
-    /* \ End of Input */
-
-    /* Switch */
-    .kms_switch {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 30px;
-    }
-    .kms_switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-    .kms_switch .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #888;
-        -webkit-transition: all 0.4s ease-in;
-        transition: all 0.4s ease-in;
-    }
-    .kms_switch .slider:before {
-        position: absolute;
-        content: "";
-        height: 22px;
-        width: 22px;
-        left: 5px;
-        bottom: 4px;
-        background-color: #fff;
-        -webkit-transition: all 0.4s ease-in;
-        transition: all 0.4s ease-in;
-        box-shadow: 0px 0px 6px #00000029;
-        /* background-image: url(../public/images/close.png); */
-        /* background-repeat: no-repeat; */
-        /* background-position: center; */
-    }
-    /* Switch Rounded sliders */
-    .kms_switch .slider.round {
-        border-radius: 34px;
-    }
-    .kms_switch .slider.round:before {
-        border-radius: 50%;
-    }
-    input:checked + .slider {
-        background-color: #16a34a;
-    }
-    input:focus + .slider {
-        box-shadow: 0 0 1px #16a34a;
-    }
-    input:checked + .slider:before {
-        -webkit-transform: translateX(28px);
-        -ms-transform: translateX(28px);
-        transform: translateX(28px);
-        /* background-image: url(../public/images/tick.png);
-    background-repeat: no-repeat;
-    background-position: center; */
-    }
-    /* \ End of Switch */
-
-    /* Drawer */
-    .kms_drawer-wrapper-1 {
-        @apply fixed inset-0 overflow-hidden;
-    }
-    .kms_drawer-wrapper-2 {
-        @apply absolute inset-0 overflow-hidden;
-    }
-    .kms_drawer-backdrop {
-        @apply absolute inset-0 transition-opacity bg-black bg-opacity-75 backdrop-blur-sm;
-    }
-    .kms_drawer-container-1 {
-        @apply fixed inset-y-0 right-0 flex max-w-full pl-10;
-    }
-    .kms_drawer-container-2 {
-        @apply relative w-screen max-w-xl;
-    }
-    .kms_drawer-close-section {
-        @apply absolute top-0 left-0 flex pt-4 pr-2 -ml-8 sm:-ml-10 sm:pr-4;
-    }
-    .kms_drawer-close-btn {
-        @apply flex items-center justify-center w-8 h-8 transition bg-white rounded-full focus:outline-none hover:rotate-90;
-    }
-    .kms_sr-only {
-        @apply sr-only;
-    }
-    .kms_drawer-main {
-        @apply flex flex-col h-full overflow-y-scroll bg-white shadow-xl;
-    }
-    .kms_drawer-header {
-        @apply px-4 py-6 border-b border-slate-400 sm:px-6 bg-slate-300;
-    }
-    .kms_drawer-header-title {
-        @apply text-xl font-medium;
-    }
-    .kms_darwer-content {
-        @apply relative flex-1 px-6 py-6 overflow-auto;
-    }
-    .kms_drawer-footer {
-        @apply flex items-center justify-end gap-3 px-4 py-4 border-t bg-slate-50 border-slate-400;
-    }
-    /* \ End of Drawer */
-
-    /* Modal */
-    .kms_modal-wrapper-1 {
-        @apply fixed inset-0 z-20 overflow-y-auto;
-    }
-    .kms_modal-wrapper-2 {
-        @apply flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0 relative;
-    }
-    .kms_modal-backdrop {
-        @apply absolute inset-0 transition-opacity bg-black bg-opacity-75 backdrop-blur-sm;
-    }
-    .kms_modal-container-1 {
-        @apply opacity-100 min-h-screen flex justify-center items-center;
-    }
-    .kms_modal-container-2 {
-        @apply inline-block overflow-hidden text-left align-bottom transition-all transform shadow-xl sm:my-8 sm:align-middle sm:max-w-xl sm:w-full rounded-lg;
-    }
-    .kms_modal-main {
-        @apply bg-white;
-    }
-    .kms_modal-header {
-        @apply relative p-4 pb-4 border-b border-gray-200;
-    }
-    .kms_modal-title {
-        @apply text-sm font-semibold;
-    }
-    .kms_modal-close {
-        @apply absolute right-5 top-5 focus:outline-none;
-    }
-    .kms_modal-content {
-        @apply p-4;
-    }
-    /* \ End of Modal */
-
-    /* Delete Modal */
-    .kms_delete-header {
-        @apply py-2 px-4 rounded-lg flex items-center gap-3 text-black text-sm bg-red-200;
-    }
-    .kms_delete-content {
-        @apply mt-3 text-black text-sm;
-    }
-    .kms_delete-note {
-        @apply mt-3;
-    }
-    .kms_delete-actions {
-        @apply mt-3 flex flex-row gap-3;
-    }
-    .kms_delete-input {
-        @apply w-full flex-grow;
-    }
-    .kms_delete-buttons {
-        @apply col-span-3;
-    }
-    /* \ End of Delete Modal */
-
-    /* Animations */
-    .kms_drawer-enter {
-        opacity: 0.1;
-    }
-    .kms_drawer-enter.kms_drawer-enter-active {
-        opacity: 1;
-        transition: opacity 200ms ease-in;
-    }
-    .kms_drawer-exit {
-        opacity: 1;
-    }
-    .kms_drawer-exit.kms_drawer-exit-active {
-        opacity: 0.01;
-        transition: opacity 200ms ease-in;
-    }
-
-    .kms_modal-enter {
-        opacity: 0.01;
-    }
-    .kms_modal-enter.kms_modal-enter-active {
-        opacity: 0.5;
-        transition: opacity 200ms ease-in;
-    }
-    .kms_modal-exit {
-        opacity: 1;
-    }
-    .kms_modal-exit.kms_modal-exit-active {
-        opacity: 0.01;
-        transition: opacity 200ms ease-in;
-    }
-    /* \ End of Animations */
-
-    /* Master lister */
-    .kms_list-wrapper {
-        @apply grid gap-3 my-2;
-    }
-    .kms_list-item {
-        @apply flex items-center gap-3 p-2 transition-all rounded-lg bg-slate-100 cursor-pointer outline-none;
-    }
-    .kms_list-item.selected {
-        @apply bg-blue-500 cursor-default;
-    }
-    .kms_list-item.selected .kms_list-item-heading {
-        @apply text-black;
-    }
-    .kms_list-item-highlight {
-        @apply flex items-center justify-center w-10 h-10 uppercase rounded-lg bg-slate-200;
-    }
-    .kms_list-item-heading {
-        @apply text-sm text-gray-500 transition-all group-hover:text-black duration-300;
-    }
-    .kms_list-item-subheading {
-        @apply text-xs text-gray-700;
-    }
-    /* \ End of Master Lister */
-
-    /* Image Upload */
-    .kms_img-upload-wrapper-1 {
-        @apply flex justify-center px-6 pt-5 pb-6 mt-1 border-2 border-dashed rounded-md border-slate-400;
-    }
-    .kms_img-upload-wrapper-2 {
-        @apply space-y-1 text-center;
-    }
-    .kms_img-wrapper {
-        @apply relative inline-flex;
-    }
-    .kms_img-wrapper-img {
-        @apply h-24 w-24 object-cover;
-    }
-    .kms_img-wrapper-del {
-        @apply h-5 w-5 rounded-full bg-red-500 flex items-center justify-center absolute -top-2 -right-2 cursor-pointer;
-    }
-    .kms_img-text-wrapper {
-        @apply flex text-sm text-gray-600;
-    }
-    .kms_img-text-label {
-        @apply relative font-medium rounded-md cursor-pointer focus-within:outline-none;
-    }
-    .kms_img-text-1 {
-        @apply pl-1 text-gray-500;
-    }
-    .kms_img-text-2 {
-        @apply text-xs text-gray-500;
-    }
-    .kms_img-upload-wrapper-3 {
-        @apply p-3 border border-white mt-6 rounded-lg cursor-pointer;
-    }
-    /* \End of Image Upload */
-
-    /* Utility */
-    .kms_text-primary {
-        @apply text-blue-600;
-    }
-    .kms_text-info {
-        @apply text-blue-500;
-    }
-    .kms_text-success {
-        @apply text-green-600;
-    }
-    .kms_text-cancel {
-        @apply text-red-600;
-    }
-    .kms_sequence-action {
-        @apply py-0 px-2;
-    }
-    .kms_sequence-action:disabled {
-        @apply text-slate-400 cursor-not-allowed;
-    }
-    /* \End of Utility */
+/* Table */
+.kms_actions {
+    @apply flex items-center gap-3;
 }
+.kms_actions-update,
+.kms_actions-delete,
+.kms_actions-check,
+.kms_actions-x {
+    @apply cursor-pointer;
+}
+.kms_table-container {
+    @apply overflow-hidden bg-white border rounded-lg border-gray-200;
+}
+.kms_table {
+    @apply w-full text-sm;
+}
+.kms_thead {
+    @apply bg-slate-200;
+}
+.kms_thead th {
+    @apply px-4 py-3 text-left z-10;
+}
+.kms_tbody td {
+    @apply px-4 py-3;
+}
+.kms_tbody tr {
+    @apply border-b border-slate-300;
+}
+.kms_sort-wrapper {
+    @apply text-xs ml-2 inline-block;
+}
+.kms_sort-inactive {
+    @apply opacity-40;
+}
+.kms_table-height {
+    @apply justify-center overflow-auto;
+    height: calc(100vh - 252px);
+}
+/* \ End of Table */
+
+/* Pagination */
+.kms_pagination {
+    @apply flex flex-col justify-center md:flex-row md:justify-between items-center px-4 py-3;
+}
+.kms_pagination-actions {
+    @apply flex items-center justify-center gap-2;
+}
+.kms_pagination-pager {
+    @apply flex items-center gap-2 text-sm;
+}
+/* \ End of Pagination */
+
+/* Button */
+.kms_btn {
+    @apply cursor-pointer items-center justify-center gap-2 rounded-md py-2.5 px-6 transition text-sm focus:ring ring-offset-1;
+}
+.kms_btn:disabled {
+    @apply cursor-not-allowed;
+}
+.kms_btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-500 ring-blue-400;
+}
+.kms_btn-info {
+    @apply bg-cyan-600 text-white hover:bg-cyan-500 ring-cyan-400;
+}
+.kms_btn-success {
+    @apply bg-green-600 text-white hover:bg-green-500 ring-green-400;
+}
+.kms_btn-cancel {
+    @apply bg-gray-600 text-white hover:bg-gray-500 ring-gray-400;
+}
+.kms_btn-primary:disabled {
+    @apply bg-blue-500;
+}
+.kms_btn-secondary {
+    @apply bg-slate-600 text-white hover:bg-slate-500 ring-slate-400;
+}
+.kms_btn-secondary:disabled {
+    @apply bg-slate-500;
+}
+.kms_btn-sm {
+    @apply px-4 py-1.5;
+}
+/* \ End of Button */
+
+/* Form & Input */
+.kms_form {
+    @apply grid gap-4;
+}
+.kms_input {
+    @apply min-h-[40px] rounded-lg border border-slate-400 p-2 outline-none bg-transparent appearance-none focus:outline-none focus:ring-blue-500 focus:ring-2 transition;
+}
+.kms_input:disabled {
+    @apply bg-slate-300 cursor-not-allowed;
+}
+.kms_input-sm {
+    @apply h-8;
+}
+.kms_input-label {
+    @apply inline-block mb-2 text-sm font-semibold text-black;
+}
+.kms_input-wrapper {
+    @apply text-left;
+}
+.kms_input-error {
+    @apply mt-1 text-sm text-red-500;
+}
+.kms_input-checkbox {
+}
+/* \ End of Input */
+
+/* Switch */
+.kms_switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+}
+.kms_switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.kms_switch .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #888;
+    -webkit-transition: all 0.4s ease-in;
+    transition: all 0.4s ease-in;
+}
+.kms_switch .slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 5px;
+    bottom: 4px;
+    background-color: #fff;
+    -webkit-transition: all 0.4s ease-in;
+    transition: all 0.4s ease-in;
+    box-shadow: 0px 0px 6px #00000029;
+    /* background-image: url(../public/images/close.png); */
+    /* background-repeat: no-repeat; */
+    /* background-position: center; */
+}
+/* Switch Rounded sliders */
+.kms_switch .slider.round {
+    border-radius: 34px;
+}
+.kms_switch .slider.round:before {
+    border-radius: 50%;
+}
+input:checked + .slider {
+    background-color: #16a34a;
+}
+input:focus + .slider {
+    box-shadow: 0 0 1px #16a34a;
+}
+input:checked + .slider:before {
+    -webkit-transform: translateX(28px);
+    -ms-transform: translateX(28px);
+    transform: translateX(28px);
+    /* background-image: url(../public/images/tick.png);
+background-repeat: no-repeat;
+background-position: center; */
+}
+/* \ End of Switch */
+
+/* Drawer */
+.kms_drawer-wrapper-1 {
+    @apply fixed inset-0 overflow-hidden;
+}
+.kms_drawer-wrapper-2 {
+    @apply absolute inset-0 overflow-hidden;
+}
+.kms_drawer-backdrop {
+    @apply absolute inset-0 transition-opacity bg-black bg-opacity-75 backdrop-blur-sm;
+}
+.kms_drawer-container-1 {
+    @apply fixed inset-y-0 right-0 flex max-w-full pl-10;
+}
+.kms_drawer-container-2 {
+    @apply relative w-screen max-w-xl;
+}
+.kms_drawer-close-section {
+    @apply absolute top-0 left-0 flex pt-4 pr-2 -ml-8 sm:-ml-10 sm:pr-4;
+}
+.kms_drawer-close-btn {
+    @apply flex items-center justify-center w-8 h-8 transition bg-white rounded-full focus:outline-none hover:rotate-90;
+}
+.kms_sr-only {
+    @apply sr-only;
+}
+.kms_drawer-main {
+    @apply flex flex-col h-full overflow-y-scroll bg-white shadow-xl;
+}
+.kms_drawer-header {
+    @apply px-4 py-6 border-b border-slate-400 sm:px-6 bg-slate-300;
+}
+.kms_drawer-header-title {
+    @apply text-xl font-medium;
+}
+.kms_darwer-content {
+    @apply relative flex-1 px-6 py-6 overflow-auto;
+}
+.kms_drawer-footer {
+    @apply flex items-center justify-end gap-3 px-4 py-4 border-t bg-slate-50 border-slate-400;
+}
+/* \ End of Drawer */
+
+/* Modal */
+.kms_modal-wrapper-1 {
+    @apply fixed inset-0 z-20 overflow-y-auto;
+}
+.kms_modal-wrapper-2 {
+    @apply flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0 relative;
+}
+.kms_modal-backdrop {
+    @apply absolute inset-0 transition-opacity bg-black bg-opacity-75 backdrop-blur-sm;
+}
+.kms_modal-container-1 {
+    @apply opacity-100 min-h-screen flex justify-center items-center;
+}
+.kms_modal-container-2 {
+    @apply inline-block overflow-hidden text-left align-bottom transition-all transform shadow-xl sm:my-8 sm:align-middle sm:max-w-xl sm:w-full rounded-lg;
+}
+.kms_modal-main {
+    @apply bg-white;
+}
+.kms_modal-header {
+    @apply relative p-4 pb-4 border-b border-gray-200;
+}
+.kms_modal-title {
+    @apply text-sm font-semibold;
+}
+.kms_modal-close {
+    @apply absolute right-5 top-5 focus:outline-none;
+}
+.kms_modal-content {
+    @apply p-4;
+}
+/* \ End of Modal */
+
+/* Delete Modal */
+.kms_delete-header {
+    @apply py-2 px-4 rounded-lg flex items-center gap-3 text-black text-sm bg-red-200;
+}
+.kms_delete-content {
+    @apply mt-3 text-black text-sm;
+}
+.kms_delete-note {
+    @apply mt-3;
+}
+.kms_delete-actions {
+    @apply mt-3 flex flex-row gap-3;
+}
+.kms_delete-input {
+    @apply w-full flex-grow;
+}
+.kms_delete-buttons {
+    @apply col-span-3;
+}
+/* \ End of Delete Modal */
+
+/* Animations */
+.kms_drawer-enter {
+    opacity: 0.1;
+}
+.kms_drawer-enter.kms_drawer-enter-active {
+    opacity: 1;
+    transition: opacity 200ms ease-in;
+}
+.kms_drawer-exit {
+    opacity: 1;
+}
+.kms_drawer-exit.kms_drawer-exit-active {
+    opacity: 0.01;
+    transition: opacity 200ms ease-in;
+}
+
+.kms_modal-enter {
+    opacity: 0.01;
+}
+.kms_modal-enter.kms_modal-enter-active {
+    opacity: 0.5;
+    transition: opacity 200ms ease-in;
+}
+.kms_modal-exit {
+    opacity: 1;
+}
+.kms_modal-exit.kms_modal-exit-active {
+    opacity: 0.01;
+    transition: opacity 200ms ease-in;
+}
+/* \ End of Animations */
+
+/* Master lister */
+.kms_list-wrapper {
+    @apply grid gap-3 my-2;
+}
+.kms_list-item {
+    @apply flex items-center gap-3 p-2 transition-all rounded-lg bg-slate-100 cursor-pointer outline-none;
+}
+.kms_list-item.selected {
+    @apply bg-blue-500 cursor-default;
+}
+.kms_list-item.selected .kms_list-item-heading {
+    @apply text-black;
+}
+.kms_list-item-highlight {
+    @apply flex items-center justify-center w-10 h-10 uppercase rounded-lg bg-slate-200;
+}
+.kms_list-item-heading {
+    @apply text-sm text-gray-500 transition-all group-hover:text-black duration-300;
+}
+.kms_list-item-subheading {
+    @apply text-xs text-gray-700;
+}
+/* \ End of Master Lister */
+
+/* Image Upload */
+.kms_img-upload-wrapper-1 {
+    @apply flex justify-center px-6 pt-5 pb-6 mt-1 border-2 border-dashed rounded-md border-slate-400;
+}
+.kms_img-upload-wrapper-2 {
+    @apply space-y-1 text-center;
+}
+.kms_img-wrapper {
+    @apply relative inline-flex;
+}
+.kms_img-wrapper-img {
+    @apply h-24 w-24 object-cover;
+}
+.kms_img-wrapper-del {
+    @apply h-5 w-5 rounded-full bg-red-500 flex items-center justify-center absolute -top-2 -right-2 cursor-pointer;
+}
+.kms_img-text-wrapper {
+    @apply flex text-sm text-gray-600;
+}
+.kms_img-text-label {
+    @apply relative font-medium rounded-md cursor-pointer focus-within:outline-none;
+}
+.kms_img-text-1 {
+    @apply pl-1 text-gray-500;
+}
+.kms_img-text-2 {
+    @apply text-xs text-gray-500;
+}
+.kms_img-upload-wrapper-3 {
+    @apply p-3 border border-white mt-6 rounded-lg cursor-pointer;
+}
+/* \End of Image Upload */
+
+/* Utility */
+.kms_text-primary {
+    @apply text-blue-600;
+}
+.kms_text-info {
+    @apply text-blue-500;
+}
+.kms_text-success {
+    @apply text-green-600;
+}
+.kms_text-cancel {
+    @apply text-red-600;
+}
+.kms_sequence-action {
+    @apply py-0 px-2;
+}
+.kms_sequence-action:disabled {
+    @apply text-slate-400 cursor-not-allowed;
+}
+/* \End of Utility */
