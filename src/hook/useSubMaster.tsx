@@ -25,7 +25,17 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
 
     const { baseUrl, token, dataGetter, paginationGetter, onError, onSuccess, onLogout, selectedMaster } =
         useProviderState()
-    const { pageSize, offsetRef, currentPage, limitRef, currentPageRef, tempLimitRef } = usePagination({
+    const {
+        pageSize,
+        offsetRef,
+        currentPage,
+        limitRef,
+        currentPageRef,
+        tempLimitRef,
+        searchStr,
+        setSearchStr,
+        searchRef,
+    } = usePagination({
         defaultLimit,
     })
 
@@ -68,7 +78,6 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
                 })
                 if (response?.code === "SUCCESS") {
                     setLoading(false)
-                    currentPageRef.current = 1
                     setTotalPages(paginationGetter(response).totalPages)
                     setTotalRecords(paginationGetter(response).totalDocs)
                     return setList(dataGetter(response))
@@ -326,17 +335,14 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
     const onChangeCurrentPage = (page: number): void => {
         currentPageRef.current = page
         setSequencing(false)
-        getSubMastersList()
+        getSubMastersList(searchRef.current)
     }
 
     useEffect(() => {
         if (selectedMaster) {
-            if (currentPageRef.current === 1) {
-                setSequencing(false)
-                getSubMastersList()
-            } else {
-                currentPageRef.current = 1
-            }
+            currentPageRef.current = 1
+            setSequencing(false)
+            getSubMastersList()
         }
     }, [selectedMaster])
 
@@ -372,6 +378,10 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
         onCofirmDeleteMaster,
         onImageUpload,
         onImageRemove,
+
+        // Search
+        searchStr,
+        setSearchStr,
     }
 }
 

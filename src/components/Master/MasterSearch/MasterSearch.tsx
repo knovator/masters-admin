@@ -3,7 +3,7 @@ import { Input } from "../../../components/Common"
 import { useMasterState } from "../../../context/MasterContext"
 
 const MasterSearch = () => {
-    const { getMastersList, t } = useMasterState()
+    const { setSearchStr, t, setCurrentPage } = useMasterState()
     const callerRef = useRef<NodeJS.Timeout | null>(null)
     const [search, setSearch] = useState<string>("")
 
@@ -12,7 +12,8 @@ const MasterSearch = () => {
         if (callerRef.current) clearTimeout(callerRef.current)
 
         callerRef.current = setTimeout(() => {
-            getMastersList(str)
+            setSearchStr(str)
+            setCurrentPage(1)
         }, 300)
     }
 
