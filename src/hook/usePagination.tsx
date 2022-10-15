@@ -10,6 +10,7 @@ const usePagination = ({ defaultLimit }: UsePaginationProps) => {
     const limitRef = useRef<number>(defaultLimit || constants.DEFAULT_LIMIT)
     const currentPageRef = useRef<number>(constants.DEFAULT_CURRENT_PAGE)
     const tempLimitRef = useRef<number>(constants.DEFAULT_OFFSET_PAYLOAD)
+    const searchRef = useRef<string>("")
 
     const setTempLimit = (value: number) => {
         tempLimitRef.current = value
@@ -19,13 +20,14 @@ const usePagination = ({ defaultLimit }: UsePaginationProps) => {
         limitRef.current = Number.parseInt(String(value), constants.DECIMAL_REDIX)
         offsetRef.current = constants.DEFAULT_OFFSET_PAYLOAD
         currentPageRef.current = constants.DEFAULT_CURRENT_PAGE
-        console.log(value, limitRef.current)
     }
 
     const changeCurrentPage = (value: number) => {
         offsetRef.current = Math.max(value - 1, 1) * limitRef.current
         currentPageRef.current = constants.DEFAULT_CURRENT_PAGE
     }
+
+    const setSearchStr = (value: string) => (searchRef.current = value)
 
     return {
         tempSize: tempLimitRef.current,
@@ -36,9 +38,12 @@ const usePagination = ({ defaultLimit }: UsePaginationProps) => {
         limitRef,
         tempLimitRef,
         currentPageRef,
+        searchRef,
         setPageSize,
         currentPage: currentPageRef.current,
         setCurrentPage: changeCurrentPage,
+        searchStr: searchRef.current,
+        setSearchStr: setSearchStr,
     }
 }
 

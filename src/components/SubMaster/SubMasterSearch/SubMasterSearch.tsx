@@ -5,7 +5,7 @@ import { useSubMasterState } from "../../../context/SubMasterContext"
 
 const SubMasterSearch = () => {
     const { selectedMaster } = useProviderState()
-    const { getSubMastersList, t } = useSubMasterState()
+    const { setSearchStr, t, setCurrentPage } = useSubMasterState()
     const callerRef = useRef<NodeJS.Timeout | null>(null)
     const [search, setSearch] = useState<string>("")
 
@@ -18,7 +18,9 @@ const SubMasterSearch = () => {
         if (callerRef.current) clearTimeout(callerRef.current)
 
         callerRef.current = setTimeout(() => {
-            getSubMastersList(str)
+            // setCurrentPage internally calls getSubMastersList
+            setSearchStr(str)
+            setCurrentPage(1)
         }, 300)
     }
 

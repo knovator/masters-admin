@@ -198,6 +198,9 @@ interface MasterContextType {
     canDelete?: boolean
     canPartialUpdate?: boolean
     getMastersList: (search?: string) => Promise<void>
+    // Pagination
+    searchStr: string
+    setSearchStr: (val: string) => void
 }
 interface SubMasterContextType {
     t: (key: string) => string
@@ -236,6 +239,9 @@ interface SubMasterContextType {
     sequencing: boolean
     setSequencing: (status: boolean) => void
     onConfirmSequence: () => void
+    // Pagination
+    searchStr: string
+    setSearchStr: (val: string) => void
 }
 type onDelete = ({ data, confirmDelete }: { data: any; confirmDelete: () => void }) => any
 // \ End of Context

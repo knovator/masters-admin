@@ -48,6 +48,9 @@ const SubMasterContextProvider = ({
     sequencing = false,
     setSequencing = () => {},
     onConfirmSequence = () => {},
+    // Pagination
+    searchStr = "",
+    setSearchStr = () => {},
     // other
     children,
 }: SubMasterContextProviderProps) => {
@@ -90,6 +93,9 @@ const SubMasterContextProvider = ({
                 loader,
                 onChangeSequence,
                 onConfirmSequence,
+                // Pagination
+                searchStr,
+                setSearchStr,
             }}
         >
             {children}

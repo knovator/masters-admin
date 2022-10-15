@@ -22,7 +22,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
     const sortConfigRef = useRef<SortConfigType>(defaultSort)
 
     const { baseUrl, token, dataGetter, paginationGetter, onError, onLogout, onSuccess } = useProviderState()
-    const { currentPage, offsetRef, limitRef, currentPageRef } = usePagination({
+    const { currentPage, offsetRef, limitRef, currentPageRef, searchStr, setSearchStr, searchRef } = usePagination({
         defaultLimit,
     })
 
@@ -60,7 +60,6 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
                 })
                 if (response?.code === "SUCCESS") {
                     setLoading(false)
-                    if (search) currentPageRef.current = 1
                     setTotalPages(paginationGetter(response).totalPages)
                     setTotalRecords(paginationGetter(response).totalDocs)
                     return setList(dataGetter(response))
@@ -205,7 +204,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
     }
     const onChangeCurrentPage = (page: number): void => {
         currentPageRef.current = page
-        getMastersList()
+        getMastersList(searchRef.current)
     }
     useEffect(() => {
         getMastersList()
@@ -237,6 +236,10 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
         onCloseForm,
         onDataSubmit,
         onCofirmDeleteMaster,
+
+        // Search
+        searchStr,
+        setSearchStr,
     }
 }
 
