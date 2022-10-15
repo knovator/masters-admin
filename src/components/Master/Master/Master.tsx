@@ -75,6 +75,8 @@ const Master = ({
         onCloseForm,
         onDataSubmit,
         onCofirmDeleteMaster,
+        searchStr,
+        setSearchStr,
     } = useMaster({
         defaultLimit: Array.isArray(limits) && limits.length > 0 ? limits[0] : DEFAULT_LIMIT,
         routes,
@@ -115,6 +117,8 @@ const Master = ({
                 canDelete={permissions?.destroy}
                 getMastersList={getMastersList}
                 canPartialUpdate={permissions?.partialUpdate}
+                searchStr={searchStr}
+                setSearchStr={setSearchStr}
             >
                 {children ? (
                     children

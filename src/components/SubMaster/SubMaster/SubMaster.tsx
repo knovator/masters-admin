@@ -87,6 +87,9 @@ const SubMaster = ({
         onCofirmDeleteMaster,
         onImageUpload,
         onImageRemove,
+        // pagination
+        searchStr,
+        setSearchStr,
     } = useSubMaster({
         defaultLimit: Array.isArray(limits) && limits.length > 0 ? limits[0] : DEFAULT_LIMIT,
         routes,
@@ -134,6 +137,9 @@ const SubMaster = ({
                 canPartialUpdate={permissions?.partialUpdate}
                 onChangeSequence={onChangeSequence}
                 onConfirmSequence={onConfirmSequence}
+                // Pagination
+                searchStr={searchStr}
+                setSearchStr={setSearchStr}
             >
                 {children ? (
                     children

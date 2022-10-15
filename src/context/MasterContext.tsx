@@ -42,6 +42,8 @@ const MasterContextProvider = ({
     canDelete = false,
     canPartialUpdate = false,
     loader = undefined,
+    searchStr = "",
+    setSearchStr = () => {},
     // other
     children,
 }: MasterContextProviderProps) => {
@@ -78,6 +80,9 @@ const MasterContextProvider = ({
                 canDelete,
                 canPartialUpdate,
                 loader,
+                // pagination
+                searchStr,
+                setSearchStr,
             }}
         >
             {children}
