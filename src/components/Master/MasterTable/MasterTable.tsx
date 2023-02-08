@@ -49,7 +49,7 @@ const MasterTable = ({ columns, actions }: TableWrapperProps) => {
             }
         }
         // Appending Table Actions, if actions not specified or actions object is provided
-        if (typeof actions === "undefined" || !!actions) {
+        if ((tableActions.showDelete && canUpdate) || (tableActions.showUpdate && canDelete)) {
             let modification: ColumnSchemaType = {
                 Header: t("common:actions"),
                 accessor: "actions",
