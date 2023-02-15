@@ -7,12 +7,13 @@ import { build_path } from "../utils/util"
 
 interface UseMasterProps {
     defaultLimit: number
+    imageBaseUrl?: string
     routes?: Routes_Input
     defaultSort?: SortConfigType
     preConfirmDelete?: (data: { row: any }) => Promise<boolean>
 }
 
-const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmDelete }: UseMasterProps) => {
+const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfirmDelete, imageBaseUrl }: UseMasterProps) => {
     const [list, setList] = useState<any[]>([])
     const [loading, setLoading] = useState(false)
     const [totalPages, setTotalPages] = useState(0)
@@ -135,6 +136,9 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
         if (formState === "ADD") {
             finalData.parentCode = selectedMaster?.code
             finalData.parentId = selectedMaster?.id
+        }
+        if(finalData.img && typeof finalData.img !== "string") {
+            finalData.img = finalData.img?._id || finalData.img?.id
         }
         let code = formState === "ADD" ? CALLBACK_CODES.CREATE : CALLBACK_CODES.UPDATE
         try {
@@ -289,7 +293,7 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
                 let responseData = response?.data[0] || response?.data
                 return {
                     fileId: responseData?._id || responseData?.id,
-                    fileUrl: build_path(baseUrl, responseData?.uri),
+                    fileUrl: build_path(imageBaseUrl ? imageBaseUrl : baseUrl, responseData?.uri),
                 }
             } else onError(CALLBACK_CODES.IMAGE_REMOVE, response.code, response.message)
         } catch (error) {

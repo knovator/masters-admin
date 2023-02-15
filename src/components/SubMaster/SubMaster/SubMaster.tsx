@@ -30,6 +30,7 @@ const SubMaster = ({
     preConfirmDelete,
     loader,
     children,
+    imageBaseUrl,
     permissions = DEFAULT_PERMISSIONS,
     explicitForm,
     t,
@@ -94,6 +95,7 @@ const SubMaster = ({
         defaultLimit: Array.isArray(limits) && limits.length > 0 ? limits[0] : DEFAULT_LIMIT,
         routes,
         defaultSort,
+        imageBaseUrl,
         preConfirmDelete,
     })
 
@@ -103,6 +105,7 @@ const SubMaster = ({
                 // Translation
                 t={derivedT}
                 // Form
+                imageBaseUrl={imageBaseUrl}
                 loading={loading}
                 formState={formState}
                 onChangeFormState={onChangeFormState}
