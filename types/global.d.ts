@@ -39,6 +39,7 @@ interface SubMasterProps extends React.PropsWithChildren {
     routes?: Routes_Input
     loader?: JSX.Element
     explicitForm?: boolean
+    imageBaseUrl?: string
     t?: TFunc
     permissions?: PermissionsObj
     preConfirmDelete?: (data: { row: any }) => Promise<boolean>
@@ -205,6 +206,7 @@ interface MasterContextType {
 interface SubMasterContextType {
     t: (key: string) => string
     // Form
+    imageBaseUrl?: string
     formState: FormActionTypes | undefined
     closeForm: () => void
     onDataSubmit: (data: any) => void

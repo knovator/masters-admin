@@ -14,6 +14,7 @@ const SubMasterContextProvider = ({
             } as any
         )[key]),
     // Form
+    imageBaseUrl = '',
     formState = "",
     closeForm = () => {},
     loading = false,
@@ -59,6 +60,7 @@ const SubMasterContextProvider = ({
             value={{
                 t,
                 // Form
+                imageBaseUrl,
                 closeForm,
                 formState,
                 loading,
