@@ -118,7 +118,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
                 routes,
                 action: formState === "ADD" ? "CREATE" : "UPDATE",
                 module: "masters",
-                id: itemData?.id,
+                id: itemData?._id,
             })
             let response = await request({
                 baseUrl,
@@ -170,7 +170,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
                     url: api.url,
                     onError: handleError(CALLBACK_CODES.DELETE),
                     data: {
-                        id: itemData?.id,
+                        id: itemData?._id || itemData?.id,
                     },
                 })
                 if (response?.code === "SUCCESS") {
