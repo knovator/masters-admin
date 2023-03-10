@@ -26,7 +26,7 @@ const Lister = ({ render, selectFirst }: ListerProps) => {
                     })}
                     role="button"
                     onKeyDown={() => setSelectedMaster(item)}
-                    key={item.id}
+                    key={item._id || item.id}
                 >
                     <div className="kms_list-item-highlight">{item?.name?.charAt(0)}</div>
                     <div>

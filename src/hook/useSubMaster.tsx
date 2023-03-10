@@ -135,9 +135,9 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
         let finalData = { ...data }
         if (formState === "ADD") {
             finalData.parentCode = selectedMaster?.code
-            finalData.parentId = selectedMaster?.id
+            finalData.parentId = selectedMaster?._id || selectedMaster?.id
         }
-        if(finalData.img && typeof finalData.img !== "string") {
+        if (finalData.img && typeof finalData.img !== "string") {
             finalData.img = finalData.img?._id || finalData.img?.id
         }
         let code = formState === "ADD" ? CALLBACK_CODES.CREATE : CALLBACK_CODES.UPDATE
@@ -146,7 +146,7 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
                 routes,
                 action: formState === "ADD" ? "CREATE" : "UPDATE",
                 module: "masters",
-                id: itemData?.id,
+                id: itemData?._id || itemData?.id,
             })
             let response = await request({
                 baseUrl,
@@ -198,7 +198,7 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
                     url: api.url,
                     onError: handleError(CALLBACK_CODES.DELETE),
                     data: {
-                        id: itemData?.id,
+                        id: itemData?._id || itemData?.id,
                     },
                 })
                 if (response?.code === "SUCCESS") {
