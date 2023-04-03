@@ -92,6 +92,10 @@ const MasterTable = ({ columns, actions }: TableWrapperProps) => {
             }
         })
 
+        if (!canPartialUpdate) {
+            modifiedColumns = modifiedColumns.filter((column) => column.accessor !== "isActive")
+        }
+
         setTableColumns(modifiedColumns)
     }, [actions, canDelete, canUpdate, columns, defaultColumns, onChangeFormState, updateClosure])
 
