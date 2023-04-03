@@ -162,6 +162,10 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
                 ),
             })
 
+        if (!canPartialUpdate) {
+            modifiedColumns = modifiedColumns.filter((column) => column.accessor !== "isActive")
+        }
+
         setTableColumns(modifiedColumns)
     }, [
         actions,
