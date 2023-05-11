@@ -52,6 +52,7 @@
 - `accessor` => string to access data value from object
 - `id` (*optional*) => unique id
 - `sortable` (*optional*) => boolean value indicates, if user can sort column
+- `refetchOnUpdate` (*optional*) => Flag to refetch list when update happens by calling `onUpdate(data)`
 - `Cell` (*optional*) => `({ row, onUpdate }) => JSX.Element`
     - `row` is record currently accessing
     - `onUpdate(data)` callback function to execute to perform update
