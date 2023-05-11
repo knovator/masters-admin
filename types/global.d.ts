@@ -100,6 +100,7 @@ type ColumnSchemaType = {
     accessor: string
     id?: string
     sortable?: boolean
+    refetchOnUpdate?: boolean
     Cell?: (data: TableSchemaCellArgs) => any
 }
 type ColumnsSchema = ColumnSchemaType[]
@@ -229,7 +230,7 @@ interface SubMasterContextType {
     // Table
     sortConfig: SortConfigType
     setSortConfig: (config: SortConfigType) => void
-    onUpdate: (id: string, data: any) => Promise<void>
+    onUpdate: (id: string, data: any, refetchOnUpdate?: boolean) => Promise<void>
     sortable: boolean
     columns: ColumnsSchema
     data: any[]
