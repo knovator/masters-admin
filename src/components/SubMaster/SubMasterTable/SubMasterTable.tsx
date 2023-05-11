@@ -35,10 +35,10 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
     const [tableColumns, setTableColumns] = useState<ColumnsSchema>([])
 
     const updateClosure = useCallback(
-        (item: any, key: string) => {
+        (item: any, key: string, refetchOnUpdate?: boolean) => {
             return function (value: string) {
                 if (onUpdate && canPartialUpdate) {
-                    onUpdate(item._id, { [key]: value })
+                    onUpdate(item._id, { [key]: value }, refetchOnUpdate)
                 }
             }
         },
@@ -106,7 +106,7 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
                     if (column.Cell)
                         return column.Cell({
                             row: row.original,
-                            onUpdate: updateClosure(row.original, column.accessor),
+                            onUpdate: updateClosure(row.original, column.accessor, column.refetchOnUpdate),
                         })
                     else return String(row.original[column.accessor] || "")
                 },

@@ -107,7 +107,7 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
         getSubMastersList()
     }
     const partialUpdate = useCallback(
-        async (id: string, data: any) => {
+        async (id: string, data: any, refetchOnUpdate?: boolean) => {
             try {
                 let api = getApiType({ routes, action: "UPDATE", module: "masters", id })
                 let response = await request({
@@ -120,7 +120,8 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
                 })
                 if (response?.code === "SUCCESS") {
                     onSuccess(CALLBACK_CODES.UPDATE, response.code, response.message)
-                    setList((oldList) => oldList.map((item) => (item._id === id ? { ...item, ...data } : item)))
+                    if (refetchOnUpdate) getSubMastersList()
+                    else setList((oldList) => oldList.map((item) => (item._id === id ? { ...item, ...data } : item)))
                 } else {
                     onError(CALLBACK_CODES.UPDATE, response.code, response.message)
                 }
