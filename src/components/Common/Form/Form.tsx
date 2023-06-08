@@ -9,6 +9,7 @@ interface FormProps {
     schema: SchemaType[]
     data?: any
     isUpdating?: boolean
+    languages?: LanguageType[]
     indicatesRequired?: string
     onSubmit: (data: any) => void
     ref: MutableRefObject<HTMLFormElement | null>
@@ -16,7 +17,14 @@ interface FormProps {
 
 const Form = forwardRef<HTMLFormElement | null, FormProps>(
     (
-        { schema, onSubmit, data, isUpdating = false, indicatesRequired = TRANSLATION_PAIRS_COMMON.indicatesRequired },
+        {
+            schema,
+            onSubmit,
+            data,
+            isUpdating = false,
+            languages,
+            indicatesRequired = TRANSLATION_PAIRS_COMMON.indicatesRequired,
+        },
         ref,
     ) => {
         const {
@@ -77,6 +85,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(
                                 rest={register(schema.accessor, schema.validations || {})}
                                 className="kms_w-full"
                                 disabled={isUpdating && typeof schema.editable !== "undefined" && !schema.editable}
+                                isRequired={schema.isRequired}
                             />
                         )
                         break
@@ -90,24 +99,43 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(
                                 disabled={isUpdating && schema.editable}
                                 className="kms_w-full kms_p-2"
                                 placeholder={schema.placeholder}
+                                isRequired={schema.isRequired}
                             />
                         )
                         break
                     case "text":
                     case "number":
                     default:
-                        input = (
-                            <Input
-                                rest={register(schema.accessor, schema.validations || {})}
-                                label={schema.label}
-                                onInput={schema.onInput}
-                                error={errors[schema.accessor]?.message}
-                                type={schema.type}
-                                className="kms_w-full kms_p-2"
-                                placeholder={schema.placeholder}
-                                disabled={isUpdating && typeof schema.editable !== "undefined" && !schema.editable}
-                            />
-                        )
+                        if (Array.isArray(languages) && languages.length > 0 && schema.accessor === "names") {
+                            input = languages.map((lang) => (
+                                <Input
+                                    key={lang.code}
+                                    rest={register(`${schema.accessor}.${lang.code}`, schema.validations || {})}
+                                    label={schema.label + " (" + lang.name + ")"}
+                                    onInput={schema.onInput}
+                                    error={errors[schema.accessor]?.message}
+                                    isRequired={schema.isRequired}
+                                    // @ts-ignore
+                                    type={schema.type}
+                                    className="kms_w-full kms_p-2"
+                                    placeholder={schema.placeholder + " (" + lang.name + ")"}
+                                    disabled={isUpdating && typeof schema.editable !== "undefined" && !schema.editable}
+                                />
+                            ))
+                        } else
+                            input = (
+                                <Input
+                                    rest={register(schema.accessor, schema.validations || {})}
+                                    label={schema.label}
+                                    onInput={schema.onInput}
+                                    isRequired={schema.isRequired}
+                                    error={errors[schema.accessor]?.message}
+                                    type={schema.type}
+                                    className="kms_w-full kms_p-2"
+                                    placeholder={schema.placeholder}
+                                    disabled={isUpdating && typeof schema.editable !== "undefined" && !schema.editable}
+                                />
+                            )
                         break
                 }
             } else if (schema.Input) {
@@ -158,7 +186,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(
                     <React.Fragment key={i}>{inputRenderer(schema)}</React.Fragment>
                 ))}
                 <p>
-                    <b>*</b> {indicatesRequired}
+                    <b className="kms_required_astrisk">*</b> {indicatesRequired}
                 </p>
             </form>
         )

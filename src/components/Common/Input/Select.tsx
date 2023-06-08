@@ -1,10 +1,25 @@
 import React from "react"
 import classNames from "classnames"
 
-const Select = ({ onChange, value, rest, label, error, options = [], className, disabled }: SelectProps) => {
+const Select = ({
+    onChange,
+    value,
+    rest,
+    label,
+    error,
+    options = [],
+    className,
+    isRequired,
+    disabled,
+}: SelectProps) => {
     return (
         <div className="kms_input-wrapper">
-            {label && <label className="kms_input-label">{label}</label>}
+            {label && (
+                <label className="kms_input-label">
+                    {label}
+                    {isRequired && <span className="kms_required_astrisk"> *</span>}
+                </label>
+            )}
             <select
                 data-testid={`input-select-${label}`}
                 value={value}

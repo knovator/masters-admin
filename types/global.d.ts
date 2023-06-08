@@ -180,6 +180,7 @@ interface MasterContextType {
     loading: boolean
     canAdd: boolean
     canUpdate: boolean
+    languages: LanguageType[]
     // Pagination
     currentPage: number
     setCurrentPage: (page: number) => void
@@ -207,6 +208,7 @@ interface MasterContextType {
 interface SubMasterContextType {
     t: (key: string) => string
     // Form
+    languages: LanguageType[]
     imageBaseUrl?: string
     formState: FormActionTypes | undefined
     closeForm: () => void
@@ -250,7 +252,7 @@ type onDelete = ({ data, confirmDelete }: { data: any; confirmDelete: () => void
 // \ End of Context
 
 // API
-type ACTION_TYPES = "IMAGE_UPLOAD" | "IMAGE_REMOVE" | "CREATE" | "LIST" | "DELETE" | "UPDATE" | "SEQUENCE"
+type ACTION_TYPES = "IMAGE_UPLOAD" | "IMAGE_REMOVE" | "CREATE" | "LIST" | "DELETE" | "UPDATE" | "SEQUENCE" | "LANGUAGES"
 
 interface BaseAPIProps {
     config?: any
@@ -284,6 +286,7 @@ interface InputRendererProps {
 interface SchemaType {
     label?: string
     accessor: string
+    isRequired?: boolean
     Input?: (props: InputRendererProps) => JSX.Element
     validations?: import("react-hook-form").RegisterOptions
     editable?: boolean
@@ -341,6 +344,7 @@ interface InputProps {
     className?: string
     wrapperClassName?: string
     disabled?: boolean
+    isRequired?: boolean
 }
 interface CheckboxProps {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -359,6 +363,7 @@ interface SelectProps {
     options?: { value: string; label: string }[]
     className?: string
     disabled?: boolean
+    isRequired?: boolean
 }
 interface TextareaProps {
     value?: string | number
@@ -370,6 +375,7 @@ interface TextareaProps {
     error?: string
     disabled?: boolean
     className?: string
+    isRequired?: boolean
 }
 // \ End of Components
 
@@ -383,3 +389,5 @@ interface PermissionsObj {
 }
 
 type TFunc = (key: string) => string
+
+type LanguageType = { name: string; code: string }

@@ -18,6 +18,7 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
     const [totalRecords, setTotalRecords] = useState(0)
     const [itemData, setItemData] = useState<any | null>(null)
     const [formState, setFormState] = useState<FormActionTypes>()
+    const [languages, setLanguages] = useState<LanguageType[]>([])
 
     const sortConfigRef = useRef<SortConfigType>(defaultSort)
 
@@ -82,6 +83,22 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
             token,
         ],
     )
+    const getLanguagesList = useCallback(async () => {
+        try {
+            let api = getApiType({ routes, action: "LANGUAGES", module: "masters" })
+            let response = await request({
+                baseUrl,
+                token,
+                method: api.method,
+                url: api.url,
+                onError: handleError(CALLBACK_CODES.GET_ALL),
+            })
+            if (response?.code === "SUCCESS") {
+                setLanguages(response.data)
+                return response.data
+            }
+        } catch (error) {}
+    }, [baseUrl, dataGetter, handleError, routes, token])
     const onChangeSortConfig = (data: SortConfigType) => {
         sortConfigRef.current = data
         getMastersList()
@@ -208,14 +225,16 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
     }
     useEffect(() => {
         getMastersList()
+        getLanguagesList()
     }, [])
 
     return {
         list,
-        getMastersList,
         loading,
+        languages,
         setLoading,
         partialUpdate,
+        getMastersList,
 
         // Pagination
         pageSize: limitRef.current,

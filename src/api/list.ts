@@ -28,6 +28,10 @@ const apiList = {
         url: `admin/${module}/partial-update/sequence`,
         method: "PATCH",
     }),
+    LANGUAGES: ({ module }: API_INPUT_TYPE) => ({
+        url: `admin/${module}/languages`,
+        method: "GET",
+    }),
 }
 
 export default apiList

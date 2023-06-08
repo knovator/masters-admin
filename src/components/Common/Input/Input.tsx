@@ -12,11 +12,17 @@ const Input = ({
     label = "",
     error,
     className,
+    isRequired,
     wrapperClassName = "",
 }: InputProps) => {
     return (
         <div className={classNames("kms_input-wrapper", wrapperClassName)}>
-            {label && <label className="kms_input-label">{label}</label>}
+            {label && (
+                <label className="kms_input-label">
+                    {label}
+                    {isRequired && <span className="kms_required_astrisk"> *</span>}
+                </label>
+            )}
             <input
                 data-testid={`input-${type}-${label}`}
                 className={classNames("kms_input", className)}

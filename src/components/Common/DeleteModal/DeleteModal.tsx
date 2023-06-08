@@ -7,18 +7,18 @@ import { TRANSLATION_PAIRS_COMMON } from "../../../constants/common"
 interface DeleteModalProps {
     formState: FormActionTypes | undefined
     onClose: () => void
-    itemData: any
     onConfirmDelete: () => void
     permanentlyDelete?: string
     lossOfData?: string
     pleaseType?: string
     toProceedOrCancel?: string
     confirm?: string
+    name?: string
 }
 const DeleteModal = ({
     formState,
     onClose,
-    itemData,
+    name,
     onConfirmDelete,
     permanentlyDelete = TRANSLATION_PAIRS_COMMON.permanentlyDelete,
     lossOfData = TRANSLATION_PAIRS_COMMON.lossOfData,
@@ -34,13 +34,13 @@ const DeleteModal = ({
         <Modal open={formState === "DELETE"} onClose={onClose} title="Confirmation Required">
             <div className="kms_delete-header">
                 <p>
-                    {permanentlyDelete} <b>{itemData?.name}</b>
+                    {permanentlyDelete} <b>{name}</b>
                 </p>
             </div>
             <div className="kms_delete-content">
                 <p>{lossOfData}</p>
                 <p className="kms_delete-note">
-                    {pleaseType} <b className="text-black font-bold">{itemData?.name}</b> {toProceedOrCancel}
+                    {pleaseType} <b className="text-black font-bold">{name}</b> {toProceedOrCancel}
                 </p>
             </div>
             <div className="kms_delete-actions">
@@ -52,7 +52,7 @@ const DeleteModal = ({
                     onChange={(e) => setUserInput(e.target.value)}
                 />
                 <div className="kms_delete-buttons">
-                    <Button label={confirm} disabled={userInput !== itemData?.name} onClick={onConfirmDelete} />
+                    <Button label={confirm} disabled={userInput !== name} onClick={onConfirmDelete} />
                 </div>
             </div>
         </Modal>

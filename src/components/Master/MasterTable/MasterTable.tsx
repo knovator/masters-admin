@@ -19,6 +19,7 @@ const MasterTable = ({ columns, actions }: TableWrapperProps) => {
         canList,
         canUpdate,
         canPartialUpdate,
+        languages,
         t,
     } = useMasterState()
     const [tableColumns, setTableColumns] = useState<ColumnsSchema>([])
@@ -36,6 +37,24 @@ const MasterTable = ({ columns, actions }: TableWrapperProps) => {
 
     const verifyAndUpdateColumns = useCallback(() => {
         let modifiedColumns = [...(columns ? columns : defaultColumns)]
+        if (Array.isArray(languages) && languages.length > 0) {
+            let nameColumn = modifiedColumns.find((column) => column.accessor === "name")
+            if (nameColumn) {
+                modifiedColumns = modifiedColumns.filter((column) => column.accessor !== "name")
+                let newColumns = []
+                for (let language of languages) {
+                    newColumns.push({
+                        ...nameColumn,
+                        accessor: `names.${language.code}`,
+                        Header: `${nameColumn.Header} (${language.name})`,
+                        Cell: ({ row }: any) => {
+                            return String(row.names?.[language.code] || "")
+                        },
+                    })
+                }
+                modifiedColumns.unshift(...newColumns)
+            }
+        }
 
         // Handling Table Actions
         let tableActions: TableActionTypes = {
@@ -97,11 +116,11 @@ const MasterTable = ({ columns, actions }: TableWrapperProps) => {
         }
 
         setTableColumns(modifiedColumns)
-    }, [actions, canDelete, canUpdate, columns, defaultColumns, onChangeFormState, updateClosure])
+    }, [actions, canDelete, canUpdate, columns, defaultColumns, onChangeFormState, updateClosure, languages])
 
     useEffect(() => {
         verifyAndUpdateColumns()
-    }, [columns, defaultColumns, verifyAndUpdateColumns])
+    }, [columns, defaultColumns, verifyAndUpdateColumns, languages])
 
     if (Array.isArray(data) && canList) {
         return (

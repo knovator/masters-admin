@@ -62,6 +62,7 @@ const SubMaster = ({
     const formRef = useRef<HTMLFormElement>(null)
     const {
         list,
+        languages,
         getSubMastersList,
         loading,
         partialUpdate,
@@ -105,6 +106,7 @@ const SubMaster = ({
                 // Translation
                 t={derivedT}
                 // Form
+                languages={languages}
                 imageBaseUrl={imageBaseUrl}
                 loading={loading}
                 formState={formState}
@@ -168,7 +170,11 @@ const SubMaster = ({
 
                 <DeleteModal
                     formState={formState}
-                    itemData={itemData}
+                    name={
+                        Array.isArray(languages) && languages.length > 0
+                            ? itemData?.names?.[languages[0].code]
+                            : itemData?.name
+                    }
                     onClose={onCloseForm}
                     onConfirmDelete={onCofirmDeleteMaster}
                 />

@@ -58,6 +58,7 @@ const Master = ({
     const {
         list,
         loading,
+        languages,
         partialUpdate,
         totalPages,
         totalRecords,
@@ -90,6 +91,7 @@ const Master = ({
                 t={derivedT}
                 // Form
                 loading={loading}
+                languages={languages}
                 formState={formState}
                 onChangeFormState={onChangeFormState}
                 closeForm={onCloseForm}
@@ -150,7 +152,11 @@ const Master = ({
 
                 <DeleteModal
                     formState={formState}
-                    itemData={itemData}
+                    name={
+                        Array.isArray(languages) && languages.length > 0
+                            ? itemData?.names?.[languages[0].code]
+                            : itemData?.name
+                    }
                     onClose={onCloseForm}
                     onConfirmDelete={onCofirmDeleteMaster}
                 />

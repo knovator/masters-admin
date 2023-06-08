@@ -423,4 +423,7 @@ background-position: center; */
 .kms_w-10 {
     @apply w-10;
 }
+.kms_required_astrisk {
+    @apply text-red-500;
+}
 /* \End of Utility */

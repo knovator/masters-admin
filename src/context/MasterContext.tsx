@@ -14,6 +14,7 @@ const MasterContextProvider = ({
             } as any
         )[key]),
     // Form
+    languages = [],
     formState = "",
     closeForm = () => {},
     loading = false,
@@ -52,6 +53,7 @@ const MasterContextProvider = ({
             value={{
                 t,
                 // Form
+                languages,
                 closeForm,
                 formState,
                 loading,
