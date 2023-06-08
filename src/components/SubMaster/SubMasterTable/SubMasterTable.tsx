@@ -13,6 +13,7 @@ import { useSubMasterState } from "../../../context/SubMasterContext"
 const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
     const { selectedMaster } = useProviderState()
     const {
+        languages,
         onUpdate,
         sortable,
         sortConfig,
@@ -57,6 +58,24 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
     const verifyAndUpdateColumns = useCallback(() => {
         let len = Array.isArray(data) ? data.length : 0
         let modifiedColumns = [...(columns ? columns : defaultColumns)]
+        if (Array.isArray(languages) && languages.length > 0) {
+            let nameColumn = modifiedColumns.find((column) => column.accessor === "name")
+            if (nameColumn) {
+                modifiedColumns = modifiedColumns.filter((column) => column.accessor !== "name")
+                let newColumns = []
+                for (let language of languages) {
+                    newColumns.push({
+                        ...nameColumn,
+                        accessor: `names.${language.code}`,
+                        Header: `${nameColumn.Header} (${language.name})`,
+                        Cell: ({ row }: any) => {
+                            return String(row.names?.[language.code] || "")
+                        },
+                    })
+                }
+                modifiedColumns.unshift(...newColumns)
+            }
+        }
 
         // Handling Table Actions
         let tableActions: TableActionTypes = {

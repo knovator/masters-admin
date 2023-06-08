@@ -208,6 +208,7 @@ interface MasterContextType {
 interface SubMasterContextType {
     t: (key: string) => string
     // Form
+    languages: LanguageType[]
     imageBaseUrl?: string
     formState: FormActionTypes | undefined
     closeForm: () => void

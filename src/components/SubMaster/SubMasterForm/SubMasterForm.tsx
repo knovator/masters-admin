@@ -7,12 +7,24 @@ import { useProviderState } from "../../../context/ProviderContext"
 
 const SubMasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ schema }, ref) => {
     const { baseUrl } = useProviderState()
-    const { onDataSubmit, updateData, formState, canAdd, canUpdate, onImageUpload, t, onImageRemove, imageBaseUrl } = useSubMasterState()
+    const {
+        onDataSubmit,
+        updateData,
+        formState,
+        languages,
+        canAdd,
+        canUpdate,
+        onImageUpload,
+        t,
+        onImageRemove,
+        imageBaseUrl,
+    } = useSubMasterState()
     const defaultSchema: SchemaType[] = [
         {
-            label: `${t("name")}*`,
-            accessor: "name",
+            label: `${t("name")}`,
+            accessor: Array.isArray(languages) && languages.length > 0 ? "names" : "name",
             type: "text",
+            isRequired: true,
             placeholder: t("enterName"),
             onInput: handleCapitalize,
             validations: {
@@ -20,9 +32,10 @@ const SubMasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ 
             },
         },
         {
-            label: `${t("code")}*`,
+            label: `${t("code")}`,
             accessor: "code",
             type: "text",
+            isRequired: true,
             onInput: handleCode,
             editable: false,
             placeholder: t("enterCode"),
@@ -56,7 +69,7 @@ const SubMasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ 
                     setImgId={(value) => {
                         field.onChange(value)
                     }}
-                    baseUrl={imageBaseUrl ? imageBaseUrl :baseUrl}
+                    baseUrl={imageBaseUrl ? imageBaseUrl : baseUrl}
                     text={
                         <>
                             <div className="kms_img-text-wrapper">
@@ -95,6 +108,7 @@ const SubMasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ 
             schema={schema ? schema : defaultSchema}
             onSubmit={onDataSubmit}
             ref={ref}
+            languages={languages}
             data={updateData}
             isUpdating={formState === "UPDATE"}
         />

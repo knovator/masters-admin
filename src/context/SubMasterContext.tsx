@@ -14,7 +14,8 @@ const SubMasterContextProvider = ({
             } as any
         )[key]),
     // Form
-    imageBaseUrl = '',
+    languages = [],
+    imageBaseUrl = "",
     formState = "",
     closeForm = () => {},
     loading = false,
@@ -60,6 +61,7 @@ const SubMasterContextProvider = ({
             value={{
                 t,
                 // Form
+                languages,
                 imageBaseUrl,
                 closeForm,
                 formState,
