@@ -5,23 +5,25 @@ import { useMasterState } from "../../../context/MasterContext"
 import { Form } from "../../../components/Common"
 
 const MasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ schema }, ref) => {
-    const { onDataSubmit, updateData, formState, canAdd, canUpdate, t } = useMasterState()
+    const { onDataSubmit, updateData, formState, canAdd, canUpdate, t, languages } = useMasterState()
     const defaultSchema: SchemaType[] = [
         {
-            label: `${t("name")}*`,
-            accessor: "name",
+            label: `${t("name")}`,
+            accessor: Array.isArray(languages) && languages.length > 0 ? "names" : "name",
             type: "text",
             placeholder: t("enterName"),
             onInput: handleCapitalize,
+            isRequired: true,
             validations: {
                 required: t("requiredName"),
             },
         },
         {
-            label: `${t("code")}*`,
+            label: `${t("code")}`,
             accessor: "code",
             type: "text",
             onInput: handleCode,
+            isRequired: true,
             editable: false,
             placeholder: t("enterCode"),
             validations: {
@@ -64,6 +66,7 @@ const MasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ sch
             onSubmit={onDataSubmit}
             ref={ref}
             data={updateData}
+            languages={languages}
             isUpdating={formState === "UPDATE"}
         />
     )

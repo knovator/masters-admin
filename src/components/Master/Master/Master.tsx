@@ -58,6 +58,7 @@ const Master = ({
     const {
         list,
         loading,
+        languages,
         partialUpdate,
         totalPages,
         totalRecords,
@@ -90,6 +91,7 @@ const Master = ({
                 t={derivedT}
                 // Form
                 loading={loading}
+                languages={languages}
                 formState={formState}
                 onChangeFormState={onChangeFormState}
                 closeForm={onCloseForm}

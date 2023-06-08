@@ -11,10 +11,16 @@ const Textarea = ({
     error,
     disabled,
     className,
+    isRequired,
 }: TextareaProps) => {
     return (
         <div className="kms_input-wrapper">
-            {label && <label className="kms_input-label">{label}</label>}
+            {label && (
+                <label className="kms_input-label">
+                    {label}
+                    {isRequired && <span className="kms_required_astrisk"> *</span>}
+                </label>
+            )}
             <textarea
                 data-testid={`input-textarea-${label}`}
                 className={classNames("kms_input", className)}
