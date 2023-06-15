@@ -37,22 +37,21 @@ const MasterTable = ({ columns, actions }: TableWrapperProps) => {
 
     const verifyAndUpdateColumns = useCallback(() => {
         let modifiedColumns = [...(columns ? columns : defaultColumns)]
-        if (Array.isArray(languages) && languages.length > 0) {
-            let nameColumn = modifiedColumns.find((column) => column.accessor === "name")
-            if (nameColumn) {
-                modifiedColumns = modifiedColumns.filter((column) => column.accessor !== "name")
+        if (Array.isArray(languages) && languages.length > 0 && !columns) {
+            let nameColumnIndex = modifiedColumns.findIndex((column) => column.accessor === "name")
+            if (nameColumnIndex !== -1) {
                 let newColumns = []
                 for (let language of languages) {
                     newColumns.push({
-                        ...nameColumn,
+                        ...modifiedColumns[nameColumnIndex],
                         accessor: `names.${language.code}`,
-                        Header: `${nameColumn.Header} (${language.name})`,
+                        Header: `Display (${language.name})`,
                         Cell: ({ row }: any) => {
                             return String(row.names?.[language.code] || "")
                         },
                     })
                 }
-                modifiedColumns.unshift(...newColumns)
+                modifiedColumns.splice(nameColumnIndex + 1, 0, ...newColumns)
             }
         }
 

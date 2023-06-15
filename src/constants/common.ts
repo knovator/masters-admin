@@ -36,6 +36,8 @@ const TRANSLATION_PAIRS_SUBMASTERS = {
     sequence: "Sequence", // Table
     name: "Name", // Table, Form
     enterName: "Enter Name", // Name Placeholder
+    names: "Display Name",
+    enterNames: "Enter Display Name",
     requiredName: "Name is Required", // Name field Required Message
     code: "Code", // Table, Form Field Label
     enterCode: "Enter Code", // Code Placeholder
@@ -59,6 +61,8 @@ const TRANSLATION_PAIRS_MASTERS = {
     searchMaster: "Search Masters",
     name: "Name", // Table, Form
     enterName: "Enter Name", // Form Placeholder
+    names: "Display Name",
+    enterNames: "Enter Display Name",
     requiredName: "Name is Required", // Name Required Validation
     code: "Code", // Table, Form
     enterCode: "Enter Code", // Form Placeholder

@@ -118,7 +118,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(
                                     // @ts-ignore
                                     type={schema.type}
                                     className="kms_w-full kms_p-2"
-                                    placeholder={schema.placeholder + " (" + lang.name + ")"}
+                                    placeholder={(schema.placeholder || "") + " (" + lang.name + ")"}
                                     disabled={isUpdating && typeof schema.editable !== "undefined" && !schema.editable}
                                 />
                             ))
