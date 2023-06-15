@@ -152,11 +152,7 @@ const Master = ({
 
                 <DeleteModal
                     formState={formState}
-                    name={
-                        Array.isArray(languages) && languages.length > 0
-                            ? itemData?.names?.[languages[0].code]
-                            : itemData?.name
-                    }
+                    name={itemData?.name}
                     onClose={onCloseForm}
                     onConfirmDelete={onCofirmDeleteMaster}
                 />

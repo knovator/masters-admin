@@ -22,15 +22,26 @@ const SubMasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ 
     const defaultSchema: SchemaType[] = [
         {
             label: `${t("name")}`,
-            accessor: Array.isArray(languages) && languages.length > 0 ? "names" : "name",
+            accessor: "name",
             type: "text",
-            isRequired: true,
             placeholder: t("enterName"),
             onInput: handleCapitalize,
+            isRequired: true,
             validations: {
                 required: t("requiredName"),
             },
         },
+        ...(Array.isArray(languages) && languages.length > 0
+            ? [
+                  {
+                      label: `${t("names")}`,
+                      accessor: "names",
+                      type: "text",
+                      placeholder: t("enterNames"),
+                      onInput: handleCapitalize,
+                  } as SchemaType,
+              ]
+            : []),
         {
             label: `${t("code")}`,
             accessor: "code",

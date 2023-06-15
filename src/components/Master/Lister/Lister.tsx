@@ -5,7 +5,7 @@ import { useProviderState } from "../../../context/ProviderContext"
 
 const Lister = ({ render, selectFirst }: ListerProps) => {
     const { setSelectedMaster, selectedMaster } = useProviderState()
-    const { data, loading, loader, canList, languages } = useMasterState()
+    const { data, loading, loader, canList } = useMasterState()
 
     useEffect(() => {
         if (selectFirst && Array.isArray(data) && data.length > 0) {
@@ -30,11 +30,7 @@ const Lister = ({ render, selectFirst }: ListerProps) => {
                 >
                     <div className="kms_list-item-highlight">{item?.name?.charAt(0)}</div>
                     <div>
-                        <p className="kms_list-item-heading">
-                            {languages && languages.length > 0
-                                ? `${languages[0].name} - ${item.names?.[languages[0].code] || ""}`
-                                : item?.name}
-                        </p>
+                        <p className="kms_list-item-heading">{item?.name}</p>
                         <p className="kms_list-item-subheading">{item?.code || ""}</p>
                     </div>
                 </div>
