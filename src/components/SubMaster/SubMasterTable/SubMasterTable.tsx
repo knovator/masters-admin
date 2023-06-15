@@ -58,7 +58,7 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
     const verifyAndUpdateColumns = useCallback(() => {
         let len = Array.isArray(data) ? data.length : 0
         let modifiedColumns = [...(columns ? columns : defaultColumns)]
-        if (Array.isArray(languages) && languages.length > 0 && columns && columns?.length === 0) {
+        if (Array.isArray(languages) && languages.length > 0 && !columns) {
             let nameColumnIndex = modifiedColumns.findIndex((column) => column.accessor === "name")
             if (nameColumnIndex !== -1) {
                 let newColumns = []
