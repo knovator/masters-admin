@@ -59,7 +59,7 @@ const Table = ({
                 {loading && loader ? (
                     <div className="kms_table-height">{loader}</div>
                 ) : (
-                    <table className="kms_table" {...getTableProps()}>
+                    <table className={`kms_table ${data.length > 0 ? "" : "empty-table"}`} {...getTableProps()}>
                         <thead className="kms_thead">
                             {headerGroups.map((headerGroup, i) => (
                                 <tr {...headerGroup.getHeaderGroupProps()} key={i}>
@@ -92,7 +92,7 @@ const Table = ({
                                     )
                                 })
                             ) : (
-                                <tr>
+                                <tr className="empty-row">
                                     <td colSpan={columns?.length || 0}>{noDataText}</td>
                                 </tr>
                             )}
