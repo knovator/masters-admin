@@ -18,11 +18,11 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
     const [totalRecords, setTotalRecords] = useState(0)
     const [itemData, setItemData] = useState<any | null>(null)
     const [formState, setFormState] = useState<FormActionTypes>()
-    const [languages, setLanguages] = useState<LanguageType[]>([])
 
     const sortConfigRef = useRef<SortConfigType>(defaultSort)
 
-    const { baseUrl, token, dataGetter, paginationGetter, onError, onLogout, onSuccess } = useProviderState()
+    const { baseUrl, token, dataGetter, paginationGetter, onError, onLogout, onSuccess, setLanguages } =
+        useProviderState()
     const { currentPage, offsetRef, limitRef, currentPageRef, searchStr, setSearchStr, searchRef } = usePagination({
         defaultLimit,
     })
@@ -231,7 +231,6 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
     return {
         list,
         loading,
-        languages,
         setLoading,
         partialUpdate,
         getMastersList,

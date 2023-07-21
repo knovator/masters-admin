@@ -35,7 +35,7 @@ const SubMaster = ({
     explicitForm,
     t,
 }: SubMasterProps) => {
-    const { switchClass } = useProviderState()
+    const { switchClass, selectedMaster, languages } = useProviderState()
     const derivedT = createTranslation(t, { ...TRANSLATION_PAIRS_SUBMASTERS, ...TRANSLATION_PAIRS_COMMON })
     const columns = [
         {
@@ -58,11 +58,9 @@ const SubMaster = ({
             },
         },
     ]
-    const { selectedMaster } = useProviderState()
     const formRef = useRef<HTMLFormElement>(null)
     const {
         list,
-        languages,
         getSubMastersList,
         loading,
         partialUpdate,

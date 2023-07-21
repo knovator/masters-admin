@@ -35,7 +35,7 @@ const Master = ({
     t = undefined,
     permissions = DEFAULT_PERMISSIONS,
 }: MasterProps) => {
-    const { switchClass } = useProviderState()
+    const { switchClass, languages } = useProviderState()
     const derivedT = createTranslation(t, { ...TRANSLATION_PAIRS_MASTERS, ...TRANSLATION_PAIRS_COMMON })
     const formRef = useRef<HTMLFormElement | null>(null)
     const columns = [
@@ -58,7 +58,6 @@ const Master = ({
     const {
         list,
         loading,
-        languages,
         partialUpdate,
         totalPages,
         totalRecords,
