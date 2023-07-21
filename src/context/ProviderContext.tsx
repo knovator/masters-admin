@@ -14,6 +14,7 @@ const Provider = ({
     switchClass = "kms_switch",
 }: ProviderContextProviderProps) => {
     const [selectedMaster, setSelectedMaster] = useState()
+    const [languages, setLanguages] = useState<LanguageType[]>([])
     let ctxDataGetter = typeof dataGetter === "function" ? dataGetter : (response: any) => response?.data?.docs
     let ctxPaginatonGetter =
         typeof paginationGetter === "function" ? paginationGetter : (response: any) => response?.data
@@ -22,6 +23,8 @@ const Provider = ({
             value={{
                 baseUrl,
                 token,
+                languages,
+                setLanguages,
                 dataGetter: ctxDataGetter,
                 paginationGetter: ctxPaginatonGetter,
                 onError,

@@ -162,6 +162,8 @@ interface ProviderContextType {
     token: string | (() => Promise<string>)
     selectedMaster: any
     switchClass: string
+    languages: LanguageType[]
+    setLanguages: (languages: LanguageType[]) => void
     setSelectedMaster: (data: any) => void
     dataGetter: (response: any) => any[]
     paginationGetter: (response: any) => any

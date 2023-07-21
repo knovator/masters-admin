@@ -21,7 +21,6 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
     const [sequencing, setSequencing] = useState(false)
     const [itemData, setItemData] = useState<any | null>(null)
     const [formState, setFormState] = useState<FormActionTypes>()
-    const [languages, setLanguages] = useState<LanguageType[]>([])
 
     const sortConfigRef = useRef<SortConfigType>(defaultSort)
 
@@ -103,22 +102,7 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
             dataGetter,
         ],
     )
-    const getLanguagesList = useCallback(async () => {
-        try {
-            let api = getApiType({ routes, action: "LANGUAGES", module: "masters" })
-            let response = await request({
-                baseUrl,
-                token,
-                method: api.method,
-                url: api.url,
-                onError: handleError(CALLBACK_CODES.GET_ALL),
-            })
-            if (response?.code === "SUCCESS") {
-                setLanguages(response.data)
-                return response.data
-            }
-        } catch (error) {}
-    }, [baseUrl, dataGetter, handleError, routes, token])
+
     const onChangeSortConfig = (data: SortConfigType) => {
         sortConfigRef.current = data
         getSubMastersList()
@@ -367,13 +351,9 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
             getSubMastersList()
         }
     }, [selectedMaster])
-    useEffect(() => {
-        getLanguagesList()
-    }, [])
 
     return {
         list,
-        languages,
         getSubMastersList,
         loading,
         setLoading,
