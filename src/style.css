@@ -103,6 +103,18 @@
 .kms_input-wrapper {
     @apply text-left;
 }
+.kms_search-input-wrapper {
+    @apply relative flex items-center;
+}
+.kms_search-icon {
+    @apply absolute left-3;
+}
+.kms_search-icon svg {
+    @apply text-gray-300;
+}
+.kms_search-input {
+    @apply min-h-[40px] focus:outline-none px-3 leading-none rounded-md focus:ring-1 transition border pl-10;
+}
 .kms_input-error {
     @apply mt-1 text-sm text-red-500;
 }

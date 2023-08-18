@@ -25,7 +25,7 @@ const SubMasterSearch = () => {
     }
 
     return (
-        <Input
+        <Input.SearchInput
             type="search"
             value={search}
             onChange={(e) => onChangeSearch(e.target.value)}
