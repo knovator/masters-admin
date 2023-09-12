@@ -7,17 +7,6 @@ import { Form } from "../../../components/Common"
 const MasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ schema }, ref) => {
     const { onDataSubmit, updateData, formState, canAdd, canUpdate, t, languages } = useMasterState()
     const defaultSchema: SchemaType[] = [
-        {
-            label: `${t("name")}`,
-            accessor: "name",
-            type: "text",
-            placeholder: t("enterName"),
-            onInput: handleCapitalize,
-            isRequired: true,
-            validations: {
-                required: t("requiredName"),
-            },
-        },
         ...(Array.isArray(languages) && languages.length > 0
             ? [
                   {
@@ -26,9 +15,25 @@ const MasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ sch
                       type: "text",
                       placeholder: t("enterNames"),
                       onInput: handleCapitalize,
+                      isRequired: true,
+                      validations: {
+                          required: t("requiredName"),
+                      },
                   } as SchemaType,
               ]
-            : []),
+            : [
+                  {
+                      label: `${t("name")}`,
+                      accessor: "name",
+                      type: "text",
+                      placeholder: t("enterName"),
+                      onInput: handleCapitalize,
+                      isRequired: true,
+                      validations: {
+                          required: t("requiredName"),
+                      },
+                  } as SchemaType,
+              ]),
         {
             label: `${t("code")}`,
             accessor: "code",
