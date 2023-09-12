@@ -20,17 +20,6 @@ const SubMasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ 
         imageBaseUrl,
     } = useSubMasterState()
     const defaultSchema: SchemaType[] = [
-        {
-            label: `${t("name")}`,
-            accessor: "name",
-            type: "text",
-            placeholder: t("enterName"),
-            onInput: handleCapitalize,
-            isRequired: true,
-            validations: {
-                required: t("requiredName"),
-            },
-        },
         ...(Array.isArray(languages) && languages.length > 0
             ? [
                   {
@@ -39,9 +28,25 @@ const SubMasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ 
                       type: "text",
                       placeholder: t("enterNames"),
                       onInput: handleCapitalize,
+                      isRequired: true,
+                      validations: {
+                          required: t("requiredName"),
+                      },
                   } as SchemaType,
               ]
-            : []),
+            : [
+                  {
+                      label: `${t("name")}`,
+                      accessor: "name",
+                      type: "text",
+                      placeholder: t("enterName"),
+                      onInput: handleCapitalize,
+                      isRequired: true,
+                      validations: {
+                          required: t("requiredName"),
+                      },
+                  } as SchemaType,
+              ]),
         {
             label: `${t("code")}`,
             accessor: "code",

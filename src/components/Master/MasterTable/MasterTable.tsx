@@ -45,13 +45,13 @@ const MasterTable = ({ columns, actions }: TableWrapperProps) => {
                     newColumns.push({
                         ...modifiedColumns[nameColumnIndex],
                         accessor: `names.${language.code}`,
-                        Header: `Display (${language.name})`,
+                        Header: `Name (${language.name})`,
                         Cell: ({ row }: any) => {
                             return String(row.names?.[language.code] || "")
                         },
                     })
                 }
-                modifiedColumns.splice(nameColumnIndex + 1, 0, ...newColumns)
+                modifiedColumns.splice(nameColumnIndex, 1, ...newColumns)
             }
         }
 

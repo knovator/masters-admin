@@ -113,7 +113,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(
                                     rest={register(`${schema.accessor}.${lang.code}`, schema.validations || {})}
                                     label={schema.label + " (" + lang.name + ")"}
                                     onInput={schema.onInput}
-                                    error={errors[schema.accessor]?.message}
+                                    error={errors[schema.accessor]?.[lang.code]?.message}
                                     isRequired={schema.isRequired}
                                     // @ts-ignore
                                     type={schema.type}
