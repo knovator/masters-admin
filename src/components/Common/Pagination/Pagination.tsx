@@ -9,10 +9,14 @@ const Pagination = ({
     setCurrentPage,
     totalRecords,
     limits,
-    pageLabel = "Page",
-    nextLabel = "Next",
-    previousLabel = "Previous",
     disabledPagination,
+
+    pageText,
+    showText,
+    showingText,
+    ofText,
+    nextContent,
+    previousContent,
 }: PaginationProps) => {
     const pageHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
@@ -33,16 +37,17 @@ const Pagination = ({
     return (
         <div className="kms_pagination">
             <div>
-                {(currentPage - 1) * pageSize + 1} - {Math.min(currentPage * pageSize, totalRecords)} of {totalRecords}
+                {showingText} {(currentPage - 1) * pageSize + 1} - {Math.min(currentPage * pageSize, totalRecords)}{" "}
+                {ofText} {totalRecords}
             </div>
             <div className="kms_pagination-actions">
                 <Button
-                    label={previousLabel}
+                    label={previousContent}
                     onClick={() => setCurrentPage(currentPage - 1)}
                     disabled={currentPage - 1 === 0 || !!disabledPagination}
                 />
                 <div className="kms_pagination-pager">
-                    {pageLabel}
+                    {pageText}
                     <input
                         className="kms_input kms_input-sm kms_w-10"
                         maxLength={3}
@@ -65,13 +70,13 @@ const Pagination = ({
                     >
                         {limits.map((pageSize) => (
                             <option key={pageSize} value={pageSize}>
-                                Show {pageSize}
+                                {showText} {pageSize}
                             </option>
                         ))}
                     </select>
                 ) : null}
                 <Button
-                    label={nextLabel}
+                    label={nextContent}
                     onClick={() => setCurrentPage(currentPage + 1)}
                     disabled={currentPage === totalPages || !!disabledPagination}
                 />

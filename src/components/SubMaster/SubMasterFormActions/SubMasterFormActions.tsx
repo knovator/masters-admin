@@ -5,8 +5,8 @@ import { useProviderState } from "../../../context/ProviderContext"
 import { CALLBACK_CODES } from "../../../constants/common"
 
 const SubMasterFormActions = ({ formRef }: FormActionWrapperProps) => {
-    const { onError } = useProviderState()
-    const { formState, closeForm, loading, canAdd, canUpdate, t } = useSubMasterState()
+    const { onError, commonTranslations } = useProviderState()
+    const { formState, closeForm, loading, canAdd, canUpdate } = useSubMasterState()
     const onSubmitClick = (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (!formRef) {
             return onError(CALLBACK_CODES.INTERNAL, "error", `formRef is required to submit the form!`)
@@ -26,7 +26,7 @@ const SubMasterFormActions = ({ formRef }: FormActionWrapperProps) => {
     return (
         <FormActions
             loading={loading}
-            primaryLabel={formState === "ADD" ? t("addSubMaster") : t("updateSubMaster")}
+            primaryLabel={formState === "ADD" ? commonTranslations.create : commonTranslations.update}
             onPrimaryButtonClick={onSubmitClick}
             onSecondaryButtonClick={closeForm}
         />

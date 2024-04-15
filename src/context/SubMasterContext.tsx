@@ -1,18 +1,15 @@
 import React, { createContext, useContext } from "react"
-import { PAGE_LIMITS, TRANSLATION_PAIRS_COMMON, TRANSLATION_PAIRS_SUBMASTERS } from "../constants/common"
+import { PAGE_LIMITS, TRANSLATION_PAIRS_SUBMASTERS } from "../constants/common"
 
-interface SubMasterContextProviderProps extends React.PropsWithChildren, Partial<SubMasterContextType> {}
+interface SubMasterContextProviderProps
+    extends React.PropsWithChildren,
+        Omit<SubMasterContextType, "submasterTranslations"> {
+    submasterTranslations?: Partial<SubmasterTranslations>
+}
 
 const SubMasterContext = createContext<SubMasterContextType | null>(null)
 
 const SubMasterContextProvider = ({
-    t = (key: string) =>
-        ((
-            {
-                ...TRANSLATION_PAIRS_COMMON,
-                ...TRANSLATION_PAIRS_SUBMASTERS,
-            } as any
-        )[key]),
     // Form
     languages = [],
     imageBaseUrl = "",
@@ -53,13 +50,13 @@ const SubMasterContextProvider = ({
     // Pagination
     searchStr = "",
     setSearchStr = () => {},
+    submasterTranslations,
     // other
     children,
 }: SubMasterContextProviderProps) => {
     return (
         <SubMasterContext.Provider
             value={{
-                t,
                 // Form
                 languages,
                 imageBaseUrl,
@@ -100,6 +97,10 @@ const SubMasterContextProvider = ({
                 // Pagination
                 searchStr,
                 setSearchStr,
+                submasterTranslations: {
+                    ...TRANSLATION_PAIRS_SUBMASTERS,
+                    ...submasterTranslations,
+                },
             }}
         >
             {children}

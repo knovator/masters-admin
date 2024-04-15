@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from "react"
-
+import { TRANSLATION_PAIRS_COMMON } from "../constants/common"
 const ProviderContext = createContext<ProviderContextType | null>(null)
 
 const Provider = ({
@@ -11,6 +11,7 @@ const Provider = ({
     onError = () => {},
     onSuccess = () => {},
     onLogout = () => {},
+    translations,
     switchClass = "kms_switch",
 }: ProviderContextProviderProps) => {
     const [selectedMaster, setSelectedMaster] = useState()
@@ -33,6 +34,10 @@ const Provider = ({
                 selectedMaster,
                 setSelectedMaster,
                 switchClass,
+                commonTranslations: {
+                    ...TRANSLATION_PAIRS_COMMON,
+                    ...translations,
+                },
             }}
         >
             {children}

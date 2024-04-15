@@ -34,45 +34,20 @@ const TRANSLATION_PAIRS_SUBMASTERS = {
     dragDrop: "or drag and drop",
     allowedFormat: "PNG, JPG, SVG up to 2 MB",
     sequence: "Sequence", // Table
-    name: "Name", // Table, Form
-    enterName: "Enter Name", // Name Placeholder
-    names: "Name",
-    enterNames: "Enter Name",
-    requiredName: "Name is Required", // Name field Required Message
-    code: "Code", // Table, Form Field Label
-    enterCode: "Enter Code", // Code Placeholder
-    requiredCode: "Code is Required", // Code required message
-    webDisplay: "Web Display", // Form, Web Display Field
-    enterWebDisplay: "Enter Web Display", // Web Display Placeholder
-    active: "Active", // Table
-    description: "Discription", // Form,
-    enterDescription: "Enter Discription", // Field placeholder
+
     cover: "Cover Image",
     searchSubMasters: "Search Sub Masters", // Search Placeholder
     addSubMaster: "Add Sub Master", // Add Button, Sidebar Title
     updateSubMaster: "Edit Sub Master", // Edit Button, Sidebar Title
-    "submaster:noDataText": "No data found! Click on 'Add Sub Master' to add one.", // No Data Text
-    "submaster:selectMaster": "select 'Master' to see respective 'SubMasters'", // Select Master Message
+    noDataText: "No data found! Click on 'Add Sub Master' to add one.", // No Data Text
+    selectMaster: "select 'Master' to see respective 'SubMasters'", // Select Master Message
 }
 
 const TRANSLATION_PAIRS_MASTERS = {
     addMaster: "Add Master",
     updateMaster: "Edit Master",
     searchMaster: "Search Masters",
-    name: "Name", // Table, Form
-    enterName: "Enter Name", // Form Placeholder
-    names: "Name",
-    enterNames: "Enter Name",
-    requiredName: "Name is Required", // Name Required Validation
-    code: "Code", // Table, Form
-    enterCode: "Enter Code", // Form Placeholder
-    requiredCode: "Code is Required", // Code Required Validation
-    webDisplay: "Web Display", // Form, Web Display Field
-    enterWebDisplay: "Enter Web Display", // Web Display Placeholder
-    description: "Discription", // Form,
-    enterDiscription: "Enter Description", // Description Placeholder
-    active: "Active",
-    "master:noDataText": "No data found! Click on 'Add Master' to add one.", // No Data Text
+    noDataText: "No data found! Click on 'Add Master' to add one.", // No Data Text
 }
 
 const TRANSLATION_PAIRS_COMMON = {
@@ -82,12 +57,36 @@ const TRANSLATION_PAIRS_COMMON = {
     pleaseType: "Please type",
     toProceedOrCancel: "to processed or close this modal to cancel.",
     confirm: "Confirm",
-    "common:actions": "Actions",
-    "common:cancel": "Cancel",
     page: "Page",
     next: "Next",
     previous: "Previous",
     indicatesRequired: "Indicates fields are required",
+
+    confirmationRequired: "Confirmation Required",
+    cancel: "Cancel",
+    yes: "Yes",
+    delete: "Delete",
+    create: "Create",
+    update: "Update",
+    show: "Show",
+    showing: "Showing",
+    of: "of",
+    typeHerePlaceholder: "Type Here",
+
+    code: "Code",
+    codePlaceholder: "Enter code",
+    codeRequired: "Code is required",
+    name: "Name",
+    namePlaceholder: "Enter name",
+    nameRequired: "Name is required",
+
+    webDisplay: "Web Display", // Form, Web Display Field
+    enterWebDisplay: "Enter Web Display", // Web Display Placeholder
+    description: "Discription", // Form,
+    enterDescription: "Enter Discription", // Field placeholder
+
+    active: "Active",
+    actions: "Actions",
 }
 
 export {

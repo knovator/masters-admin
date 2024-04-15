@@ -3,7 +3,7 @@ import { Input } from "../../../components/Common"
 import { useMasterState } from "../../../context/MasterContext"
 
 const MasterSearch = () => {
-    const { setSearchStr, t, setCurrentPage } = useMasterState()
+    const { setSearchStr, masterTranslations, setCurrentPage } = useMasterState()
     const callerRef = useRef<NodeJS.Timeout | null>(null)
     const [search, setSearch] = useState<string>("")
 
@@ -22,7 +22,7 @@ const MasterSearch = () => {
             type="search"
             value={search}
             onChange={(e) => onChangeSearch(e.target.value)}
-            placeholder={t("searchMaster")}
+            placeholder={masterTranslations.searchMaster}
         />
     )
 }

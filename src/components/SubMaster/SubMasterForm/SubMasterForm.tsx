@@ -6,7 +6,7 @@ import { capitalizeFirstLetter, changeToCode } from "../../../utils/util"
 import { useProviderState } from "../../../context/ProviderContext"
 
 const SubMasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ schema }, ref) => {
-    const { baseUrl } = useProviderState()
+    const { baseUrl, commonTranslations } = useProviderState()
     const {
         onDataSubmit,
         updateData,
@@ -15,7 +15,7 @@ const SubMasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ 
         canAdd,
         canUpdate,
         onImageUpload,
-        t,
+        submasterTranslations,
         onImageRemove,
         imageBaseUrl,
     } = useSubMasterState()
@@ -23,58 +23,58 @@ const SubMasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ 
         ...(Array.isArray(languages) && languages.length > 0
             ? [
                   {
-                      label: `${t("names")}`,
+                      label: commonTranslations.name,
                       accessor: "names",
                       type: "text",
-                      placeholder: t("enterNames"),
+                      placeholder: commonTranslations.namePlaceholder,
                       onInput: handleCapitalize,
                       isRequired: true,
                       validations: {
-                          required: t("requiredName"),
+                          required: commonTranslations.nameRequired,
                       },
                   } as SchemaType,
               ]
             : [
                   {
-                      label: `${t("name")}`,
+                      label: commonTranslations.name,
                       accessor: "name",
                       type: "text",
-                      placeholder: t("enterName"),
+                      placeholder: commonTranslations.namePlaceholder,
                       onInput: handleCapitalize,
                       isRequired: true,
                       validations: {
-                          required: t("requiredName"),
+                          required: commonTranslations.nameRequired,
                       },
                   } as SchemaType,
               ]),
         {
-            label: `${t("code")}`,
+            label: commonTranslations.code,
             accessor: "code",
             type: "text",
             isRequired: true,
             onInput: handleCode,
             editable: false,
-            placeholder: t("enterCode"),
+            placeholder: commonTranslations.codePlaceholder,
             validations: {
-                required: t("requiredCode"),
+                required: commonTranslations.codeRequired,
             },
         },
         {
-            label: t("webDisplay"),
+            label: commonTranslations.webDisplay,
             accessor: "webDsply",
             type: "text",
             onInput: handleCapitalize,
-            placeholder: t("enterWebDisplay"),
+            placeholder: commonTranslations.enterWebDisplay,
         },
         {
-            label: t("description"),
+            label: commonTranslations.description,
             accessor: "desc",
             type: "textarea",
             onInput: handleCapitalize,
-            placeholder: t("enterDescription"),
+            placeholder: commonTranslations.enterDescription,
         },
         {
-            label: t("cover"),
+            label: submasterTranslations.cover,
             accessor: "img",
             Input: ({ field, error, setError }) => (
                 <ImageUpload
@@ -90,11 +90,11 @@ const SubMasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ 
                         <>
                             <div className="kms_img-text-wrapper">
                                 <label htmlFor="file-upload" className="kms_img-text-label">
-                                    <span>{t("uploadFile")}</span>
+                                    <span>{submasterTranslations.uploadFile}</span>
                                 </label>
-                                <p className="kms_img-text-1">{t("dragDrop")}</p>
+                                <p className="kms_img-text-1">{submasterTranslations.dragDrop}</p>
                             </div>
-                            <p className="kms_img-text-2">{t("allowedFormat")}</p>
+                            <p className="kms_img-text-2">{submasterTranslations.allowedFormat}</p>
                         </>
                     }
                     onImageUpload={onImageUpload}
@@ -104,7 +104,7 @@ const SubMasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ 
             ),
         },
         {
-            label: t("active"),
+            label: commonTranslations.active,
             accessor: "isActive",
             type: "checkbox",
             defaultValue: true,

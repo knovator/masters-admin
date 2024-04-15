@@ -5,7 +5,6 @@ import useSubMaster from "../../../hook/useSubMaster"
 import { Drawer, DeleteModal } from "../../../components/Common"
 import SubMasterContextProvider from "../../../context/SubMasterContext"
 import { useProviderState } from "../../../context/ProviderContext"
-import { createTranslation } from "../../../utils/util"
 import {
     DEFAULT_LIMIT,
     PAGE_LIMITS,
@@ -33,25 +32,26 @@ const SubMaster = ({
     imageBaseUrl,
     permissions = DEFAULT_PERMISSIONS,
     explicitForm,
-    t,
+    translations,
 }: SubMasterProps) => {
+    const { commonTranslations } = useProviderState()
     const { switchClass, selectedMaster, languages } = useProviderState()
-    const derivedT = createTranslation(t, { ...TRANSLATION_PAIRS_SUBMASTERS, ...TRANSLATION_PAIRS_COMMON })
+    const combinedTranslations = { ...TRANSLATION_PAIRS_SUBMASTERS, ...translations }
     const columns = [
         {
-            Header: derivedT("sequence"),
+            Header: combinedTranslations.sequence,
             accessor: "seq",
         },
         {
-            Header: derivedT("name"),
+            Header: commonTranslations.name,
             accessor: "name",
         },
         {
-            Header: derivedT("code"),
+            Header: commonTranslations.code,
             accessor: "code",
         },
         {
-            Header: derivedT("active"),
+            Header: commonTranslations.active,
             accessor: "isActive",
             Cell({ row, onUpdate }: any) {
                 return <ToggleBtn isChecked={row.isActive} onChange={onUpdate} switchClass={switchClass} />
@@ -101,8 +101,6 @@ const SubMaster = ({
     return (
         <div>
             <SubMasterContextProvider
-                // Translation
-                t={derivedT}
                 // Form
                 languages={languages}
                 imageBaseUrl={imageBaseUrl}
@@ -143,6 +141,7 @@ const SubMaster = ({
                 // Pagination
                 searchStr={searchStr}
                 setSearchStr={setSearchStr}
+                submasterTranslations={translations}
             >
                 {children ? (
                     children
@@ -159,7 +158,11 @@ const SubMaster = ({
                     <Drawer
                         open={formState === "ADD" || formState === "UPDATE"}
                         onClose={onCloseForm}
-                        title={formState === "ADD" ? derivedT("addSubMaster") : derivedT("updateSubMaster")}
+                        title={
+                            formState === "ADD"
+                                ? combinedTranslations.addSubMaster
+                                : combinedTranslations.updateSubMaster
+                        }
                         footerContent={<SubMasterFormActions formRef={formRef} />}
                     >
                         <SubMasterForm ref={formRef} />
@@ -171,6 +174,12 @@ const SubMaster = ({
                     name={itemData?.name}
                     onClose={onCloseForm}
                     onConfirmDelete={onCofirmDeleteMaster}
+                    confirm={commonTranslations.confirm}
+                    confirmationRequired={commonTranslations.confirmationRequired}
+                    lossOfData={commonTranslations.lossOfData}
+                    permanentlyDelete={commonTranslations.permanentlyDelete}
+                    pleaseType={commonTranslations.pleaseType}
+                    toProceedOrCancel={commonTranslations.toProceedOrCancel}
                 />
             </SubMasterContextProvider>
         </div>

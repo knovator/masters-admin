@@ -1,18 +1,13 @@
 import React, { createContext, useContext } from "react"
-import { PAGE_LIMITS, TRANSLATION_PAIRS_COMMON, TRANSLATION_PAIRS_MASTERS } from "../constants/common"
+import { PAGE_LIMITS, TRANSLATION_PAIRS_MASTERS } from "../constants/common"
 
-interface MasterContextProviderProps extends React.PropsWithChildren, Partial<MasterContextType> {}
+interface MasterContextProviderProps extends React.PropsWithChildren, Omit<MasterContextType, "masterTranslations"> {
+    masterTranslations?: Partial<MasterTranslations>
+}
 
 const MasterContext = createContext<MasterContextType | null>(null)
 
 const MasterContextProvider = ({
-    t = (key: string) =>
-        ((
-            {
-                ...TRANSLATION_PAIRS_MASTERS,
-                ...TRANSLATION_PAIRS_COMMON,
-            } as any
-        )[key]),
     // Form
     languages = [],
     formState = "",
@@ -44,6 +39,7 @@ const MasterContextProvider = ({
     canPartialUpdate = false,
     loader = undefined,
     searchStr = "",
+    masterTranslations,
     setSearchStr = () => {},
     // other
     children,
@@ -51,7 +47,6 @@ const MasterContextProvider = ({
     return (
         <MasterContext.Provider
             value={{
-                t,
                 // Form
                 languages,
                 closeForm,
@@ -85,6 +80,10 @@ const MasterContextProvider = ({
                 // pagination
                 searchStr,
                 setSearchStr,
+                masterTranslations: {
+                    ...TRANSLATION_PAIRS_MASTERS,
+                    ...masterTranslations,
+                },
             }}
         >
             {children}

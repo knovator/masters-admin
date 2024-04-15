@@ -11,7 +11,7 @@ import { useProviderState } from "../../../context/ProviderContext"
 import { useSubMasterState } from "../../../context/SubMasterContext"
 
 const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
-    const { selectedMaster } = useProviderState()
+    const { selectedMaster, commonTranslations } = useProviderState()
     const {
         languages,
         onUpdate,
@@ -28,7 +28,7 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
         canUpdate,
         canPartialUpdate,
         onChangeSequence,
-        t,
+        submasterTranslations,
         sequencing,
         setSequencing,
         onConfirmSequence,
@@ -66,7 +66,7 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
                     newColumns.push({
                         ...modifiedColumns[nameColumnIndex],
                         accessor: `names.${language.code}`,
-                        Header: `Name (${language.name})`,
+                        Header: `${commonTranslations.name} (${language.name})`,
                         Cell: ({ row }: any) => {
                             return String(row.names?.[language.code] || "")
                         },
@@ -90,7 +90,7 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
         // Appending Table Actions, if actions not specified or actions object is provided
         if ((tableActions.showDelete && canUpdate) || (tableActions.showUpdate && canDelete)) {
             let modification: ColumnSchemaType = {
-                Header: t("common:actions"),
+                Header: commonTranslations.actions,
                 accessor: "actions",
                 Cell({ row }) {
                     return (
@@ -214,7 +214,7 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
                 loading={loading}
                 onMove={updateSequence}
                 dragEnable={sequencing}
-                noDataText={selectedMaster ? t("submaster:noDataText") : t("submaster:selectMaster")}
+                noDataText={selectedMaster ? submasterTranslations.noDataText : submasterTranslations.selectMaster}
             />
         )
     }

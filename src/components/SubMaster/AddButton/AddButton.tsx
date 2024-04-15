@@ -4,8 +4,14 @@ import { useSubMasterState } from "../../../context/SubMasterContext"
 
 
 const AddButton = () => {
-    const { onChangeFormState, canAdd, t } = useSubMasterState()
-    return <Button label={t("addSubMaster")} onClick={() => onChangeFormState("ADD")} disabled={!canAdd} />
+    const { onChangeFormState, canAdd, submasterTranslations } = useSubMasterState()
+    return (
+        <Button
+            label={submasterTranslations.addSubMaster}
+            onClick={() => onChangeFormState("ADD")}
+            disabled={!canAdd}
+        />
+    )
 }
 
 export default AddButton
