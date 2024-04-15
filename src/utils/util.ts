@@ -44,10 +44,3 @@ export const build_path = (...args: string[]) => {
         .filter((x) => x.length)
         .join("/")
 }
-
-export function createTranslation(t: TFunc | undefined, obj: Record<string, string>) {
-    return function (key: string): string {
-        if (typeof t === "function") return t(key)
-        return obj[key] || ""
-    }
-}

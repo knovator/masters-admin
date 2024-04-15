@@ -3,65 +3,67 @@ import { capitalizeFirstLetter, changeToCode } from "../../../utils/util"
 import { useMasterState } from "../../../context/MasterContext"
 
 import { Form } from "../../../components/Common"
+import { useProviderState } from "../../../context/ProviderContext"
 
 const MasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ schema }, ref) => {
-    const { onDataSubmit, updateData, formState, canAdd, canUpdate, t, languages } = useMasterState()
+    const { commonTranslations } = useProviderState()
+    const { onDataSubmit, updateData, formState, canAdd, canUpdate, masterTranslations, languages } = useMasterState()
     const defaultSchema: SchemaType[] = [
         ...(Array.isArray(languages) && languages.length > 0
             ? [
                   {
-                      label: `${t("names")}`,
+                      label: commonTranslations.name,
                       accessor: "names",
                       type: "text",
-                      placeholder: t("enterNames"),
+                      placeholder: commonTranslations.namePlaceholder,
                       onInput: handleCapitalize,
                       isRequired: true,
                       validations: {
-                          required: t("requiredName"),
+                          required: commonTranslations.nameRequired,
                       },
                   } as SchemaType,
               ]
             : [
                   {
-                      label: `${t("name")}`,
+                      label: commonTranslations.name,
                       accessor: "name",
                       type: "text",
-                      placeholder: t("enterName"),
+                      placeholder: commonTranslations.namePlaceholder,
                       onInput: handleCapitalize,
                       isRequired: true,
                       validations: {
-                          required: t("requiredName"),
+                          required: commonTranslations.nameRequired,
                       },
                   } as SchemaType,
               ]),
         {
-            label: `${t("code")}`,
+            label: commonTranslations.code,
             accessor: "code",
             type: "text",
             onInput: handleCode,
             isRequired: true,
             editable: false,
-            placeholder: t("enterCode"),
+            placeholder: commonTranslations.codePlaceholder,
             validations: {
-                required: t("requiredCode"),
+                required: commonTranslations.codeRequired,
             },
         },
         {
-            label: t("webDisplay"),
+            label: commonTranslations.webDisplay,
             accessor: "webDsply",
             type: "text",
             onInput: handleCapitalize,
-            placeholder: t("enterWebDisplay"),
+            placeholder: commonTranslations.enterWebDisplay,
         },
         {
-            label: t("description"),
+            label: commonTranslations.description,
             accessor: "desc",
             type: "textarea",
             onInput: handleCapitalize,
-            placeholder: t("enterDiscription"),
+            placeholder: commonTranslations.enterDescription,
         },
         {
-            label: t("active"),
+            label: commonTranslations.active,
             accessor: "isActive",
             type: "checkbox",
             defaultValue: true,

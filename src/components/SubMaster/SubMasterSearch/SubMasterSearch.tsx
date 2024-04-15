@@ -5,7 +5,7 @@ import { useSubMasterState } from "../../../context/SubMasterContext"
 
 const SubMasterSearch = () => {
     const { selectedMaster } = useProviderState()
-    const { setSearchStr, t, setCurrentPage } = useSubMasterState()
+    const { setSearchStr, submasterTranslations, setCurrentPage } = useSubMasterState()
     const callerRef = useRef<NodeJS.Timeout | null>(null)
     const [search, setSearch] = useState<string>("")
 
@@ -29,7 +29,7 @@ const SubMasterSearch = () => {
             type="search"
             value={search}
             onChange={(e) => onChangeSearch(e.target.value)}
-            placeholder={t("searchSubMasters")}
+            placeholder={submasterTranslations.searchSubMasters}
         />
     )
 }

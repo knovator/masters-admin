@@ -40,7 +40,7 @@ interface SubMasterProps extends React.PropsWithChildren {
     loader?: JSX.Element
     explicitForm?: boolean
     imageBaseUrl?: string
-    t?: TFunc
+    translations?: Partial<SubmasterTranslations>
     permissions?: PermissionsObj
     preConfirmDelete?: (data: { row: any }) => Promise<boolean>
 }
@@ -58,7 +58,7 @@ interface FormActionWrapperProps {
 }
 
 interface ListerProps {
-    selectFirst?: boolean;
+    selectFirst?: boolean
     render?: ({ row, onClick, masterCode }: { row: any; onClick: () => void; masterCode: string }) => JSX.Element
 }
 
@@ -78,6 +78,7 @@ interface ProviderContextProviderProps
             | "dataGetter"
             | "paginationGetter"
             | "switchClass"
+            | "commonTranslations"
         > {
     onError?: (callback_code: import("../src/constants/common").CALLBACK_CODES, code: string, message: string) => void
     onSuccess?: (callback_code: import("../src/constants/common").CALLBACK_CODES, code: string, message: string) => void
@@ -85,6 +86,7 @@ interface ProviderContextProviderProps
     dataGetter?: (response: any) => any[]
     paginationGetter?: (response: any) => any
     switchClass?: string
+    translations?: Partial<CommonTranslations>
 }
 
 interface TableWrapperProps {
@@ -147,16 +149,53 @@ interface PaginationProps {
     setPageSize: (size: number) => void
     totalRecords: number
     limits: number[]
-    pageLabel?: string
-    nextLabel?: string
-    previousLabel?: string
     disabledPagination?: boolean
+
+    showText: string
+    showingText: string
+    pageText: string
+    ofText: string
+    previousContent: string
+    nextContent: string
 }
 
 type SortConfigType = [string, 1 | -1]
 // \ End of Table & Pagination
 
 // Context
+interface CommonTranslations {
+    permanentlyDelete: string
+    lossOfData: string
+    pleaseType: string
+    toProceedOrCancel: string
+    confirm: string
+    page: string
+    next: string
+    previous: string
+    indicatesRequired: string
+    confirmationRequired: string
+    cancel: string
+    yes: string
+    delete: string
+    create: string
+    update: string
+    show: string
+    showing: string
+    of: string
+    typeHerePlaceholder: string
+    code: string
+    codePlaceholder: string
+    codeRequired: string
+    name: string
+    namePlaceholder: string
+    nameRequired: string
+    webDisplay: string
+    enterWebDisplay: string
+    description: string
+    enterDescription: string
+    active: string
+    actions: string
+}
 interface ProviderContextType {
     baseUrl: string
     token: string | (() => Promise<string>)
@@ -170,9 +209,15 @@ interface ProviderContextType {
     onError: (callback_code: import("../src/constants/common").CALLBACK_CODES, code: string, message: string) => void
     onSuccess: (callback_code: import("../src/constants/common").CALLBACK_CODES, code: string, message: string) => void
     onLogout: () => void
+    commonTranslations: CommonTranslations
+}
+interface MasterTranslations {
+    addMaster: string
+    updateMaster: string
+    searchMaster: string
+    noDataText: string
 }
 interface MasterContextType {
-    t: (key: string) => string
     // Form
     formState: FormActionTypes | undefined
     closeForm: () => void
@@ -206,9 +251,23 @@ interface MasterContextType {
     // Pagination
     searchStr: string
     setSearchStr: (val: string) => void
+    // Translation
+    masterTranslations: MasterTranslations
+}
+interface SubmasterTranslations {
+    uploadFile: string
+    dragDrop: string
+    allowedFormat: string
+    sequence: string
+
+    cover: string
+    searchSubMasters: string
+    addSubMaster: string
+    updateSubMaster: string
+    noDataText: string
+    selectMaster: string
 }
 interface SubMasterContextType {
-    t: (key: string) => string
     // Form
     languages: LanguageType[]
     imageBaseUrl?: string
@@ -249,6 +308,8 @@ interface SubMasterContextType {
     // Pagination
     searchStr: string
     setSearchStr: (val: string) => void
+    // Translation
+    submasterTranslations: SubmasterTranslations
 }
 type onDelete = ({ data, confirmDelete }: { data: any; confirmDelete: () => void }) => any
 // \ End of Context
@@ -310,9 +371,9 @@ interface MasterProps extends React.PropsWithChildren {
     loader?: JSX.Element
     explicitForm?: boolean
     permissions?: PermissionsObj
-    t?: (key: string) => string
     preConfirmDelete?: (data: { row: any }) => Promise<boolean>
     switchClass?: string
+    translations?: Partial<MasterTranslations>
 }
 interface ImageObjectProps {
     _id: string

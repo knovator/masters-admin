@@ -2,16 +2,9 @@ import React, { useRef } from "react"
 
 import ToggleBtn from "../../../widgets/toggle"
 import useMaster from "../../../hook/useMaster"
-import { createTranslation } from "../../../utils/util"
 import { Drawer, DeleteModal } from "../../../components/Common"
 import MasterContextProvider from "../../../context/MasterContext"
-import {
-    DEFAULT_LIMIT,
-    PAGE_LIMITS,
-    DEFAULT_PERMISSIONS,
-    TRANSLATION_PAIRS_MASTERS,
-    TRANSLATION_PAIRS_COMMON,
-} from "../../../constants/common"
+import { DEFAULT_LIMIT, PAGE_LIMITS, DEFAULT_PERMISSIONS, TRANSLATION_PAIRS_MASTERS } from "../../../constants/common"
 
 import Lister from "../Lister"
 import AddButton from "../AddButton"
@@ -32,23 +25,23 @@ const Master = ({
     children,
     preConfirmDelete,
     loader,
-    t = undefined,
+    translations = {},
     permissions = DEFAULT_PERMISSIONS,
 }: MasterProps) => {
-    const { switchClass, languages } = useProviderState()
-    const derivedT = createTranslation(t, { ...TRANSLATION_PAIRS_MASTERS, ...TRANSLATION_PAIRS_COMMON })
+    const { switchClass, languages, commonTranslations } = useProviderState()
+    const combinedTranslations = { ...TRANSLATION_PAIRS_MASTERS, ...translations }
     const formRef = useRef<HTMLFormElement | null>(null)
     const columns = [
         {
-            Header: derivedT("name"),
+            Header: commonTranslations.name,
             accessor: "name",
         },
         {
-            Header: derivedT("code"),
+            Header: commonTranslations.code,
             accessor: "code",
         },
         {
-            Header: derivedT("active"),
+            Header: commonTranslations.active,
             accessor: "isActive",
             Cell({ row, onUpdate }: any) {
                 return <ToggleBtn isChecked={row.isActive} onChange={onUpdate} switchClass={switchClass} />
@@ -87,7 +80,6 @@ const Master = ({
     return (
         <div>
             <MasterContextProvider
-                t={derivedT}
                 // Form
                 loading={loading}
                 languages={languages}
@@ -120,6 +112,7 @@ const Master = ({
                 canPartialUpdate={permissions?.partialUpdate}
                 searchStr={searchStr}
                 setSearchStr={setSearchStr}
+                masterTranslations={translations}
             >
                 {children ? (
                     children
@@ -138,9 +131,9 @@ const Master = ({
                         onClose={onCloseForm}
                         title={
                             formState === "ADD"
-                                ? derivedT("addMaster")
+                                ? combinedTranslations.addMaster
                                 : formState === "UPDATE"
-                                ? derivedT("updateMaster")
+                                ? combinedTranslations.updateMaster
                                 : ""
                         }
                         footerContent={<MasterFormActions formRef={formRef} />}
@@ -154,6 +147,12 @@ const Master = ({
                     name={itemData?.name}
                     onClose={onCloseForm}
                     onConfirmDelete={onCofirmDeleteMaster}
+                    confirm={commonTranslations.confirm}
+                    confirmationRequired={commonTranslations.confirmationRequired}
+                    lossOfData={commonTranslations.lossOfData}
+                    permanentlyDelete={commonTranslations.permanentlyDelete}
+                    pleaseType={commonTranslations.pleaseType}
+                    toProceedOrCancel={commonTranslations.toProceedOrCancel}
                 />
             </MasterContextProvider>
         </div>

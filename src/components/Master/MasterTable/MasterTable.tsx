@@ -3,8 +3,10 @@ import { useMasterState } from "../../../context/MasterContext"
 import Table from "../../../components/Common/Table"
 import DeleteIcon from "../../../icons/deleteIcon"
 import UpdateIcon from "../../../icons/updateIcon"
+import { useProviderState } from "../../../context/ProviderContext"
 
 const MasterTable = ({ columns, actions }: TableWrapperProps) => {
+    const { commonTranslations } = useProviderState()
     const {
         onUpdate,
         sortable,
@@ -20,7 +22,7 @@ const MasterTable = ({ columns, actions }: TableWrapperProps) => {
         canUpdate,
         canPartialUpdate,
         languages,
-        t,
+        masterTranslations,
     } = useMasterState()
     const [tableColumns, setTableColumns] = useState<ColumnsSchema>([])
 
@@ -45,7 +47,7 @@ const MasterTable = ({ columns, actions }: TableWrapperProps) => {
                     newColumns.push({
                         ...modifiedColumns[nameColumnIndex],
                         accessor: `names.${language.code}`,
-                        Header: `Name (${language.name})`,
+                        Header: `${commonTranslations.name} (${language.name})`,
                         Cell: ({ row }: any) => {
                             return String(row.names?.[language.code] || "")
                         },
@@ -69,7 +71,7 @@ const MasterTable = ({ columns, actions }: TableWrapperProps) => {
         // Appending Table Actions, if actions not specified or actions object is provided
         if ((tableActions.showDelete && canUpdate) || (tableActions.showUpdate && canDelete)) {
             let modification: ColumnSchemaType = {
-                Header: t("common:actions"),
+                Header: commonTranslations.actions,
                 accessor: "actions",
                 Cell({ row }) {
                     return (
@@ -131,7 +133,7 @@ const MasterTable = ({ columns, actions }: TableWrapperProps) => {
                 setSortConfig={setSortConfig}
                 loader={loader}
                 loading={loading}
-                noDataText={t("master:noDataText")}
+                noDataText={masterTranslations.noDataText}
             />
         )
     }

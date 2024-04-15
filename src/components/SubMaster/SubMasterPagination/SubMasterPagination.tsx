@@ -1,8 +1,10 @@
 import React from "react"
 import { Pagination } from "../../../components/Common"
 import { useSubMasterState } from "../../../context/SubMasterContext"
+import { useProviderState } from "../../../context/ProviderContext"
 
 const SubMasterPagination = () => {
+    const { commonTranslations } = useProviderState()
     const {
         limits,
         currentPage,
@@ -12,7 +14,6 @@ const SubMasterPagination = () => {
         totalPages,
         totalRecords,
         canList,
-        t,
         sequencing,
     } = useSubMasterState()
 
@@ -26,10 +27,13 @@ const SubMasterPagination = () => {
             setPageSize={setPageSize}
             totalRecords={totalRecords}
             limits={limits}
-            pageLabel={t("page")}
-            nextLabel={t("next")}
-            previousLabel={t("previous")}
             disabledPagination={sequencing}
+            nextContent={commonTranslations.next}
+            ofText={commonTranslations.of}
+            pageText={commonTranslations.page}
+            previousContent={commonTranslations.previous}
+            showingText={commonTranslations.showing}
+            showText={commonTranslations.show}
         />
     )
 }
