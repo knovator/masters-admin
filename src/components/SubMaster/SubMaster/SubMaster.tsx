@@ -28,6 +28,7 @@ const SubMaster = ({
     limits = PAGE_LIMITS,
     preConfirmDelete,
     loader,
+    locale,
     children,
     imageBaseUrl,
     permissions = DEFAULT_PERMISSIONS,
@@ -171,10 +172,10 @@ const SubMaster = ({
 
                 <DeleteModal
                     formState={formState}
-                    name={itemData?.name}
                     onClose={onCloseForm}
                     onConfirmDelete={onCofirmDeleteMaster}
                     confirm={commonTranslations.confirm}
+                    name={locale ? itemData?.names[locale] : itemData?.name}
                     confirmationRequired={commonTranslations.confirmationRequired}
                     lossOfData={commonTranslations.lossOfData}
                     permanentlyDelete={commonTranslations.permanentlyDelete}

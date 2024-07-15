@@ -1,6 +1,6 @@
 {
     "name": "@knovator/masters-admin",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "description": "Package for integrating Masters, Submasters functionality in React projects",
     "main": "dist/index.js",
     "module": "dist/masters-admin.esm.js",
