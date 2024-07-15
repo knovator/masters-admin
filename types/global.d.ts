@@ -36,6 +36,7 @@ interface SubMasterProps extends React.PropsWithChildren {
     sortable?: boolean
     defaultSort?: SortConfigType
     limits?: number[]
+    locale?: string
     routes?: Routes_Input
     loader?: JSX.Element
     explicitForm?: boolean
@@ -367,6 +368,7 @@ interface MasterProps extends React.PropsWithChildren {
     sortable?: boolean
     defaultSort?: SortConfigType
     limits?: number[]
+    locale?: string
     routes?: Routes_Input
     loader?: JSX.Element
     explicitForm?: boolean

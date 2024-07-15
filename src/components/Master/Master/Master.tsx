@@ -25,6 +25,7 @@ const Master = ({
     children,
     preConfirmDelete,
     loader,
+    locale,
     translations = {},
     permissions = DEFAULT_PERMISSIONS,
 }: MasterProps) => {
@@ -144,10 +145,10 @@ const Master = ({
 
                 <DeleteModal
                     formState={formState}
-                    name={itemData?.name}
                     onClose={onCloseForm}
                     onConfirmDelete={onCofirmDeleteMaster}
                     confirm={commonTranslations.confirm}
+                    name={locale ? itemData?.names[locale] : itemData?.name}
                     confirmationRequired={commonTranslations.confirmationRequired}
                     lossOfData={commonTranslations.lossOfData}
                     permanentlyDelete={commonTranslations.permanentlyDelete}
