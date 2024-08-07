@@ -95,12 +95,12 @@ const SubMasterTable = ({ columns, actions }: TableWrapperProps) => {
                 Cell({ row }) {
                     return (
                         <div className="kms_actions">
-                            {tableActions.showUpdate && canUpdate ? (
+                            {row.canEdit !== false &&tableActions.showUpdate && canUpdate ? (
                                 <button onClick={() => onChangeFormState("UPDATE", row)}>
                                     <UpdateIcon fill="#fff" />
                                 </button>
                             ) : null}
-                            {row.canDel && tableActions.showDelete && canDelete ? (
+                            {row.canDel !== false && tableActions.showDelete && canDelete ? (
                                 <button onClick={() => onChangeFormState("DELETE", row)}>
                                     <DeleteIcon />
                                 </button>
