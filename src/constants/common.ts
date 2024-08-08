@@ -79,6 +79,8 @@ const TRANSLATION_PAIRS_COMMON = {
     name: "Name",
     namePlaceholder: "Enter name",
     nameRequired: "Name is required",
+    synonyms: "Synonyms",
+    synonymsPlaceholder: "Enter Synonyms",
 
     webDisplay: "Web Display", // Form, Web Display Field
     enterWebDisplay: "Enter Web Display", // Web Display Placeholder

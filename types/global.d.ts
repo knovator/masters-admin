@@ -355,7 +355,7 @@ interface SchemaType {
     validations?: import("react-hook-form").RegisterOptions
     editable?: boolean
     onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void
-    type?: "text" | "number" | "select" | "checkbox" | "textarea"
+    type?: "text" | "number" | "select" | "checkbox" | "textarea" | "multiselect"
     options?: { value: string; label: string }[]
     defaultValue?: string | number | boolean
     placeholder?: string
