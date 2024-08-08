@@ -27,19 +27,23 @@ const createOption = (label: string): Option => ({
 })
 
 const Multiselect: React.FC<MultiSelectProps> = ({ onChange, label, error, isRequired, disabled, value }) => {
-    const [inputValue, setInputValue] = React.useState<string | undefined>()
+    const [inputValue, setInputValue] = React.useState<string | undefined>("")
     const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
+        console.log(value)
         if (!inputValue) return
         switch (event.key) {
             case "Enter":
             case "Tab":
-               
-            
-            const updatedValue = [...value, inputValue];
-            onChange(updatedValue);
-            setInputValue("");
-            event.preventDefault();
-            break;
+                if (value === undefined) {
+                    onChange([inputValue])
+                    setInputValue("")
+                    break
+                }
+                const updatedValue = [...value, inputValue]
+                onChange(updatedValue)
+                setInputValue("")
+                event.preventDefault()
+                break
         }
     }
 
@@ -61,7 +65,6 @@ const Multiselect: React.FC<MultiSelectProps> = ({ onChange, label, error, isReq
                 onInputChange={setInputValue}
                 onChange={(newData) => {
                     onChange(newData.map((option) => option.value))
-                    
                 }}
                 placeholder="Type something and press enter..."
                 value={value?.map(createOption)}
