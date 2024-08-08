@@ -29,7 +29,6 @@ const createOption = (label: string): Option => ({
 const Multiselect: React.FC<MultiSelectProps> = ({ onChange, label, error, isRequired, disabled, value }) => {
     const [inputValue, setInputValue] = React.useState<string | undefined>("")
     const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
-        console.log(value)
         if (!inputValue) return
         switch (event.key) {
             case "Enter":
