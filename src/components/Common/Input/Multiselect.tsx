@@ -48,12 +48,7 @@ const Multiselect: React.FC<MultiSelectProps> = ({ onChange, label, error, isReq
 
     return (
         <div className="kms_input-wrapper">
-            {label && (
-                <label className="kms_input-label">
-                    {label}
-                    {isRequired && <span className="kms_required_astrisk"> *</span>}
-                </label>
-            )}
+            {label && <label className="kms_input-label">{label}</label>}
             <CreatableSelect
                 isMulti
                 isClearable
@@ -65,10 +60,24 @@ const Multiselect: React.FC<MultiSelectProps> = ({ onChange, label, error, isReq
                 onChange={(newData) => {
                     onChange(newData.map((option) => option.value))
                 }}
-                placeholder="Type something and press enter..."
+                placeholder="Enter Synonyms"
                 value={value?.map(createOption)}
                 isDisabled={disabled}
-                className="h-9"
+                styles={{
+                    control: (provided) => ({
+                        ...provided,
+                        border: "1px solid #94A3B8",
+                        paddingTop: "0.1rem",
+                        paddingBottom: "0.1rem",
+                        borderRadius: "0.5rem",
+                        outline: "4px solid transparent",
+                    }),
+                    placeholder: (provided) => ({
+                        ...provided,
+                        color: "#9CA3AF",
+                        marginLeft: "0px",
+                    }),
+                }}
             />
             {error && <p className="kms_input-error">{error}</p>}
         </div>
