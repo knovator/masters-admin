@@ -1,6 +1,6 @@
 {
     "name": "@knovator/masters-admin",
-    "version": "3.1.0",
+    "version": "3.2.0",
     "description": "Package for integrating Masters, Submasters functionality in React projects",
     "main": "dist/index.js",
     "module": "dist/masters-admin.esm.js",
@@ -113,6 +113,7 @@
     },
     "dependencies": {
         "@types/react-beautiful-dnd": "^13.1.2",
-        "react-beautiful-dnd": "^13.1.0"
+        "react-beautiful-dnd": "^13.1.0",
+        "react-select": "^5.8.0"
     }
 }

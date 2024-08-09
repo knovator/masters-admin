@@ -1,6 +1,6 @@
 import React, { forwardRef, MutableRefObject, useEffect } from "react"
 import { Controller, useForm } from "react-hook-form"
-
+import Multiselect from "../Input/Multiselect"
 import { TRANSLATION_PAIRS_COMMON } from "../../../constants/common"
 import { isEmpty } from "../../../utils/util"
 import Input from "../Input"
@@ -76,6 +76,27 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(
                             />
                         )
                         break
+                    case "multiselect":
+                        input = (
+                            <Controller
+                                control={control}
+                                name={schema.accessor}
+                                rules={schema.validations}
+                                render={({ field }) => (
+                                // @ts-ignore
+                                <Multiselect
+                                    label={schema.label}
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                    error={errors[schema.accessor]?.message}
+                                    className="kms_w-full"
+                                    disabled={isUpdating && typeof schema.editable !== "undefined" && !schema.editable}
+                                    isRequired={schema.isRequired}
+                                />
+                                )}
+                            />
+                            );
+                            break;
                     case "select":
                         input = (
                             <Input.Select
