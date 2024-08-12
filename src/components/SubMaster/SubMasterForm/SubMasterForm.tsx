@@ -48,13 +48,6 @@ const SubMasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ 
                   } as SchemaType,
               ]),
         {
-            label: "Synonym",
-            accessor: "synonym",
-            type: "multiselect",
-            isRequired: true,
-            placeholder: "Enter Synonyms",
-        },
-        {
             label: commonTranslations.code,
             accessor: "code",
             type: "text",
@@ -65,6 +58,13 @@ const SubMasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ 
             validations: {
                 required: commonTranslations.codeRequired,
             },
+        },
+        {
+            label: "Synonym",
+            accessor: "synonym",
+            type: "multiselect",
+            isRequired: true,
+            placeholder: "Enter Synonyms",
         },
         {
             label: commonTranslations.webDisplay,
