@@ -48,7 +48,7 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
         onError(code, "error", data?.message)
     }
     const getSubMastersList = useCallback(
-        async (search?: string, all: boolean = false) => {
+        async ({ search, all = false, exclude }: { search?: string, all?: boolean, exclude?: string } = {}, callback?: (data: any) => void) => {
             try {
                 let sortConfig = sortConfigRef.current
                 setLoading(true)
@@ -61,6 +61,7 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
                     onError: handleError(CALLBACK_CODES.GET_ALL),
                     data: {
                         search,
+                        exclude,
                         query: {
                             parentCode: selectedMaster?.code,
                         },
@@ -81,7 +82,8 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
                     setLoading(false)
                     setTotalPages(paginationGetter(response).totalPages)
                     setTotalRecords(paginationGetter(response).totalDocs)
-                    return setList(dataGetter(response))
+                    if(typeof callback === 'function') return callback(dataGetter(response));
+                    else return setList(dataGetter(response))
                 }
                 setLoading(false)
             } catch (error) {
@@ -330,7 +332,7 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
         }
         setSequencing(status)
         sortConfigRef.current = ["seq", 1]
-        getSubMastersList("", status)
+        getSubMastersList({ all: status, search: ''})
     }
     const onChangePageSize = (size: number): void => {
         limitRef.current = size
@@ -341,7 +343,7 @@ const useSubMaster = ({ defaultLimit, routes, defaultSort = ["seq", 1], preConfi
     const onChangeCurrentPage = (page: number): void => {
         currentPageRef.current = page
         setSequencing(false)
-        getSubMastersList(searchRef.current)
+        getSubMastersList({search: searchRef.current})
     }
 
     useEffect(() => {
