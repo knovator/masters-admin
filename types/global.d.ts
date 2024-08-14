@@ -301,7 +301,7 @@ interface SubMasterContextType {
     loader?: JSX.Element
     canDelete?: boolean
     canPartialUpdate?: boolean
-    getSubMastersList: (search?: string) => Promise<void>
+    getSubMastersList: (options: {search?: string, all: boolean , exclude?: []} = {}, callback?: (data: any) => void) => Promise<void>
     onChangeSequence: (sourceIndex: number, destinationIndex: number) => Promise<void>
     sequencing: boolean
     setSequencing: (status: boolean) => void
@@ -355,8 +355,8 @@ interface SchemaType {
     validations?: import("react-hook-form").RegisterOptions
     editable?: boolean
     onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void
-    type?: "text" | "number" | "select" | "checkbox" | "textarea" | "multiselect"
-    options?: { value: string; label: string }[]
+    type?: "text" | "number" | "select" | "checkbox" | "textarea" | "multiselect" | "ReactSelect"
+    options?: { value: string; label: string }[] | strings
     defaultValue?: string | number | boolean
     placeholder?: string
 }

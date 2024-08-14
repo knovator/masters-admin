@@ -67,6 +67,13 @@ const SubMasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ 
             placeholder: "Enter Synonyms",
         },
         {
+            label: "Merge Submasters",
+            accessor: "mergeSubmasters",
+            type: "ReactSelect",
+            isRequired: true,
+            placeholder: "Select submasters to merge",
+        },
+        {
             label: commonTranslations.webDisplay,
             accessor: "webDsply",
             type: "text",
@@ -134,6 +141,7 @@ const SubMasterForm = forwardRef<HTMLFormElement | null, FormContainerProps>(({ 
             languages={languages}
             data={updateData}
             isUpdating={formState === "UPDATE"}
+            updateData={updateData}
         />
     )
 })

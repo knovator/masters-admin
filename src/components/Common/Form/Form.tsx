@@ -4,6 +4,7 @@ import Multiselect from "../Input/Multiselect"
 import { TRANSLATION_PAIRS_COMMON } from "../../../constants/common"
 import { isEmpty } from "../../../utils/util"
 import Input from "../Input"
+import MergeInput from "../Input/MergeInput"
 
 interface FormProps {
     schema: SchemaType[]
@@ -13,6 +14,7 @@ interface FormProps {
     indicatesRequired?: string
     onSubmit: (data: any) => void
     ref: MutableRefObject<HTMLFormElement | null>
+    updateData: object;    
 }
 
 const Form = forwardRef<HTMLFormElement | null, FormProps>(
@@ -24,6 +26,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(
             isUpdating = false,
             languages,
             indicatesRequired = TRANSLATION_PAIRS_COMMON.indicatesRequired,
+            updateData,
         },
         ref,
     ) => {
@@ -97,6 +100,31 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(
                             />
                             );
                             break;
+                        case "ReactSelect":
+                            input = (
+                                <Controller
+                                    control={control}
+                                    name={schema.accessor}
+                                    rules={schema.validations}
+                                    render={({ field }) => (
+                                        // @ts-ignore
+                                        <MergeInput 
+                                            data={updateData}                                   
+                                            label={schema.label}
+                                            value={field.value}
+                                            onChange={field.onChange}
+                                            error={errors[schema.accessor]?.message}
+                                            className="kms_w-full"
+                                            disabled={
+                                                isUpdating && typeof schema.editable !== "undefined" && !schema.editable
+                                            }
+                                            isRequired={schema.isRequired}
+                                            
+                                        />
+                                    )}
+                                />
+                            )
+                            break
                     case "select":
                         input = (
                             <Input.Select
