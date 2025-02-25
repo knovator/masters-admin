@@ -13,7 +13,8 @@ interface UseMasterProps {
 
 const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preConfirmDelete }: UseMasterProps) => {
     const [list, setList] = useState<any[]>([])
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
+    const [allDataList, setAllDataList] = useState<any[]>([])
     const [totalPages, setTotalPages] = useState(0)
     const [totalRecords, setTotalRecords] = useState(0)
     const [itemData, setItemData] = useState<any | null>(null)
@@ -68,6 +69,41 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
                 setLoading(false)
             } catch (error) {
                 setLoading(false)
+            }
+        },
+        [
+            baseUrl,
+            currentPageRef.current,
+            dataGetter,
+            offsetRef.current,
+            limitRef.current,
+            onError,
+            onSuccess,
+            paginationGetter,
+            routes,
+            token,
+        ],
+    )
+    const getAllMastersList = useCallback(
+        async (search?: string) => {
+            try {
+                let api = getApiType({ routes, action: "LIST", module: "masters" })
+                let response = await request({
+                    baseUrl,
+                    token,
+                    method: api.method,
+                    url: api.url,
+                    onError: handleError(CALLBACK_CODES.GET_ALL),
+                    data: {
+                        search,
+                        all: true,
+                    },
+                })
+                if (response?.code === "SUCCESS") {
+                    return setAllDataList(dataGetter(response))
+                }
+            } catch (error) {
+                console.log("error loading all masters", error);
             }
         },
         [
@@ -225,11 +261,13 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
     }
     useEffect(() => {
         getMastersList()
+        getAllMastersList();
         getLanguagesList()
     }, [])
 
     return {
         list,
+        allDataList,
         loading,
         setLoading,
         partialUpdate,

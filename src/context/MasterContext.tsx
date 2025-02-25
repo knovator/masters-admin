@@ -7,6 +7,7 @@ interface MasterContextProviderProps extends React.PropsWithChildren, Omit<Maste
 
 const MasterContext = createContext<MasterContextType | null>(null)
 
+
 const MasterContextProvider = ({
     // Form
     languages = [],
@@ -29,6 +30,7 @@ const MasterContextProvider = ({
     canList = false,
     // Table
     columns = [],
+    allDataList = [],
     data = [],
     getMastersList = () => Promise.resolve(),
     onUpdate = () => Promise.resolve(),
@@ -69,6 +71,7 @@ const MasterContextProvider = ({
                 // Table
                 columns,
                 data,
+                allDataList,
                 getMastersList,
                 onUpdate,
                 setSortConfig,

@@ -245,6 +245,7 @@ interface MasterContextType {
     sortable: boolean
     columns: ColumnsSchema
     data: any[]
+    allDataList: any[],
     loader?: JSX.Element
     canDelete?: boolean
     canPartialUpdate?: boolean

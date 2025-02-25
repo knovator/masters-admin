@@ -51,6 +51,7 @@ const Master = ({
     ]
     const {
         list,
+        allDataList,
         loading,
         partialUpdate,
         totalPages,
@@ -102,6 +103,7 @@ const Master = ({
                 canList={permissions?.list}
                 // Table
                 onUpdate={partialUpdate}
+                allDataList={allDataList}
                 data={list}
                 sortable={sortable}
                 sortConfig={sortConfig}
