@@ -5,13 +5,14 @@ import { useProviderState } from "../../../context/ProviderContext"
 
 const Lister = ({ render, selectFirst }: ListerProps) => {
     const { setSelectedMaster, selectedMaster } = useProviderState()
-    const { data, loading, loader, canList } = useMasterState()
+    const { loading, loader, canList , allDataList } = useMasterState()
+
 
     useEffect(() => {
-        if (selectFirst && Array.isArray(data) && data.length > 0) {
-            setSelectedMaster(data[0])
+        if (selectFirst && Array.isArray(allDataList) && allDataList.length > 0) {
+            setSelectedMaster(allDataList[0])
         }
-    }, [data])
+    }, [allDataList])
 
     const onItemRender = useCallback(
         (item: any) => {
@@ -43,7 +44,7 @@ const Lister = ({ render, selectFirst }: ListerProps) => {
     if (loading && loader) return loader
     return (
         <div className="kms_list-wrapper" data-testid="kms_list-wrapper">
-            {data.map((item) => onItemRender(item))}
+            {allDataList.map((item) => onItemRender(item))}
         </div>
     )
 }
