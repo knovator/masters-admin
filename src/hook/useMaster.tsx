@@ -260,10 +260,10 @@ const useMaster = ({ defaultLimit, routes, defaultSort = ["createdAt", 1], preCo
         getMastersList(searchRef.current)
     }
     useEffect(() => {
-        getMastersList()
-        getAllMastersList();
+        getMastersList(searchStr)
+        getAllMastersList(searchStr);
         getLanguagesList()
-    }, [])
+    }, [searchStr])
 
     return {
         list,
