@@ -14,14 +14,15 @@ const Button = ({ label, onClick, disabled, variant = "primary", size = "md", cl
     return (
         <button
             onClick={onClick}
-            className={classNames("kms_btn", 
+            className={classNames(
+                "kms_btn", 
                 {
                 "kms_btn-primary": variant === "primary",
                 "kms_btn-secondary": variant === "secondary",
                 "kms_btn-sm": size === "sm",
                 },
-            className,
-        )}
+                className
+            )}
             disabled={disabled}
         >
             {label}
