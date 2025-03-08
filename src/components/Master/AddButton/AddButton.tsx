@@ -2,9 +2,9 @@ import React from "react"
 import { Button } from "../../../components/Common"
 import { useMasterState } from "../../../context/MasterContext"
 
-const AddButton = () => {
+const AddButton = ({ className }: {className?: string}) => {
     const { onChangeFormState, canAdd, masterTranslations } = useMasterState()
-    return <Button label={masterTranslations.addMaster} onClick={() => onChangeFormState("ADD")} disabled={!canAdd} />
+    return <Button className={className} label={masterTranslations.addMaster} onClick={() => onChangeFormState("ADD")} disabled={!canAdd} />
 }
 
 export default AddButton
