@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react"
 import { Input } from "../../../components/Common"
 import { useMasterState } from "../../../context/MasterContext"
 
-const MasterSearch = () => {
+const MasterSearch = ({ onSearch }: SearchProps) => {
     const { setSearchStr, masterTranslations, setCurrentPage } = useMasterState()
     const callerRef = useRef<NodeJS.Timeout | null>(null)
     const [search, setSearch] = useState<string>("")
@@ -14,6 +14,7 @@ const MasterSearch = () => {
         callerRef.current = setTimeout(() => {
             setSearchStr(str)
             setCurrentPage(1)
+            if (onSearch) onSearch(str)
         }, 300)
     }
 
