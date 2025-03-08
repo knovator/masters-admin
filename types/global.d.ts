@@ -7,7 +7,7 @@ declare module "@knovator/masters-admin" {
         Table: (props: TableWrapperProps) => JSX.Element | null
         Pagination: () => JSX.Element | null
         Search: (props: SearchProps) => JSX.Element
-        AddButton: () => JSX.Element
+        AddButton: (props: ButtonProps) => JSX.Element
         Form: (props: FormContainerProps) => JSX.Element | null
         Lister: (props: ListerProps) => JSX.Element | null
         FormActions: (props: FormActionWrapperProps) => JSX.Element
@@ -18,7 +18,7 @@ declare module "@knovator/masters-admin" {
         Table: (props: TableWrapperProps) => JSX.Element | null
         Pagination: () => JSX.Element | null
         Search: () => JSX.Element
-        AddButton: () => JSX.Element
+        AddButton: (props: ButtonProps) => JSX.Element
         Form: (props: FormContainerProps) => JSX.Element | null
         FormActions: (props: FormActionWrapperProps) => JSX.Element
         FormWrapper: (props: FormWrapperProps) => JSX.Element
@@ -65,6 +65,10 @@ interface ListerProps {
 
 interface SearchProps {
     onSearch?: (str: string) => void
+}
+
+interface ButtonProps {
+    className?: string
 }
 
 interface FormContainerProps {
