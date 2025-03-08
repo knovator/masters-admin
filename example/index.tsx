@@ -37,6 +37,7 @@ const App = () => {
             >
                 {view === "submaster" ? (
                     <Master limits={[1, 2, 3, 4, 5]}>
+                        <Master.Search />
                         <Master.Lister />
                         <SubMaster limits={[1, 2, 3, 4, 5]}>
                             <SubMaster.Search />
