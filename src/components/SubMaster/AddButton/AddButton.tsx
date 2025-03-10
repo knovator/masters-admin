@@ -2,11 +2,7 @@ import React from "react"
 import { Button } from "../../../components/Common"
 import { useSubMasterState } from "../../../context/SubMasterContext"
 
-interface buttonProps {
-    className?: string
-}
-
-const AddButton = ({ className }: buttonProps) => {
+const AddButton = ({ className }: ButtonProps) => {
     const { onChangeFormState, canAdd, submasterTranslations } = useSubMasterState()
     return (
         <Button
