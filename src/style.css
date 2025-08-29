@@ -1,4 +1,24 @@
-@tailwind base;
+@import 'tailwindcss/theme' layer(theme);
+@import 'tailwindcss/preflight' layer(base);
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
 /* Table */
 .kms_actions {
     @apply flex items-center gap-3;
@@ -53,7 +73,7 @@
 
 /* Button */
 .kms_btn {
-    @apply cursor-pointer items-center justify-center gap-2 rounded-md py-2.5 px-6 transition text-sm focus:ring ring-offset-1;
+    @apply cursor-pointer items-center justify-center gap-2 rounded-md py-2.5 px-6 transition text-sm focus:ring-3 ring-offset-1;
 }
 .kms_btn:disabled {
     @apply cursor-not-allowed;
@@ -89,7 +109,7 @@
     @apply grid gap-4;
 }
 .kms_input {
-    @apply min-h-[40px] rounded-lg border border-slate-400 p-2 outline-none bg-transparent appearance-none focus:outline-none focus:ring-blue-500 focus:ring-2 transition;
+    @apply min-h-[40px] rounded-lg border border-slate-400 p-2 outline-hidden bg-transparent appearance-none focus:outline-hidden focus:ring-blue-500 focus:ring-2 transition;
 }
 .kms_input:disabled {
     @apply bg-slate-300 cursor-not-allowed;
@@ -113,7 +133,7 @@
     @apply text-gray-300;
 }
 .kms_search-input {
-    @apply min-h-[40px] focus:outline-none px-3 leading-none rounded-md focus:ring-1 transition border pl-10;
+    @apply min-h-[40px] focus:outline-hidden px-3 leading-none rounded-md focus:ring-1 transition border pl-10;
 }
 .kms_input-error {
     @apply mt-1 text-sm text-red-500;
@@ -206,7 +226,7 @@ background-position: center; */
     @apply absolute inset-0 overflow-hidden;
 }
 .kms_drawer-backdrop {
-    @apply absolute inset-0 transition-opacity bg-black bg-opacity-75 backdrop-blur-sm;
+    @apply absolute inset-0 transition-opacity bg-black opacity-75 backdrop-blur-xs;
 }
 .kms_drawer-container-1 {
     @apply fixed inset-y-0 right-0 flex max-w-full pl-10;
@@ -218,7 +238,7 @@ background-position: center; */
     @apply absolute top-0 left-0 flex pt-4 pr-2 -ml-8 sm:-ml-10 sm:pr-4;
 }
 .kms_drawer-close-btn {
-    @apply flex items-center justify-center w-8 h-8 transition bg-white rounded-full focus:outline-none hover:rotate-90;
+    @apply flex items-center justify-center w-8 h-8 transition bg-white rounded-full focus:outline-hidden hover:rotate-90;
 }
 .kms_sr-only {
     @apply sr-only;
@@ -248,7 +268,7 @@ background-position: center; */
     @apply flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0 relative;
 }
 .kms_modal-backdrop {
-    @apply absolute inset-0 transition-opacity bg-black bg-opacity-75 backdrop-blur-sm;
+    @apply absolute inset-0 transition-opacity bg-black opacity-75 backdrop-blur-xs;
 }
 .kms_modal-container-1 {
     @apply opacity-100 min-h-screen flex justify-center items-center;
@@ -266,7 +286,7 @@ background-position: center; */
     @apply text-sm font-semibold;
 }
 .kms_modal-close {
-    @apply absolute right-5 top-5 focus:outline-none;
+    @apply absolute right-5 top-5 focus:outline-hidden;
 }
 .kms_modal-content {
     @apply p-4;
@@ -331,7 +351,7 @@ background-position: center; */
     @apply grid gap-3 my-2;
 }
 .kms_list-item {
-    @apply flex items-center gap-3 p-2 transition-all rounded-lg bg-slate-100 cursor-pointer outline-none;
+    @apply flex items-center gap-3 p-2 transition-all rounded-lg bg-slate-100 cursor-pointer outline-hidden;
 }
 .kms_list-item.selected {
     @apply bg-blue-500 cursor-default;
@@ -370,7 +390,7 @@ background-position: center; */
     @apply flex text-sm text-gray-600;
 }
 .kms_img-text-label {
-    @apply relative font-medium rounded-md cursor-pointer focus-within:outline-none;
+    @apply relative font-medium rounded-md cursor-pointer focus-within:outline-hidden;
 }
 .kms_img-text-1 {
     @apply pl-1 text-gray-500;
