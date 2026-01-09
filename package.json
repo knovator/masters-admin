@@ -40,7 +40,7 @@
         "prepare": "dts build && yarn build:tailwind",
         "size": "size-limit",
         "watch": "dts watch",
-        "start": "concurrently \"dts watch\" \"yarn watch:tailwind\"",
+        "start": "concurrently \"dts watch\"",
         "test": "dts test --passWithNoTests",
         "build:tailwind": "cross-env NODE_ENV=production npx @tailwindcss/cli -i ./src/style.css -c ./tailwind.config.js -o ./dist/style.css --minify",
         "watch:tailwind": "cross-env NODE_ENV=production npx @tailwindcss/cli -i ./src/style.css -c ./tailwind.config.js -o ./dist/style.css --watch"
@@ -82,8 +82,8 @@
         "husky": "^8.0.1",
         "msw": "^0.42.3",
         "postcss": "^8.4.14",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
         "react-dropzone": "^14.2.1",
         "react-hook-form": "^7.32.2",
         "react-table": "^7.8.0",
@@ -107,8 +107,8 @@
     ],
     "peerDependencies": {
         "@knovator/api": "^0.0.10",
-        "react": ">=17.0.1",
-        "react-dom": ">=17.0.1",
+        "react": ">=19.0.0",
+        "react-dom": ">=19.0.0",
         "react-hook-form": "^7.32.2",
         "react-table": "^7.8.0"
     },
