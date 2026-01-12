@@ -1,6 +1,6 @@
 {
     "name": "@knovator/masters-admin",
-    "version": "4.0.2",
+    "version": "4.0.6",
     "description": "Package for integrating Masters, Submasters functionality in React projects",
     "main": "dist/index.js",
     "module": "dist/masters-admin.esm.js",
@@ -40,7 +40,7 @@
         "prepare": "dts build && yarn build:tailwind",
         "size": "size-limit",
         "watch": "dts watch",
-        "start": "concurrently \"dts watch\" \"yarn watch:tailwind\"",
+        "start": "concurrently \"dts watch\"",
         "test": "dts test --passWithNoTests",
         "build:tailwind": "cross-env NODE_ENV=production npx @tailwindcss/cli -i ./src/style.css -c ./tailwind.config.js -o ./dist/style.css --minify",
         "watch:tailwind": "cross-env NODE_ENV=production npx @tailwindcss/cli -i ./src/style.css -c ./tailwind.config.js -o ./dist/style.css --watch"
@@ -70,6 +70,7 @@
         "@testing-library/react": "^13.3.0",
         "@tsconfig/create-react-app": "^1.0.2",
         "@tsconfig/recommended": "^1.0.1",
+        "@types/minimatch": "^5.0.1",
         "@types/react-dom": "^18.0.6",
         "@types/react-dropzone": "^5.1.0",
         "@types/react-table": "^7.7.12",
@@ -82,8 +83,8 @@
         "husky": "^8.0.1",
         "msw": "^0.42.3",
         "postcss": "^8.4.14",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
+        "react": "^19.2.2",
+        "react-dom": "^19.2.2",
         "react-dropzone": "^14.2.1",
         "react-hook-form": "^7.32.2",
         "react-table": "^7.8.0",
@@ -107,8 +108,8 @@
     ],
     "peerDependencies": {
         "@knovator/api": "^0.0.10",
-        "react": ">=17.0.1",
-        "react-dom": ">=17.0.1",
+        "react": ">=19.0.0",
+        "react-dom": ">=19.0.0",
         "react-hook-form": "^7.32.2",
         "react-table": "^7.8.0"
     },

@@ -13,7 +13,7 @@ const Drawer = ({ children, open, onClose, title, footerContent }: DrawerProps) 
     const nodeRef = useRef(null)
     return (
         <CSSTransition
-            ref={nodeRef}
+            nodeRef={nodeRef}
             in={open}
             timeout={{ enter: 250, exit: 350 }}
             classNames="kms_drawer"

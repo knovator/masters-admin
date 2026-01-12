@@ -37,6 +37,23 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(
             setError,
         } = useForm()
 
+        const getErrorMessage = (error: unknown): string | undefined => {
+            if (typeof error === "string") return error
+            if (error && typeof error === "object" && "message" in error) {
+                const message = (error as { message?: unknown }).message
+                return typeof message === "string" ? message : undefined
+            }
+            return undefined
+        }
+
+        const getNestedErrorMessage = (key: string, nestedKey: string): string | undefined => {
+            const entry = (errors as Record<string, unknown>)[key]
+            if (!entry || typeof entry !== "object") return undefined
+
+            const nested = (entry as Record<string, unknown>)[nestedKey]
+            return getErrorMessage(nested)
+        }
+
         // setting data values
         useEffect(() => {
             if (!isEmpty(data)) {
@@ -68,7 +85,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(
                     case "checkbox":
                         input = (
                             <Input.Checkbox
-                                error={errors[schema.accessor]?.message}
+                                error={getErrorMessage(errors[schema.accessor])}
                                 label={schema.label}
                                 rest={register(schema.accessor, schema.validations || {})}
                                 className="kms_block"
@@ -81,7 +98,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(
                             <Input.Select
                                 options={schema.options}
                                 label={schema.label}
-                                error={errors[schema.accessor]?.message}
+                                error={getErrorMessage(errors[schema.accessor])}
                                 rest={register(schema.accessor, schema.validations || {})}
                                 className="kms_w-full"
                                 disabled={isUpdating && typeof schema.editable !== "undefined" && !schema.editable}
@@ -92,7 +109,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(
                     case "textarea":
                         input = (
                             <Input.Textarea
-                                error={errors[schema.accessor]?.message}
+                                error={getErrorMessage(errors[schema.accessor])}
                                 label={schema.label}
                                 rest={register(schema.accessor, schema.validations || {})}
                                 onInput={schema.onInput}
@@ -114,8 +131,9 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(
                                     label={schema.label + " (" + lang.name + ")"}
                                     onInput={schema.onInput}
                                     error={
-                                        errors[schema.accessor]?.[lang.code]?.message
-                                            ? errors[schema.accessor][lang.code].message + ` (${lang.name})`
+                                        getNestedErrorMessage(schema.accessor, lang.code)
+                                            ? getNestedErrorMessage(schema.accessor, lang.code) +
+                                              ` (${lang.name})`
                                             : undefined
                                     }
                                     isRequired={schema.isRequired}
@@ -133,7 +151,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(
                                     label={schema.label}
                                     onInput={schema.onInput}
                                     isRequired={schema.isRequired}
-                                    error={errors[schema.accessor]?.message}
+                                    error={getErrorMessage(errors[schema.accessor])}
                                     type={schema.type}
                                     className="kms_w-full kms_p-2"
                                     placeholder={schema.placeholder}
@@ -153,7 +171,7 @@ const Form = forwardRef<HTMLFormElement | null, FormProps>(
                             render={({ field }) =>
                                 schema.Input!({
                                     field,
-                                    error: errors[schema.accessor]?.message,
+                                    error: getErrorMessage(errors[schema.accessor]),
                                     setError: (msg) =>
                                         setError.call(null, schema.accessor, { type: "custom", message: msg }),
                                 })
